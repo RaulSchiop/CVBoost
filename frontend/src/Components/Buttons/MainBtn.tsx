@@ -1,9 +1,15 @@
 "use client";
 import { motion } from "motion/react";
 
-export default function LogInBtn() {
+type Props = {
+   children: React.ReactNode;
+   onClick?: () => void;
+};
+
+export default function MainBtn({ children, onClick }: Props) {
    return (
       <motion.button
+         onClick={onClick}
          initial={{ opacity: 0, y: -500 }}
          animate={{ opacity: 1, y: 0 }}
          transition={{ type: "spring", duration: 0.5 }}
@@ -20,7 +26,7 @@ export default function LogInBtn() {
          className="text-white flex items-center justify-between px-5 py-3
     bg-purple-100/50 backdrop-blur-md border border-purple-300/30 rounded-xl shadow-lg hover:bg-accent-100 active:bg-white"
       >
-         <h1 className="text-white active:text-accent-200">Log In</h1>
+         <h1 className="text-white active:text-accent-200">{children}</h1>
       </motion.button>
    );
 }

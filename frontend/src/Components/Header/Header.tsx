@@ -1,10 +1,17 @@
+"use client";
 import LogInBtn from "../Buttons/LogInButton";
 import Logo from "../Logo/Logo";
 import Link from "next/link";
+import { motion } from "motion/react";
 
 export default function Header() {
    return (
-      <div className="fixed w-full h-10  flex items-center justify-between mt-10 px-15 z-50 ">
+      <motion.div
+         initial={{ opacity: 0, y: -500 }}
+         animate={{ opacity: 1, y: 0 }}
+         transition={{ type: "spring", duration: 0.5 }}
+         className="fixed top-5 w-full h-16 flex items-center justify-between px-15 z-50 "
+      >
          <Logo></Logo>
          <div
             className="text-white flex items-center justify-between 
@@ -52,8 +59,9 @@ export default function Header() {
                Profile
             </Link>
          </div>
-
-         <LogInBtn></LogInBtn>
-      </div>
+         <Link href="/auth">
+            <LogInBtn></LogInBtn>
+         </Link>
+      </motion.div>
    );
 }
