@@ -12,7 +12,7 @@ export default function Header() {
          initial={{ opacity: 0, y: -500 }}
          animate={{ opacity: 1, y: 0 }}
          transition={{ type: "spring", duration: 0.5 }}
-         className="fixed top-5 w-full h-16 flex items-center justify-between px-15 z-50"
+         className="fixed top-5 w-full h-16 flex items-center justify-between px-25 z-50"
       >
          <Logo></Logo>
 

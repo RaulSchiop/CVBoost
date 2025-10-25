@@ -54,7 +54,7 @@ export default function LogIn() {
    }
 
    return (
-      <div className="sm:mt-10 lg:mt-0">
+      <div className="sm:mt-10 lg:mt-0 bg-gradient-to-bl from-accent-200 via-black to-accent-200 ">
          {error.on && (
             <Alert message={error.message} onClose={handleCloseAlert}></Alert>
          )}
