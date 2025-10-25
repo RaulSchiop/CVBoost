@@ -1,5 +1,5 @@
 "use client";
-
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -77,7 +77,7 @@ export default function LogIn() {
                   >
                      <form
                         onSubmit={() => console.log("logIn")}
-                        className="flex flex-col gap-3"
+                        className="flex flex-col gap-2"
                      >
                         <h1 className="text-white text-3xl">Log in</h1>
                         <input
@@ -98,6 +98,12 @@ export default function LogIn() {
                            required
                            className="text-white placeholder-white border focus:border-secondarytext rounded px-4 py-2 focus:outline-none"
                         />
+                        <Link
+                           className="transition-all duration-300 text-accent-900 hover:underline hover:px-3 active:sclae-90 transform hover:bg-accent-100 hover:rounded-lg"
+                           href={"/forgotPassword"}
+                        >
+                           Forgot Password ?
+                        </Link>
                         <MainBtn>Log in</MainBtn>
                      </form>
                   </motion.div>
@@ -162,7 +168,7 @@ export default function LogIn() {
                            placeholder="Password"
                            name="password"
                            type="password"
-                            onChange={handleInputChange}
+                           onChange={handleInputChange}
                            value={register.password}
                            required
                            className="text-white placeholder-white border focus:border-secondarytext rounded px-4 py-2 focus:outline-none"
