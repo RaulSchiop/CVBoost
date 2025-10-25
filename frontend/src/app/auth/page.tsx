@@ -10,11 +10,30 @@ type AlertType = {
    message: string;
    on: boolean;
 };
+
+type LogIn = {
+   email: string;
+   password: string;
+};
+type Register = {
+   name: string;
+   email: string;
+   password: string;
+};
 export default function LogIn() {
    const [change, setChange] = useState(true);
    const [error, setError] = useState<AlertType>({
       message: "",
       on: false,
+   });
+   const [logIn, setLogIn] = useState<LogIn>({
+      email: "",
+      password: "",
+   });
+   const [register, setRegister] = useState<Register>({
+      name: "",
+      email: "",
+      password: "",
    });
 
    function handleChange() {
@@ -23,6 +42,15 @@ export default function LogIn() {
 
    function handleCloseAlert() {
       setError({ message: "", on: false });
+   }
+
+   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+      const { name, value } = e.target;
+
+      setLogIn((prev) => ({
+         ...prev,
+         [name]: value,
+      }));
    }
 
    return (
@@ -54,15 +82,19 @@ export default function LogIn() {
                         <h1 className="text-white text-3xl">Log in</h1>
                         <input
                            placeholder="Email"
-                           name="Email"
+                           name="email"
                            type="email"
+                           onChange={handleInputChange}
+                           value={logIn.email}
                            required
                            className="text-white placeholder-white border focus:border-secondarytext rounded px-4 py-2 focus:outline-none"
                         />
                         <input
                            placeholder="Password"
-                           name="Password"
+                           name="password"
                            type="password"
+                           onChange={handleInputChange}
+                           value={logIn.password}
                            required
                            className="text-white placeholder-white border focus:border-secondarytext rounded px-4 py-2 focus:outline-none"
                         />
@@ -112,20 +144,26 @@ export default function LogIn() {
                            placeholder="Name"
                            name="name"
                            type="text"
+                           onChange={handleInputChange}
+                           value={register.name}
                            required
                            className="text-white  placeholder-white border focus:border-secondarytext rounded px-4 py-2 focus:outline-none"
                         />
                         <input
                            placeholder="Email"
-                           name="Email"
+                           name="email"
                            type="email"
+                           onChange={handleInputChange}
+                           value={register.email}
                            required
                            className="text-white  placeholder-white border focus:border-secondarytext rounded px-4 py-2 focus:outline-none"
                         />
                         <input
                            placeholder="Password"
-                           name="Password"
+                           name="password"
                            type="password"
+                            onChange={handleInputChange}
+                           value={register.password}
                            required
                            className="text-white placeholder-white border focus:border-secondarytext rounded px-4 py-2 focus:outline-none"
                         />
