@@ -24,9 +24,9 @@ export default function MainBtn({ children, onClick }: Props) {
             transition: { type: "spring", duration: 0.4 },
          }}
          className="text-white flex items-center justify-between px-5 py-3
-    bg-purple-300/50 backdrop-blur-md border border-purple-300/30 rounded-xl shadow-lg s active:bg-white"
+                  bg-accent-700/50 backdrop-blur-md border border-accent-700/30 rounded-xl shadow-lg  active:bg-accent-300"
       >
-         <h1 className="text-white active:text-accent-200">{children}</h1>
+         <h1 className="text-white ">{children}</h1>
       </motion.button>
    );
 }

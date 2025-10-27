@@ -99,7 +99,7 @@ export default function LogIn() {
                            className="text-white placeholder-white border focus:border-secondarytext rounded px-4 py-2 focus:outline-none"
                         />
                         <Link
-                           className="transition-all duration-300 text-accent-900 hover:underline hover:px-3 active:sclae-90 transform hover:bg-accent-100 hover:rounded-lg"
+                           className="transition-all duration-300 text-accent-900 hover:underline hover:px-3 active:sclae-90 transform hover:bg-gradient-to-r from-accent-300 via-accent-200 to-black hover:rounded-lg"
                            href={"/forgotPassword"}
                         >
                            Forgot Password ?
