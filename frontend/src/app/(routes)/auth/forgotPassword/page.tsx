@@ -1,9 +1,17 @@
 "use client";
 import MainBtn from "@/Components/Buttons/MainBtn";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 export default function ForgotPassword() {
-   function handleInputChange() {}
+   const [email, setEmail] = useState<String>("");
+
+   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+      e.preventDefault();
+      setEmail(e.target.value);
+   }
+
+   console.log(email);
    function handleSubbmit() {}
    return (
       <div className="min-h-screen w-full bg-gradient-to-bl from-accent-200 via-black to-accent-200 flex items-center justify-center p-4">
