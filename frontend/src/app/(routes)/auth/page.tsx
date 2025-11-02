@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import MainBtn from "@/Components/Buttons/MainBtn";
 import Alert from "@/Components/Alert/Alert";
 

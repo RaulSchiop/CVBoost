@@ -1,12 +1,19 @@
 "use client";
 import MainBtn from "@/Components/Buttons/MainBtn";
+import { motion } from "framer-motion";
 
 export default function ForgotPassword() {
    function handleInputChange() {}
    function handleSubbmit() {}
    return (
       <div className="min-h-screen w-full bg-gradient-to-bl from-accent-200 via-black to-accent-200 flex items-center justify-center p-4">
-         <div className=" mt-0 md:mt-30 md:mb-20 lg:mt-10 xl:mt-20 lg:mb-0 xl:mb-0 flex items-center justify-center w-full max-w-2xl mx-auto bg-purple-500/25 backdrop-blur-md border border-purple-300/30 px-6 py-8 sm:px-8 sm:py-10 rounded-2xl shadow-lg">
+         <motion.div
+            initial={{ opacity: 0, x: -5000 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 1000 }}
+            transition={{ duration: 0.5, type: "spring" }}
+            className=" mt-0 md:mt-30 md:mb-20 lg:mt-10 xl:mt-20 lg:mb-0 xl:mb-0 flex items-center justify-center w-full max-w-2xl mx-auto bg-purple-500/25 backdrop-blur-md border border-purple-300/30 px-6 py-8 sm:px-8 sm:py-10 rounded-2xl shadow-lg"
+         >
             <form
                onSubmit={() => console.log("logIn")}
                className="flex flex-col gap-4 w-full"
@@ -32,7 +39,7 @@ export default function ForgotPassword() {
                   <MainBtn>Reset Password</MainBtn>
                </div>
             </form>
-         </div>
+         </motion.div>
       </div>
    );
 }

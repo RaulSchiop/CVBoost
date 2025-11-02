@@ -3,15 +3,35 @@ import LogInBtn from "../Buttons/LogInButton";
 import Logo from "../Logo/Logo";
 import Link from "next/link";
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Header() {
    const [isMenuOpen, setIsMenuOpen] = useState(false);
+   const [isVisible, setIsVisible] = useState(true);
+   const [lastScrollY, setLastScrollY] = useState(0);
+
+   useEffect(() => {
+      const handleScroll = () => {
+         const currentScrollY = window.scrollY;
+         setIsVisible(currentScrollY <= 0 || currentScrollY < lastScrollY);
+         setLastScrollY(currentScrollY);
+      };
+
+      window.addEventListener("scroll", handleScroll, { passive: true });
+      return () => window.removeEventListener("scroll", handleScroll);
+   }, [lastScrollY]);
    return (
       <motion.div
          initial={{ opacity: 0, y: -500 }}
-         animate={{ opacity: 1, y: 0 }}
-         transition={{ type: "spring", duration: 0.5 }}
+         animate={{
+            opacity: 1,
+            y: isVisible ? 0 : -100,
+         }}
+         transition={{
+            type: "spring",
+            duration: 0.5,
+            bounce: 0.2,
+         }}
          className="fixed top-5 w-full h-16 flex items-center justify-between px-15 md:px-25 z-50"
       >
          <Link href={"/"}>
