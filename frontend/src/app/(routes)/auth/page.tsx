@@ -54,7 +54,7 @@ export default function LogIn() {
    }
 
    return (
-      <div className="sm:mt-10 lg:mt-0 bg-gradient-to-bl from-accent-200 via-black to-accent-200 ">
+      <div className="sm:mt-10 md:mt-0 bg-gradient-to-bl from-accent-200 via-black to-accent-200 ">
          {error.on && (
             <Alert message={error.message} onClose={handleCloseAlert}></Alert>
          )}
@@ -100,7 +100,7 @@ export default function LogIn() {
                         />
                         <Link
                            className="transition-all duration-300 text-accent-900 hover:underline hover:px-3 active:sclae-90 transform hover:bg-gradient-to-r from-accent-300 via-accent-200 to-black hover:rounded-lg"
-                           href={"/forgotPassword"}
+                           href={"/auth/forgotPassword"}
                         >
                            Forgot Password ?
                         </Link>
@@ -188,7 +188,6 @@ export default function LogIn() {
                      <h1 className="text-white text-3xl">Log In</h1>
                      <p className="text-white">Log in if you have an account</p>
                      <MainBtn onClick={handleChange}>Log In</MainBtn>
-                     <div></div>
                   </motion.div>
                </motion.div>
             )}
