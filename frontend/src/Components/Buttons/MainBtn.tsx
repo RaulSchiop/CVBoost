@@ -4,11 +4,13 @@ import { motion } from "motion/react";
 type Props = {
    children: React.ReactNode;
    onClick?: () => void;
+   type?: "submit" | "button";
 };
 
-export default function MainBtn({ children, onClick }: Props) {
+export default function MainBtn({ children, onClick, type }: Props) {
    return (
       <motion.button
+         type={type}
          onClick={onClick}
          initial={{ opacity: 0, y: -500 }}
          animate={{ opacity: 1, y: 0 }}

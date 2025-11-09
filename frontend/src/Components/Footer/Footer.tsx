@@ -5,7 +5,7 @@ import MainBtn from "../Buttons/MainBtn";
 export default function Footer() {
    return (
       <footer className="relative  w-full bg-black flex flex-col items-center justify-center">
-         <div className=" flex items-center justify-center gap-10 md:gap-20 p-5 w-full  flex-col md:flex-row">
+         <div className=" flex items-center justify-center gap-10  lg:gap-50  p-5 w-full  flex-col md:flex-row">
             <div className="flex items-center jsutify-center flex-col md:justify-start md:items-start">
                <Logo></Logo>
                <p className="mt-4 text-sm text-white/70 max-w-[200px] text-center md:text-left">
