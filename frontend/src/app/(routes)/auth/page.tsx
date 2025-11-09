@@ -43,10 +43,21 @@ export default function LogIn() {
       setError({ message: "", on: false });
    }
 
-   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+   //login
+   function handleInputChangeLogIn(e: React.ChangeEvent<HTMLInputElement>) {
       const { name, value } = e.target;
 
       setLogIn((prev) => ({
+         ...prev,
+         [name]: value,
+      }));
+   }
+
+   //register
+   function handleInputChangeRegister(e: React.ChangeEvent<HTMLInputElement>) {
+      const { name, value } = e.target;
+
+      setRegister((prev) => ({
          ...prev,
          [name]: value,
       }));
@@ -83,7 +94,7 @@ export default function LogIn() {
                            placeholder="Email"
                            name="email"
                            type="email"
-                           onChange={handleInputChange}
+                           onChange={handleInputChangeLogIn}
                            value={logIn.email}
                            required
                            className="text-white placeholder-white border focus:border-secondarytext rounded px-4 py-2 focus:outline-none"
@@ -92,7 +103,7 @@ export default function LogIn() {
                            placeholder="Password"
                            name="password"
                            type="password"
-                           onChange={handleInputChange}
+                           onChange={handleInputChangeLogIn}
                            value={logIn.password}
                            required
                            className="text-white placeholder-white border focus:border-secondarytext rounded px-4 py-2 focus:outline-none"
@@ -149,7 +160,7 @@ export default function LogIn() {
                            placeholder="Name"
                            name="name"
                            type="text"
-                           onChange={handleInputChange}
+                           onChange={handleInputChangeRegister}
                            value={register.name}
                            required
                            className="text-white  placeholder-white border focus:border-secondarytext rounded px-4 py-2 focus:outline-none"
@@ -158,7 +169,7 @@ export default function LogIn() {
                            placeholder="Email"
                            name="email"
                            type="email"
-                           onChange={handleInputChange}
+                           onChange={handleInputChangeRegister}
                            value={register.email}
                            required
                            className="text-white  placeholder-white border focus:border-secondarytext rounded px-4 py-2 focus:outline-none"
@@ -167,7 +178,7 @@ export default function LogIn() {
                            placeholder="Password"
                            name="password"
                            type="password"
-                           onChange={handleInputChange}
+                           onChange={handleInputChangeRegister}
                            value={register.password}
                            required
                            className="text-white placeholder-white border focus:border-secondarytext rounded px-4 py-2 focus:outline-none"

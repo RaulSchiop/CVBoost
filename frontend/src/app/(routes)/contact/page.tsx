@@ -1,11 +1,48 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import MainBtn from "@/Components/Buttons/MainBtn";
 import Footer from "@/Components/Footer/Footer";
 import { motion } from "motion/react";
 
+type YourDetails = {
+   name: string;
+   email: string;
+   subject: string;
+   question: string;
+};
+
 export default function ContactUs() {
+   const [newsLetter, setNewsLetter] = useState("");
+   const [contactUs, setContactUs] = useState<YourDetails>({
+      name: "",
+      email: "",
+      subject: "",
+      question: "",
+   });
    const scrollRef = useRef(null);
+
+   //contact us form
+   function handleContactUsChange(
+      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+   ) {
+      const { name, value } = e.target;
+
+      setContactUs((prev) => ({
+         ...prev,
+         [name]: value,
+      }));
+   }
+
+   async function handleContactUsSubmit() {}
+
+   //newsLetter
+   function handleNewsLetterChange(e: React.ChangeEvent<HTMLInputElement>) {
+      e.preventDefault();
+      setNewsLetter(e.target.value);
+   }
+
+   async function handleSubmitNewsLetter() {}
+
    return (
       <div className="min-h-screen flex flex-col overflow-x-hidden">
          <div className=" w-screen bg-black pt-40 px-5 md:px-20  flex flex-col items-center justify-center">
@@ -129,6 +166,9 @@ export default function ContactUs() {
                            <label className="text-accent-900">Name</label>
                            <input
                               placeholder="Your Name"
+                              name="name"
+                              value={contactUs.name}
+                              onChange={handleContactUsChange}
                               className="text-accent-900 border-b border-accent-500/60 outline-0 py-1 w-[90%]"
                            ></input>
                         </div>
@@ -138,6 +178,9 @@ export default function ContactUs() {
                            </label>
                            <input
                               placeholder="Your Email"
+                              name="email"
+                              value={contactUs.email}
+                              onChange={handleContactUsChange}
                               className="text-accent-900 border-b border-accent-500/60 outline-0 py-1"
                            ></input>
                         </div>
@@ -146,6 +189,9 @@ export default function ContactUs() {
                         <label className="text-accent-900">Subject</label>
                         <input
                            placeholder="Message Subject"
+                           name="subject"
+                           value={contactUs.subject}
+                           onChange={handleContactUsChange}
                            className="text-accent-900 border-b border-accent-500/60 outline-0 py-1"
                         ></input>
                      </div>
@@ -153,6 +199,9 @@ export default function ContactUs() {
                         <label className="text-accent-900">Questions</label>
                         <textarea
                            placeholder="Your Message"
+                           name="question"
+                           onChange={handleContactUsChange}
+                           value={contactUs.question}
                            className="min-h-[100px] text-accent-900 border-b border-accent-500/60 outline-0 py-1"
                         ></textarea>
                      </div>
@@ -172,8 +221,10 @@ export default function ContactUs() {
                </h1>
                <div className="flex items-center justify-between">
                   <input
+                     onChange={handleNewsLetterChange}
                      className="bg-white px-5 py-3 rounded-l-xl outline-0"
                      placeholder="Enter Your email"
+                     type="email"
                   ></input>
                   <motion.button
                      type="submit"
