@@ -19,7 +19,6 @@ export default function ContactUs() {
       subject: "",
       question: "",
    });
-   const scrollRef = useRef(null);
 
    //contact us form
    function handleContactUsChange(
@@ -49,9 +48,9 @@ export default function ContactUs() {
             <motion.div
                initial={{ opacity: 0 }}
                whileInView={{ opacity: 1 }}
-               viewport={{ root: scrollRef }}
-               transition={{ duration: 2, type: "spring" }}
-               className=" w-full flex items-center justify-center bg-gradient-to-bl from-black via-accent-300/70 to-black h-[300px] rounded-4xl"
+               viewport={{ once: false, amount: 0.2 }}
+               transition={{ duration: 1.5, type: "spring" }}
+               className=" w-full flex items-center justify-center bg-gradient-to-bl from-black via-accent-300/70 to-black h-[350px] rounded-4xl"
             >
                <h1 className="text-accent-800 text-4xl font-bold">
                   Contact Us
@@ -74,7 +73,7 @@ export default function ContactUs() {
                         whileHover={{ rotate: 360 }}
                         initial={{ rotate: 0 }}
                         whileInView={{ rotate: 360 }}
-                        viewport={{ root: scrollRef }}
+                        viewport={{ once: false, amount: 0.2 }}
                         transition={{ duration: 2, type: "spring" }}
                         strokeWidth="1.2"
                         xmlns="http://www.w3.org/2000/svg"
@@ -101,7 +100,7 @@ export default function ContactUs() {
                         whileHover={{ rotate: 360 }}
                         initial={{ rotate: 0 }}
                         whileInView={{ rotate: 360 }}
-                        viewport={{ root: scrollRef }}
+                        viewport={{ once: false, amount: 0.2 }}
                         transition={{ duration: 2, type: "spring" }}
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -128,7 +127,7 @@ export default function ContactUs() {
                         whileHover={{ rotate: 360 }}
                         initial={{ rotate: 0 }}
                         whileInView={{ rotate: 360 }}
-                        viewport={{ root: scrollRef }}
+                        viewport={{ once: false, amount: 0.2 }}
                         transition={{ duration: 2, type: "spring" }}
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -211,8 +210,8 @@ export default function ContactUs() {
             </div>
             <motion.form
                initial={{ opacity: 0 }}
-               whileInView={{ opacity: 2 }}
-               viewport={{ root: scrollRef }}
+               whileInView={{ opacity: 1 }}
+               viewport={{ once: false, amount: 0.2 }}
                transition={{ duration: 1.5, type: "spring" }}
                className=" bg-accent-400 lg:w-[90%] flex items-center justify-between rounded-4xl py-5 md:px-5 lg:px-30 px-5 gap-5 md:gap-0 flex-col md:flex-row mb-20"
             >
