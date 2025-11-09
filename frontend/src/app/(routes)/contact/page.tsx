@@ -46,10 +46,10 @@ export default function ContactUs() {
       <div className="min-h-screen flex flex-col overflow-x-hidden">
          <div className=" w-screen bg-black pt-40 px-5 md:px-20  flex flex-col items-center justify-center">
             <motion.div
-               initial={{ opacity: 0 }}
-               whileInView={{ opacity: 1 }}
-               viewport={{ once: false, amount: 0.2 }}
-               transition={{ duration: 1.5, type: "spring" }}
+               initial={{ opacity: 0, y: 50 }}
+               animate={{ opacity: 1, y: 0 }}
+               exit={{ opacity: 0, y: 50 }}
+               transition={{ duration: 1.2, type: "spring" }}
                className=" w-full flex items-center justify-center bg-gradient-to-bl from-black via-accent-300/70 to-black h-[350px] rounded-4xl"
             >
                <h1 className="text-accent-800 text-4xl font-bold">
