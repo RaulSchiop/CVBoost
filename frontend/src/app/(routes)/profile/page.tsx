@@ -45,21 +45,22 @@ export default function ProfilePage() {
 
    return (
       <div className="min-h-screen flex flex-col items-center">
-         <div className="bg-black pt-30 px-5 md:px-20 w-full">
+         <div className="bg-black pt-30 px-5 md:px-20 w-full mb-10">
             <h1 className="text-white text-4xl font-bold px-20 mb-10">
                Profile
             </h1>
 
             <div className="w-full max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8">
-               <div className="flex flex-col gap-6">
+               <div className="flex flex-col gap-6 ">
                   <motion.div
                      initial={{ opacity: 0, y: 50 }}
                      animate={{ opacity: 1, y: 0 }}
                      exit={{ opacity: 0, y: 50 }}
                      transition={{ duration: 1.2, type: "spring" }}
+                     className="bg-gradient-to-bl from-black via-accent-300/70 to-black"
                   >
                      <MainCard>
-                        <div className="flex items-center gap-6 p-6">
+                        <div className="flex items-center gap-6 p-6 ">
                            <div className="relative w-[120px] h-[120px] rounded-full overflow-hidden bg-gray-800 flex-shrink-0">
                               <Image
                                  src={image || NoImage}
@@ -133,7 +134,7 @@ export default function ProfilePage() {
                            No resumes uploaded yet.
                         </p>
                      ) : (
-                        <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                        <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 ">
                            {cvs.map((file, index) => (
                               <li
                                  key={index}
@@ -173,106 +174,110 @@ export default function ProfilePage() {
                   transition={{ duration: 1.2, type: "spring" }}
                   className="lg:sticky top-[50px] self-start "
                >
-                  <MainCard ClassName="w-full">
-                     <div className=" w-full">
-                        <h1 className="text-xl text-accent-900 font-bold mb-4 mt-5">
-                           Profile Info
-                        </h1>
-                        <ul className="mb-5">
-                           <li className="flex items-center justify-between gap-4 mb-3">
-                              <h1 className="text-gray-200">News Letter</h1>
-                              <svg
-                                 xmlns="http://www.w3.org/2000/svg"
-                                 fill="none"
-                                 viewBox="0 0 24 24"
-                                 strokeWidth={1.5}
-                                 stroke="currentColor"
-                                 className="size-6 text-gray-200"
-                              >
-                                 <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="m4.5 12.75 6 6 9-13.5"
-                                 />
-                              </svg>
-                           </li>
-                           <li className="flex items-center justify-between gap-4 mb-3">
-                              <h1 className="text-gray-200/40">
-                                 Profile Picture
-                              </h1>
-
-                              <svg
-                                 xmlns="http://www.w3.org/2000/svg"
-                                 fill="none"
-                                 viewBox="0 0 24 24"
-                                 strokeWidth={1.5}
-                                 stroke="currentColor"
-                                 className="size-6 text-gray-200/40"
-                              >
-                                 <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M6 18 18 6M6 6l12 12"
-                                 />
-                              </svg>
-                           </li>
-                        </ul>
-
-                        <div>
-                           <h1 className="text-xl  text-accent-900 font-bold mb-3">
-                              App Info
+                  <div className="bg-gradient-to-bl from-accent-300/70 via-black to-accent-300/70 rounded-2xl">
+                     <MainCard ClassName="w-full">
+                        <div className=" w-full ">
+                           <h1 className="text-xl text-accent-900 font-bold mb-4 mt-5">
+                              Profile Info
                            </h1>
-                           <ul>
+                           <ul className="mb-5">
                               <li className="flex items-center justify-between gap-4 mb-3">
-                                 <h1>Created CV's</h1>
-                                 <p>20</p>
+                                 <h1 className="text-gray-200">News Letter</h1>
+                                 <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth={1.5}
+                                    stroke="currentColor"
+                                    className="size-6 text-gray-200"
+                                 >
+                                    <path
+                                       strokeLinecap="round"
+                                       strokeLinejoin="round"
+                                       d="m4.5 12.75 6 6 9-13.5"
+                                    />
+                                 </svg>
                               </li>
                               <li className="flex items-center justify-between gap-4 mb-3">
-                                 <h1>CV transformation's</h1>
-                                 <p>20</p>
-                              </li>
-                              <li className="flex items-center justify-between gap-4 mb-5">
-                                 <h1>CV adaptation</h1>
-                                 <p>20</p>
+                                 <h1 className="text-gray-200/40">
+                                    Profile Picture
+                                 </h1>
+
+                                 <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth={1.5}
+                                    stroke="currentColor"
+                                    className="size-6 text-gray-200/40"
+                                 >
+                                    <path
+                                       strokeLinecap="round"
+                                       strokeLinejoin="round"
+                                       d="M6 18 18 6M6 6l12 12"
+                                    />
+                                 </svg>
                               </li>
                            </ul>
+
+                           <div>
+                              <h1 className="text-xl  text-accent-900 font-bold mb-3">
+                                 App Info
+                              </h1>
+                              <ul>
+                                 <li className="flex items-center justify-between gap-4 mb-3">
+                                    <h1>Created CV's</h1>
+                                    <p>20</p>
+                                 </li>
+                                 <li className="flex items-center justify-between gap-4 mb-3">
+                                    <h1>CV transformation's</h1>
+                                    <p>20</p>
+                                 </li>
+                                 <li className="flex items-center justify-between gap-4 mb-5">
+                                    <h1>CV adaptation</h1>
+                                    <p>20</p>
+                                 </li>
+                              </ul>
+                           </div>
+                           <div className="flex w-full items-center justify-center flex-col py-5">
+                              <h1 className="lg:text-xl text-accent-900 text-2xl font-bold mb-3 text-">
+                                 Last Ats Cv Score
+                              </h1>
+                              <div
+                                 className={`border-4 p-15 rounded-full ${
+                                    ats <= 50
+                                       ? " bg-red-500 border-red-500"
+                                       : ats <= 85
+                                       ? " bg-yellow-500 border-yellow-500"
+                                       : " bg-green-500 border-green-500"
+                                 }`}
+                              >
+                                 <h1 className="text-4xl ">{ats}</h1>
+                              </div>
+                              <div className="mt-3 flex items-center justify-between gap-3 w-[50%] lg:w-full">
+                                 <div className="border-4 border-green-500 bg-green-500 p-2 rounded-full "></div>
+                                 <p>
+                                    Excellent – highly optimized for ATS, should
+                                    pass scans.
+                                 </p>
+                              </div>
+                              <div className="mt-3 flex items-center justify-between gap-3 w-[50%] lg:w-full">
+                                 <div className="border-4 border-yellow-500 bg-yellow-500 p-2 rounded-full "></div>
+                                 <p>
+                                    Average – some optimization done, could
+                                    improve.
+                                 </p>
+                              </div>
+                              <div className="mt-3 flex items-center justify-between gap-3 w-[50%] lg:w-full">
+                                 <div className="border-4 border-red-500 bg-red-500 p-2  rounded-full "></div>
+                                 <p>
+                                    Needs improvement – may not pass ATS scans.
+                                 </p>
+                              </div>
+                           </div>
                         </div>
-                        <div className="flex w-full items-center justify-center flex-col py-5">
-                           <h1 className="lg:text-xl text-accent-900 text-2xl font-bold mb-3 text-">
-                              Last Ats Cv Score
-                           </h1>
-                           <div
-                              className={`border-4 p-15 rounded-full ${
-                                 ats <= 50
-                                    ? " bg-red-500 border-red-500"
-                                    : ats <= 85
-                                    ? " bg-yellow-500 border-yellow-500"
-                                    : " bg-green-500 border-green-500"
-                              }`}
-                           >
-                              <h1 className="text-4xl ">{ats}</h1>
-                           </div>
-                           <div className="mt-3 flex items-center justify-between gap-3 w-[50%] lg:w-full">
-                              <div className="border-4 border-green-500 bg-green-500 p-2 rounded-full "></div>
-                              <p>
-                                 Excellent – highly optimized for ATS, should
-                                 pass scans.
-                              </p>
-                           </div>
-                           <div className="mt-3 flex items-center justify-between gap-3 w-[50%] lg:w-full">
-                              <div className="border-4 border-yellow-500 bg-yellow-500 p-2 rounded-full "></div>
-                              <p>
-                                 Average – some optimization done, could
-                                 improve.
-                              </p>
-                           </div>
-                           <div className="mt-3 flex items-center justify-between gap-3 w-[50%] lg:w-full">
-                              <div className="border-4 border-red-500 bg-red-500 p-2  rounded-full "></div>
-                              <p>Needs improvement – may not pass ATS scans.</p>
-                           </div>
-                        </div>
-                     </div>
-                  </MainCard>
+                     </MainCard>
+                  </div>
                </motion.div>
             </div>
          </div>
