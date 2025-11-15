@@ -4,11 +4,13 @@ import Logo from "../Logo/Logo";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
    const [isMenuOpen, setIsMenuOpen] = useState(false);
    const [isVisible, setIsVisible] = useState(true);
    const [lastScrollY, setLastScrollY] = useState(0);
+   const pathname = usePathname();
 
    useEffect(() => {
       const handleScroll = () => {
@@ -39,25 +41,33 @@ export default function Header() {
          </Link>
          <div className="text-white hidden md:flex items-center justify-between bg-purple-500/25 backdrop-blur-md border border-purple-300/30 px-5 py-3 w-[50%] rounded-2xl shadow-lg">
             <Link
-               className="transition-all duration-300 hover:text-accent-800 hover:bg-accent-100 active:bg-accent-950 active:text-accent-200 active:scale-90 hover:px-3 hover:py-2 hover:rounded-xl transform hover:scale-110"
+               className={`transition-all duration-300 hover:text-accent-800 hover:bg-accent-100 active:bg-accent-950 active:text-accent-200 active:scale-90 hover:px-3 hover:py-2 hover:rounded-xl transform hover:scale-110 ${
+                  pathname === "/" && "underline underline-offset-4 "
+               }`}
                href="/"
             >
                Home
             </Link>
             <Link
-               className="transition-all duration-300 hover:text-accent-800 hover:bg-accent-100 active:bg-accent-950 active:text-accent-200 active:scale-90 hover:px-3 hover:py-2 hover:rounded-xl transform hover:scale-110"
+               className={`transition-all duration-300 hover:text-accent-800 hover:bg-accent-100 active:bg-accent-950 active:text-accent-200 active:scale-90 hover:px-3 hover:py-2 hover:rounded-xl transform hover:scale-110 ${
+                  pathname === "/tools" && "underline underline-offset-4 "
+               }`}
                href="/tools"
             >
                Tools
             </Link>
             <Link
-               className="transition-all duration-300 hover:text-accent-800 hover:bg-accent-100 active:bg-accent-950 active:text-accent-200 active:scale-90 hover:px-3 hover:py-2 hover:rounded-xl transform hover:scale-110"
+               className={`transition-all duration-300 hover:text-accent-800 hover:bg-accent-100 active:bg-accent-950 active:text-accent-200 active:scale-90 hover:px-3 hover:py-2 hover:rounded-xl transform hover:scale-110 ${
+                  pathname === "/contact" && "underline underline-offset-4 "
+               }`}
                href="/contact"
             >
                Contact
             </Link>
             <Link
-               className="transition-all duration-300 hover:text-accent-800 hover:bg-accent-100 active:bg-accent-950 active:text-accent-200 active:scale-90 hover:px-3 hover:py-2 hover:rounded-xl transform hover:scale-110"
+               className={`transition-all duration-300 hover:text-accent-800 hover:bg-accent-100 active:bg-accent-950 active:text-accent-200 active:scale-90 hover:px-3 hover:py-2 hover:rounded-xl transform hover:scale-110 ${
+                  pathname === "/profile" && "underline underline-offset-4 "
+               }`}
                href="/profile"
             >
                Profile

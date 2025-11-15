@@ -10,7 +10,7 @@ export default function RootLayout({
 }>) {
    return (
       <div lang="en">
-         <div className="bg-gradient-to-bl from-accent-200 via-black to-accent-200 ">
+         <div className="">
             <Header></Header>
             {children}
          </div>
