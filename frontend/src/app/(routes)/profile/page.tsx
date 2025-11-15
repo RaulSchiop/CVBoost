@@ -3,6 +3,7 @@ import MainCard from "@/Components/Cards/MainCard";
 import Footer from "@/Components/Footer/Footer";
 import Image from "next/image";
 import NoImage from "../../../../public/no image.jpg";
+import { motion } from "motion/react";
 import { useState } from "react";
 import GrayButton from "@/Components/Buttons/GrayButton";
 import MainBtn from "@/Components/Buttons/MainBtn";
@@ -51,65 +52,82 @@ export default function ProfilePage() {
 
             <div className="w-full max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8">
                <div className="flex flex-col gap-6">
-                  <MainCard ClassName="">
-                     <div className="flex items-center gap-6 p-6">
-                        <div className="relative w-[120px] h-[120px] rounded-full overflow-hidden bg-gray-800 flex-shrink-0">
-                           <Image
-                              src={image || NoImage}
-                              alt="profile image"
-                              fill
-                              className="object-cover"
-                           />
-                        </div>
-
-                        <div className="flex flex-col gap-3 items-center justify-center">
-                           <h2 className="text-3xl text-white">Schiop Raul</h2>
-                           <GrayButton>Upload New Image</GrayButton>
-                        </div>
-                     </div>
-
-                     <MainCard ClassName="mb-2">
-                        <div className=" ">
-                           <div className="flex items-center justify-between">
-                              <h1 className="text-white text-xl lg:text-2xl font-bold ">
-                                 Personal Info
-                              </h1>
-                              <MainBtn>
-                                 <p>Edit Info</p>
-                                 <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth={1.5}
-                                    stroke="currentColor"
-                                    className="size-6"
-                                 >
-                                    <path
-                                       strokeLinecap="round"
-                                       strokeLinejoin="round"
-                                       d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-                                    />
-                                 </svg>
-                              </MainBtn>
+                  <motion.div
+                     initial={{ opacity: 0, y: 50 }}
+                     animate={{ opacity: 1, y: 0 }}
+                     exit={{ opacity: 0, y: 50 }}
+                     transition={{ duration: 1.2, type: "spring" }}
+                  >
+                     <MainCard>
+                        <div className="flex items-center gap-6 p-6">
+                           <div className="relative w-[120px] h-[120px] rounded-full overflow-hidden bg-gray-800 flex-shrink-0">
+                              <Image
+                                 src={image || NoImage}
+                                 alt="profile image"
+                                 fill
+                                 className="object-cover"
+                              />
                            </div>
-                           <div className="flex items-start md:items-center justify-between flex-col md:flex-row  gap-3 p-6">
-                              <div>
-                                 <h2 className="text-gray-200/70">Name</h2>
-                                 <p>{accInfo.name}</p>
-                              </div>
-                              <div>
-                                 <h2 className="text-gray-200/70">Email</h2>
-                                 <p>{accInfo.email}</p>
-                              </div>
-                              <div>
-                                 <h2 className="text-gray-200/70">Curent CV</h2>
-                                 <p>SchiopRaulCV.pdf</p>
-                              </div>
+
+                           <div className="flex flex-col gap-3 items-center justify-center">
+                              <h2 className="text-3xl text-white">
+                                 Schiop Raul
+                              </h2>
+                              <GrayButton>Upload New Image</GrayButton>
                            </div>
                         </div>
+
+                        <MainCard ClassName="mb-2">
+                           <div className=" ">
+                              <div className="flex items-center justify-between">
+                                 <h1 className="text-white text-xl lg:text-2xl font-bold ">
+                                    Personal Info
+                                 </h1>
+                                 <MainBtn>
+                                    <p>Edit Info</p>
+                                    <svg
+                                       xmlns="http://www.w3.org/2000/svg"
+                                       fill="none"
+                                       viewBox="0 0 24 24"
+                                       strokeWidth={1.5}
+                                       stroke="currentColor"
+                                       className="size-6"
+                                    >
+                                       <path
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                          d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+                                       />
+                                    </svg>
+                                 </MainBtn>
+                              </div>
+                              <div className="flex items-start md:items-center justify-between flex-col md:flex-row  gap-3 p-6">
+                                 <div>
+                                    <h2 className="text-gray-200/70">Name</h2>
+                                    <p>{accInfo.name}</p>
+                                 </div>
+                                 <div>
+                                    <h2 className="text-gray-200/70">Email</h2>
+                                    <p>{accInfo.email}</p>
+                                 </div>
+                                 <div>
+                                    <h2 className="text-gray-200/70">
+                                       Curent CV
+                                    </h2>
+                                    <p>SchiopRaulCV.pdf</p>
+                                 </div>
+                              </div>
+                           </div>
+                        </MainCard>
                      </MainCard>
-                  </MainCard>
-                  <div className="min-h-10 p-6">
+                  </motion.div>
+                  <motion.div
+                     initial={{ opacity: 0, y: 50 }}
+                     animate={{ opacity: 1, y: 0 }}
+                     exit={{ opacity: 0, y: 50 }}
+                     transition={{ duration: 1.2, type: "spring" }}
+                     className="min-h-10 p-6"
+                  >
                      {cvs.length === 0 ? (
                         <p className="text-white/70">
                            No resumes uploaded yet.
@@ -146,9 +164,15 @@ export default function ProfilePage() {
                            ))}
                         </ul>
                      )}
-                  </div>
+                  </motion.div>
                </div>
-               <div className="lg:sticky top-[50px] self-start ">
+               <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 50 }}
+                  transition={{ duration: 1.2, type: "spring" }}
+                  className="lg:sticky top-[50px] self-start "
+               >
                   <MainCard ClassName="w-full">
                      <div className=" w-full">
                         <h1 className="text-xl text-accent-900 font-bold mb-4 mt-5">
@@ -249,7 +273,7 @@ export default function ProfilePage() {
                         </div>
                      </div>
                   </MainCard>
-               </div>
+               </motion.div>
             </div>
          </div>
 
