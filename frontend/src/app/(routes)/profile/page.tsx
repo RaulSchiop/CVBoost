@@ -6,16 +6,47 @@ import NoImage from "../../../../public/no image.jpg";
 import { useState } from "react";
 import GrayButton from "@/Components/Buttons/GrayButton";
 import MainBtn from "@/Components/Buttons/MainBtn";
+import SmallBtn from "@/Components/Buttons/SmallMainBtn";
+type UserInfo = {
+   name: string;
+   email: string;
+};
 
 export default function ProfilePage() {
    const [image, setImage] = useState<string | undefined>(undefined);
+   const [accInfo, setAccInfo] = useState<UserInfo>({
+      name: "Schiop Raul",
+      email: "raul.schiop@gmail.com",
+   });
    const [ats, setAts] = useState<number>(45);
+   const [cvs, setCvs] = useState<UserInfo[]>([
+      {
+         name: "Schiop Raul",
+         email: "raul.schiop@gmail.com",
+      },
+      {
+         name: "Schiop Raul",
+         email: "raul.schiop@gmail.com",
+      },
+      {
+         name: "Schiop Raul",
+         email: "raul.schiop@gmail.com",
+      },
+      {
+         name: "Schiop Raul",
+         email: "raul.schiop@gmail.com",
+      },
+      {
+         name: "Schiop Raul",
+         email: "raul.schiop@gmail.com",
+      },
+   ]);
 
    return (
       <div className="min-h-screen flex flex-col items-center">
          <div className="bg-black pt-30 px-5 md:px-20 w-full">
             <h1 className="text-white text-4xl font-bold px-20 mb-10">
-               Edit Profile
+               Profile
             </h1>
 
             <div className="w-full max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8">
@@ -38,13 +69,13 @@ export default function ProfilePage() {
                      </div>
 
                      <MainCard ClassName="mb-2">
-                        <div className="h-60 ">
+                        <div className=" ">
                            <div className="flex items-center justify-between">
-                              <h1 className="text-white text-2xl font-bold ">
+                              <h1 className="text-white text-xl lg:text-2xl font-bold ">
                                  Personal Info
                               </h1>
                               <MainBtn>
-                                 Edit Info
+                                 <p>Edit Info</p>
                                  <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
@@ -61,9 +92,61 @@ export default function ProfilePage() {
                                  </svg>
                               </MainBtn>
                            </div>
+                           <div className="flex items-start md:items-center justify-between flex-col md:flex-row  gap-3 p-6">
+                              <div>
+                                 <h2 className="text-gray-200/70">Name</h2>
+                                 <p>{accInfo.name}</p>
+                              </div>
+                              <div>
+                                 <h2 className="text-gray-200/70">Email</h2>
+                                 <p>{accInfo.email}</p>
+                              </div>
+                              <div>
+                                 <h2 className="text-gray-200/70">Curent CV</h2>
+                                 <p>SchiopRaulCV.pdf</p>
+                              </div>
+                           </div>
                         </div>
                      </MainCard>
                   </MainCard>
+                  <div className="min-h-10 p-6">
+                     {cvs.length === 0 ? (
+                        <p className="text-white/70">
+                           No resumes uploaded yet.
+                        </p>
+                     ) : (
+                        <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                           {cvs.map((file, index) => (
+                              <li
+                                 key={index}
+                                 className="bg-purple-500/10 border border-purple-300/20 rounded-lg overflow-hidden"
+                              >
+                                 <div className="relative h-40 w-full">
+                                    <Image
+                                       src={image || NoImage}
+                                       alt={`${file.name} preview`}
+                                       fill
+                                       className="object-cover"
+                                    />
+                                 </div>
+                                 <div className="p-3 flex flex-col gap-2">
+                                    <h3 className="text-white text-sm font-medium truncate">
+                                       {file.name}
+                                    </h3>
+                                    <div className="flex items-center  gap-2">
+                                       <SmallBtn>
+                                          <p className="text-sm">Open</p>
+                                       </SmallBtn>
+                                       <SmallBtn>
+                                          <p className="text-sm">Delete</p>
+                                       </SmallBtn>
+                                    </div>
+                                 </div>
+                              </li>
+                           ))}
+                        </ul>
+                     )}
+                  </div>
                </div>
                <div className="lg:sticky top-[50px] self-start ">
                   <MainCard ClassName="w-full">
@@ -112,8 +195,8 @@ export default function ProfilePage() {
                         </ul>
 
                         <div>
-                           <h1 className="text-xl font-bold mb-3">
-                              How You Use The app
+                           <h1 className="text-xl  text-accent-900 font-bold mb-3">
+                              App Info
                            </h1>
                            <ul>
                               <li className="flex items-center justify-between gap-4 mb-3">
@@ -131,7 +214,7 @@ export default function ProfilePage() {
                            </ul>
                         </div>
                         <div className="flex w-full items-center justify-center flex-col py-5">
-                           <h1 className="lg:text-xl text-2xl font-bold mb-3 text-">
+                           <h1 className="lg:text-xl text-accent-900 text-2xl font-bold mb-3 text-">
                               Last Ats Cv Score
                            </h1>
                            <div
