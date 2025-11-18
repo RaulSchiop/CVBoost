@@ -16,6 +16,7 @@ type UserInfo = {
 
 export default function ProfilePage() {
    const [image, setImage] = useState<string | undefined>(undefined);
+   const [profilePic, setProfilePic] = useState<File>();
    const [accInfo, setAccInfo] = useState<UserInfo>({
       name: "Schiop Raul",
       email: "raul.schiop@gmail.com",
@@ -71,7 +72,14 @@ export default function ProfilePage() {
       setCuffentCv("");
    }
 
-   console.log(accInfo);
+   function handleAddProfileImage(e: React.ChangeEvent<HTMLInputElement>) {
+      const file = e.target.files?.[0];
+      if (!file) return;
+
+      setProfilePic(file);
+      const url = URL.createObjectURL(file);
+      setImage(url); //temporary
+   }
 
    return (
       <div className="min-h-screen flex flex-col items-center">
@@ -108,7 +116,7 @@ export default function ProfilePage() {
                                  animate={{ x: 0, opacity: 1 }}
                                  transition={{ type: "spring", duration: 1 }}
                                  className=" text-2xl text-white  rounded-full hover:text-red-600 z-100 "
-                                 type="submit"
+                                 onClick={deleteCurrentCv}
                               >
                                  &times;
                               </motion.button>
@@ -152,7 +160,20 @@ export default function ProfilePage() {
                               <h2 className="text-3xl text-white">
                                  Schiop Raul
                               </h2>
-                              <GrayButton>Upload New Image</GrayButton>
+                              <label
+                                 htmlFor="file-upload"
+                                 className="block w-fit"
+                              >
+                                 <GrayButton div={true}>
+                                    Upload New Image
+                                 </GrayButton>
+                              </label>
+                              <input
+                                 id="file-upload"
+                                 type="file"
+                                 className="hidden"
+                                 onChange={handleAddProfileImage}
+                              ></input>
                            </div>
                         </div>
 
