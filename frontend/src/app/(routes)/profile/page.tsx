@@ -8,6 +8,7 @@ import { useState } from "react";
 import GrayButton from "@/Components/Buttons/GrayButton";
 import MainBtn from "@/Components/Buttons/MainBtn";
 import SmallBtn from "@/Components/Buttons/SmallMainBtn";
+import Modal from "@/Components/Modal/Modal";
 type UserInfo = {
    name: string;
    email: string;
@@ -19,8 +20,10 @@ export default function ProfilePage() {
       name: "Schiop Raul",
       email: "raul.schiop@gmail.com",
    });
+   const [modal, setModal] = useState<boolean>(false);
    const [ats, setAts] = useState<number>(45);
    const [cvs, setCvs] = useState<UserInfo[]>([
+      //demo to make the list
       {
          name: "Schiop Raul",
          email: "raul.schiop@gmail.com",
@@ -43,9 +46,49 @@ export default function ProfilePage() {
       },
    ]);
 
+   //Modal open and close for edit details
+   function handelOpenModal() {
+      setModal(true);
+   }
+
+   function handleCloseModal() {
+      setModal(false);
+   }
+
    return (
       <div className="min-h-screen flex flex-col items-center">
          <div className="bg-black pt-30 px-5 md:px-20 w-full mb-10">
+            <Modal show={modal} onClose={handleCloseModal}>
+               <div className="flex items-center justify-center flex-col">
+                  <h1 className="text-white text-xl font-bold">Edit Details</h1>
+                  <form>
+                     <div className="flex flex-col gap-3">
+                        <label className="text-accent-900">Subject</label>
+                        <input
+                           placeholder="Message Subject"
+                           name="subject"
+                           className="text-accent-900 border-b border-accent-500/60 outline-0 py-1"
+                        ></input>
+                        <div className="flex flex-col gap-3">
+                           <label className="text-accent-900">Subject</label>
+                           <input
+                              placeholder="Message Subject"
+                              name="subject"
+                              className="text-accent-900 border-b border-accent-500/60 outline-0 py-1"
+                           ></input>
+                        </div>
+                        <div className="flex flex-col gap-3">
+                           <label className="text-accent-900">Subject</label>
+                           <input
+                              placeholder="Message Subject"
+                              name="subject"
+                              className="text-accent-900 border-b border-accent-500/60 outline-0 py-1"
+                           ></input>
+                        </div>
+                     </div>
+                  </form>
+               </div>
+            </Modal>
             <h1 className="text-white text-4xl font-bold px-20 mb-10">
                Profile
             </h1>
@@ -84,7 +127,7 @@ export default function ProfilePage() {
                                  <h1 className="text-white text-xl lg:text-2xl font-bold ">
                                     Personal Info
                                  </h1>
-                                 <MainBtn>
+                                 <MainBtn onClick={handelOpenModal}>
                                     <p>Edit Info</p>
                                     <svg
                                        xmlns="http://www.w3.org/2000/svg"
