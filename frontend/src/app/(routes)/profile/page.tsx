@@ -21,6 +21,7 @@ export default function ProfilePage() {
       email: "raul.schiop@gmail.com",
    });
    const [modal, setModal] = useState<boolean>(false);
+   const [currentCv, setCuffentCv] = useState("SchiopRaul.pdf");
    const [ats, setAts] = useState<number>(45);
    const [cvs, setCvs] = useState<UserInfo[]>([
       //demo to make the list
@@ -55,43 +56,77 @@ export default function ProfilePage() {
       setModal(false);
    }
 
+   //Change account info
+   function handleSubmitChangeInfo() {}
+
+   function handleChangeAccountDetails(e: React.ChangeEvent<HTMLInputElement>) {
+      const { name, value } = e.target;
+      setAccInfo((prev) => ({
+         ...prev,
+         [name]: value,
+      }));
+   }
+
+   function deleteCurrentCv() {
+      setCuffentCv("");
+   }
+
+   console.log(accInfo);
+
    return (
       <div className="min-h-screen flex flex-col items-center">
          <div className="bg-black pt-30 px-5 md:px-20 w-full mb-10">
             <Modal show={modal} onClose={handleCloseModal}>
-               <div className="flex items-center justify-center flex-col">
-                  <h1 className="text-white text-xl font-bold">Edit Details</h1>
-                  <form>
-                     <div className="flex flex-col gap-3">
-                        <label className="text-accent-900">Subject</label>
+               <div className="flex items-center justify-center flex-col p-6">
+                  <h1 className="text-white text-2xl font-bold mb-6">
+                     Edit Account Details
+                  </h1>
+                  <form onSubmit={handleSubmitChangeInfo}>
+                     <div className="flex flex-col ">
+                        <label className="text-accent-900">Name</label>
                         <input
-                           placeholder="Message Subject"
-                           name="subject"
-                           className="text-accent-900 border-b border-accent-500/60 outline-0 py-1"
+                           placeholder="User Name"
+                           name="name"
+                           value={accInfo.name}
+                           onChange={handleChangeAccountDetails}
+                           className="text-accent-900 border-b border-accent-500/60 outline-0 py-1 mb-3"
                         ></input>
-                        <div className="flex flex-col gap-3">
-                           <label className="text-accent-900">Subject</label>
+                        <div className="flex flex-col ">
+                           <label className="text-accent-900">Email</label>
                            <input
-                              placeholder="Message Subject"
-                              name="subject"
-                              className="text-accent-900 border-b border-accent-500/60 outline-0 py-1"
+                              placeholder="exmaple@gamil.com"
+                              name="email"
+                              type="email"
+                              onChange={handleChangeAccountDetails}
+                              value={accInfo.email}
+                              className="text-accent-900 border-b border-accent-500/60 outline-0 py-1 mb-3"
                            ></input>
-                        </div>
-                        <div className="flex flex-col gap-3">
-                           <label className="text-accent-900">Subject</label>
-                           <input
-                              placeholder="Message Subject"
-                              name="subject"
-                              className="text-accent-900 border-b border-accent-500/60 outline-0 py-1"
-                           ></input>
+                           <div className="flex items-center justify-between mb-3">
+                              <p className="text-gray-200/60 ">{currentCv}</p>
+                              <motion.button
+                                 initial={{ x: 500, opacity: 0 }}
+                                 animate={{ x: 0, opacity: 1 }}
+                                 transition={{ type: "spring", duration: 1 }}
+                                 className=" text-2xl text-white  rounded-full hover:text-red-600 z-100 "
+                                 type="submit"
+                              >
+                                 &times;
+                              </motion.button>
+                           </div>
                         </div>
                      </div>
+                     <MainBtn onClick={handleSubmitChangeInfo}>Submit</MainBtn>
                   </form>
                </div>
             </Modal>
-            <h1 className="text-white text-4xl font-bold px-20 mb-10">
+            <motion.h1
+               initial={{ opacity: 0, y: 50 }}
+               animate={{ opacity: 1, y: 0 }}
+               exit={{ opacity: 0, y: 50 }}
+               className="text-white text-4xl font-bold px-20 mb-10"
+            >
                Profile
-            </h1>
+            </motion.h1>
 
             <div className="w-full max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8">
                <div className="flex flex-col gap-6 ">
@@ -158,7 +193,7 @@ export default function ProfilePage() {
                                     <h2 className="text-gray-200/70">
                                        Curent CV
                                     </h2>
-                                    <p>SchiopRaulCV.pdf</p>
+                                    <p>{currentCv}</p>
                                  </div>
                               </div>
                            </div>
