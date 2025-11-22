@@ -50,7 +50,7 @@ export default function ContactUs() {
                animate={{ opacity: 1, y: 0 }}
                exit={{ opacity: 0, y: 50 }}
                transition={{ duration: 1.2, type: "spring" }}
-               className=" w-full flex items-center justify-center bg-gradient-to-bl from-black via-accent-300/70 to-black h-[350px] rounded-4xl"
+               className=" w-full flex items-center justify-center bg-gradient-to-bl from-black via-accent-500/50 to-black h-[350px] rounded-4xl"
             >
                <h1 className="text-accent-800 text-4xl font-bold">
                   Contact Us

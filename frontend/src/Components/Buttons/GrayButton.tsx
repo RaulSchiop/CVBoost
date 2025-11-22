@@ -22,7 +22,7 @@ export default function GrayButton({
             animate={{ opacity: 1, y: 0 }}
             transition={{ type: "spring", duration: 0.5 }}
             whileHover={{
-               scale: 1.1,
+               scale: 1.05,
 
                transition: { type: "spring", duration: 0.4 },
             }}

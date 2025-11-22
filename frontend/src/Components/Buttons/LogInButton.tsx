@@ -8,7 +8,7 @@ export default function LogInBtn() {
          animate={{ opacity: 1, y: 0 }}
          transition={{ type: "spring", duration: 0.5 }}
          whileHover={{
-            scale: 1.1,
+            scale: 1.05,
 
             transition: { type: "spring", duration: 0.4 },
          }}
@@ -17,7 +17,7 @@ export default function LogInBtn() {
 
             transition: { type: "spring", duration: 0.4 },
          }}
-         className="text-white flex items-center justify-between px-5 py-3 bg-accent-700/50 backdrop-blur-md border
+         className="text-white flex items-center justify-between px-5 py-3 bg-accent-500 backdrop-blur-md border
                    border-accent-700/30 rounded-xl shadow-lg active:bg-accent-300"
       >
          <h1 className="text-white ">Log In</h1>
