@@ -37,6 +37,8 @@
    --color-primary-900: #1d1320;
    --color-primary-950: #0e0910;
 
+   --color-contrast-500: #2F3757;
+
    --color-secondary-50: #f5eef7;
    --color-secondary-100: #eaddee;
    --color-secondary-200: #d6bade;
@@ -48,6 +50,8 @@
    --color-secondary-800: #3d2145;
    --color-secondary-900: #1e1122;
    --color-secondary-950: #0f0811;
+
+   --color-notUsed-200: #e5e7eb;
 
    --color-accent-50: #f5edf8;
    --color-accent-100: #ebdaf1;

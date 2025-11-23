@@ -1,8 +1,13 @@
-import { JSX } from "react";
+"use client";
+import { JSX, useState } from "react";
 import ContrastBtn from "../Buttons/ContrastButtonCta";
 import MainBtn from "../Buttons/MainBtn";
 import Logo from "../Logo/Logo";
 import Link from "next/link";
+import GrayButton from "../Buttons/GrayButton";
+import Image from "next/image";
+import NoImage from "../../../public/no image.jpg";
+import { usePathname } from "next/navigation";
 
 const List: { icon: JSX.Element; link: string; label: string }[] = [
    {
@@ -107,27 +112,58 @@ const List: { icon: JSX.Element; link: string; label: string }[] = [
    },
 ];
 
-export default function SideBarHeader() {
-   return (
-      <div className="w-[400px] h-full p-5 flex items-center justify-center flex-col">
-         <Logo></Logo>
+type UserInfo = {
+   name: string;
+   email: string;
+};
 
-         <ContrastBtn>
-            <a className="font-bold ">+</a>
-            <h1>Create New Resume</h1>
-         </ContrastBtn>
-         <ul>
-            {List.map((items, index) => (
-               <li key={index}>
-                  <div className="flex items-center justify-between gap-2 p-6 ">
-                     <div className="bg-gray-500/30 p-2 rounded-xl">{items.icon}</div>
-                     <Link href={items.link} className="text-white">
-                        {items.label}
-                     </Link>
-                  </div>
-               </li>
-            ))}
-         </ul>
+export default function SideBarHeader() {
+    const pathname = usePathname();
+   const [image, setImage] = useState<string | undefined>(undefined);
+   const [accInfo, setAccInfo] = useState<UserInfo>({
+      name: "Schiop Raul",
+      email: "raul.schiop@gmail.com",
+   });
+
+   return (
+      <div className="w-[300px] sticky top-0 h-screen m-0 p-5 flex justify-between flex-col bg-contrast-500/50 gap-10">
+         <div className="flex  justify-center flex-col gap-4 ">
+            <Logo></Logo>
+
+            <ContrastBtn>
+               <a className="font-bold ">+</a>
+               <h1>Create New Resume</h1>
+            </ContrastBtn>
+            <ul>
+               {List.map((items, index) => (
+                  <li key={index} className="mb-2 bg-contrast-500 rounded-2xl border">
+                     <div className="flex items-center gap-5 p-5 ">
+                        <div className="bg-gray-500/30 p-2 rounded-xl">
+                           {items.icon}
+                        </div>
+                        <Link href={items.link} className="text-white">
+                           {items.label}
+                        </Link>
+                     </div>
+                  </li>
+               ))}
+            </ul>
+         </div>
+
+         <div className="flex items-center justify-center gap-4 mt-10 bg-contrast-500/50 px-5 py-2 border border-accent-400/20 rounded-2xl">
+            <div className="relative w-[40px] h-[40px] rounded-full overflow-hidden bg-gray-800 flex-shrink-0 ">
+               <Image
+                  src={image || NoImage}
+                  alt="profile image"
+                  fill
+                  className="object-cover"
+               />
+            </div>
+            <div className="flex flex-col  justify-center">
+               <h1 className="text-white text-xl text-bold">{accInfo.name}</h1>
+               <p className="text-notUsed-200/60 ">{accInfo.email}</p>
+            </div>
+         </div>
       </div>
    );
 }
