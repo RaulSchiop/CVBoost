@@ -7,7 +7,7 @@ type Props = {
    type?: "submit" | "button";
 };
 
-export default function ContrastBtn({ children, onClick, type }: Props) {
+export default function GreenBtn({ children, onClick, type }: Props) {
    return (
       <motion.button
          type={type}
@@ -25,8 +25,8 @@ export default function ContrastBtn({ children, onClick, type }: Props) {
 
             transition: { type: "spring", duration: 0.4 },
          }}
-         className="text-white flex items-center justify-between px-5 py-3 gap-3
-                  bg-green-500 backdrop-blur-md border border-accent-700/30 rounded-xl shadow-lg  hover:bg-green-500/70 transition-all transform active:bg-accent-300"
+         className="text-white flex items-center justify-center px-5 py-3 gap-4 w-full 
+                  bg-create-500 backdrop-blur-md border border-accent-700/30 rounded-xl shadow-lg shadow-create-500/20  hover:bg-green-500/70  transform active:bg-accent-300"
       >
          {children}
       </motion.button>

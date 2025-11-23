@@ -1,10 +1,11 @@
 "use client";
 import { JSX, useState } from "react";
-import ContrastBtn from "../Buttons/ContrastButtonCta";
-import MainBtn from "../Buttons/MainBtn";
+import GreenBtn from "../Buttons/GreenBtn";
+import ContrastBtn from "../Buttons/ContrastBtn";
+
 import Logo from "../Logo/Logo";
 import Link from "next/link";
-import GrayButton from "../Buttons/GrayButton";
+
 import Image from "next/image";
 import NoImage from "../../../public/no image.jpg";
 import { usePathname } from "next/navigation";
@@ -118,7 +119,7 @@ type UserInfo = {
 };
 
 export default function SideBarHeader() {
-    const pathname = usePathname();
+   const pathname = usePathname();
    const [image, setImage] = useState<string | undefined>(undefined);
    const [accInfo, setAccInfo] = useState<UserInfo>({
       name: "Schiop Raul",
@@ -127,17 +128,34 @@ export default function SideBarHeader() {
 
    return (
       <div className="w-[300px] sticky top-0 h-screen m-0 p-5 flex justify-between flex-col bg-contrast-500/50 gap-10">
-         <div className="flex  justify-center flex-col gap-4 ">
+         <div className="flex  justify-center flex-col gap-3 ">
             <Logo></Logo>
 
-            <ContrastBtn>
-               <a className="font-bold ">+</a>
-               <h1>Create New Resume</h1>
-            </ContrastBtn>
-            <ul>
+            <GreenBtn>
+               <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  className="size-5"
+               >
+                  <path
+                     strokeLinecap="round"
+                     strokeLinejoin="round"
+                     d="M12 4.5v15m7.5-7.5h-15"
+                  />
+               </svg>
+
+               <h1 className="text-lg text-white/90">Create New Resume</h1>
+            </GreenBtn>
+            <ul className="mt-5">
                {List.map((items, index) => (
-                  <li key={index} className="mb-2 bg-contrast-500 rounded-2xl border">
-                     <div className="flex items-center gap-5 p-5 ">
+                  <li
+                     key={index}
+                     className="mb-2 bg-contrast-500 rounded-2xl border"
+                  >
+                     <div className="flex items-center gap-5 px-5 py-4 ">
                         <div className="bg-gray-500/30 p-2 rounded-xl">
                            {items.icon}
                         </div>
@@ -149,19 +167,42 @@ export default function SideBarHeader() {
                ))}
             </ul>
          </div>
-
-         <div className="flex items-center justify-center gap-4 mt-10 bg-contrast-500/50 px-5 py-2 border border-accent-400/20 rounded-2xl">
-            <div className="relative w-[40px] h-[40px] rounded-full overflow-hidden bg-gray-800 flex-shrink-0 ">
-               <Image
-                  src={image || NoImage}
-                  alt="profile image"
-                  fill
-                  className="object-cover"
-               />
+         <div className="flex flex-col items-center w-full justify-center gap-3">
+            <div className="flex items-center justify-center gap-4 mt-10 bg-contrast-500/50 px-5 py-2 border border-accent-400/20 rounded-2xl">
+               <div className="relative w-[40px] h-[40px] rounded-full overflow-hidden bg-gray-800 flex-shrink-0 ">
+                  <Image
+                     src={image || NoImage}
+                     alt="profile image"
+                     fill
+                     className="object-cover"
+                  />
+               </div>
+               <div className="flex flex-col  justify-center">
+                  <h1 className="text-white text-xl text-bold">
+                     {accInfo.name}
+                  </h1>
+                  <p className="text-notUsed-200/60 ">{accInfo.email}</p>
+               </div>
             </div>
-            <div className="flex flex-col  justify-center">
-               <h1 className="text-white text-xl text-bold">{accInfo.name}</h1>
-               <p className="text-notUsed-200/60 ">{accInfo.email}</p>
+            <div className="w-full">
+               <ContrastBtn>
+                  <svg
+                     xmlns="http://www.w3.org/2000/svg"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     strokeWidth={1.5}
+                     stroke="currentColor"
+                     className="size-6"
+                  >
+                     <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
+                     />
+                  </svg>
+
+                  <h1>Sign Out</h1>
+               </ContrastBtn>
             </div>
          </div>
       </div>
