@@ -9,6 +9,7 @@ import Link from "next/link";
 import Image from "next/image";
 import NoImage from "../../../public/no image.jpg";
 import { usePathname } from "next/navigation";
+import { motion } from "motion/react";
 
 type UserInfo = {
    name: string;
@@ -167,14 +168,27 @@ export default function SideBarHeader() {
             </GreenBtn>
             <ul className="mt-5">
                {List.map((items, index) => (
-                  <li
+                  <motion.li
+                     whileHover={{
+                        scale: 1.05,
+
+                        transition: { type: "spring", duration: 0.4 },
+                     }}
+                     whileTap={{
+                        scale: 0.9,
+
+                        transition: { type: "spring", duration: 0.4 },
+                     }}
                      key={index}
                      className={`mb-2  rounded-2xl ${
                         pathname === items.link &&
                         "bg-gradient-to-r from-accent-400/20 via-accent-300/60 to-contrast-500/20 border border-accent-500"
                      } `}
                   >
-                     <Link href={items.link} className="flex items-center gap-5 px-5 py-4 ">
+                     <Link
+                        href={items.link}
+                        className="flex items-center gap-5 px-5 py-4 "
+                     >
                         <div
                            className={` p-2 rounded-xl ${
                               pathname === items.link
@@ -184,24 +198,24 @@ export default function SideBarHeader() {
                         >
                            {items.icon}
                         </div>
-                        <h1  className="text-white">
-                           {items.label}
-                        </h1>
+                        <h1 className="text-white">{items.label}</h1>
                      </Link>
-                  </li>
+                  </motion.li>
                ))}
             </ul>
          </div>
          <div className="flex flex-col items-center w-full justify-center gap-3">
             <div className="flex items-center justify-center gap-4 mt-10 bg-contrast-500/50 px-5 py-2 border border-accent-400/20 rounded-2xl">
-               <div className="relative w-[40px] h-[40px] rounded-full overflow-hidden bg-gray-800 flex-shrink-0 ">
-                  <Image
-                     src={image || NoImage}
-                     alt="profile image"
-                     fill
-                     className="object-cover"
-                  />
-               </div>
+               <Link href="/profile">
+                  <div className="relative w-[40px] h-[40px] rounded-full overflow-hidden bg-gray-800 flex-shrink-0 ">
+                     <Image
+                        src={image || NoImage}
+                        alt="profile image"
+                        fill
+                        className="object-cover"
+                     />
+                  </div>
+               </Link>
                <div className="flex flex-col  justify-center">
                   <h1 className="text-white text-xl text-bold">
                      {accInfo.name}
