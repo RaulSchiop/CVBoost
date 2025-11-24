@@ -83,7 +83,7 @@ export default function ProfilePage() {
 
    return (
       <div className="min-h-screen flex flex-col items-center">
-         <div className="bg-black pt-30 px-5 md:px-20 w-full mb-10">
+         <div className="bg-gradient-to-bl from-accent-200 via-contrast-500/50 to-accent-200 pt-30 px-5 md:px-20 w-full mb-10">
             <Modal show={modal} onClose={handleCloseModal}>
                <div className="flex items-center justify-center flex-col p-6">
                   <h1 className="text-white text-2xl font-bold mb-6">
@@ -136,14 +136,14 @@ export default function ProfilePage() {
                Profile
             </motion.h1>
 
-            <div className="w-full max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8">
-               <div className="flex flex-col gap-6 ">
+            <div className="w-full max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_320px] rounde gap-8">
+               <div className="flex flex-col gap-6 rounded-2xl ">
                   <motion.div
                      initial={{ opacity: 0, y: 50 }}
                      animate={{ opacity: 1, y: 0 }}
                      exit={{ opacity: 0, y: 50 }}
                      transition={{ duration: 1.2, type: "spring" }}
-                     className="bg-gradient-to-bl from-black via-accent-300/70 to-black"
+                     className="bg-gradient-to-bl from-black via-accent-300/70 to-black rounded-2xl"
                   >
                      <MainCard>
                         <div className="flex items-center gap-6 p-6 ">
