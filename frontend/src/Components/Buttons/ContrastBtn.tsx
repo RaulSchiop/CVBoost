@@ -26,7 +26,7 @@ export default function ContrastBtn({ children, onClick, type }: Props) {
             transition: { type: "spring", duration: 0.4 },
          }}
          className="text-white flex items-center justify-center px-4 py-2 gap-4 w-full
-                  bg-contrast-500/10 backdrop-blur-md border border-accent-700/30 rounded-xl shadow-lg  hover:bg-contrast-500/30 transform active:bg-accent-300"
+                  bg-contrast-500/10 backdrop-blur-md border border-accent-700/30 rounded-xl shadow-lg  hover:bg-contrast-500/30 transform active:bg-contrast-500/10"
       >
          {children}
       </motion.button>

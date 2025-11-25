@@ -24,7 +24,7 @@ export default function SideBarHeader() {
       name: "Schiop Raul",
       email: "raul.schiop@gmail.com",
    });
-
+   const [isMenuOpen, setIsMenuOpen] = useState(false);
    const List: { icon: JSX.Element; link: string; label: string }[] = [
       {
          icon: (
@@ -145,126 +145,266 @@ export default function SideBarHeader() {
    ];
 
    return (
-      <div className="w-[300px] sticky top-0 h-screen m-0 p-5 flex justify-between flex-col bg-contrast-500/30 gap-10">
-         <div className="flex  justify-center flex-col gap-3 ">
-            <Logo></Logo>
-            <Link href="/tools/createResume">
-               <GreenBtn>
-                  <svg
-                     xmlns="http://www.w3.org/2000/svg"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     strokeWidth={2}
-                     stroke="currentColor"
-                     className="size-5"
-                  >
-                     <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 4.5v15m7.5-7.5h-15"
-                     />
-                  </svg>
-
-                  <h1 className="text-lg text-white/90">Create New Resume</h1>
-               </GreenBtn>
-            </Link>
-            <ul className="mt-5">
-               {List.map((items, index) => (
-                  <motion.li
-                     whileHover={{
-                        scale: 1.05,
-
-                        transition: { type: "spring", duration: 0.4 },
-                     }}
-                     whileTap={{
-                        scale: 0.9,
-
-                        transition: { type: "spring", duration: 0.4 },
-                     }}
-                     key={index}
-                     className={`mb-2  rounded-2xl ${
-                        pathname === items.link &&
-                        "bg-gradient-to-r from-accent-400/20 via-accent-300/60 to-contrast-500/20 border border-accent-500"
-                     } `}
-                  >
-                     <Link
-                        href={items.link}
-                        className="flex items-center gap-4 px-3 py-4 "
+      <div>
+         <div className="w-full md:w-[300px] sticky top-0 h-full m-0 p-5 hidden md:flex justify-between flex-col bg-contrast-500/30 gap-10">
+            <div className="flex  justify-center flex-col gap-3 ">
+               <Logo></Logo>
+               <Link href="/tools/createResume">
+                  <GreenBtn>
+                     <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2}
+                        stroke="currentColor"
+                        className="size-5"
                      >
-                        <div
-                           className={` p-2 rounded-xl ${
-                              pathname === items.link
-                                 ? "bg-gradient-to-br from-pink-500 to-purple-600 "
-                                 : "bg-gray-500/30"
-                           }`}
-                        >
-                           {items.icon}
-                        </div>
-                        <h1 className="text-white">{items.label}</h1>
-                     </Link>
-                  </motion.li>
-               ))}
-            </ul>
-         </div>
-         <div className="flex flex-col items-center w-full justify-center gap-3">
-            <div className="flex items-center justify-center gap-4 mt-10 bg-contrast-500/50 px-5 py-2 border border-accent-400/20 rounded-2xl">
-               <Link href="/profile">
-                  <div className="relative w-[40px] h-[40px] rounded-full overflow-hidden bg-gray-800 flex-shrink-0 ">
-                     <Image
-                        src={image || NoImage}
-                        alt="profile image"
-                        fill
-                        className="object-cover"
-                     />
-                  </div>
+                        <path
+                           strokeLinecap="round"
+                           strokeLinejoin="round"
+                           d="M12 4.5v15m7.5-7.5h-15"
+                        />
+                     </svg>
+
+                     <h1 className="text-lg text-white/90">
+                        Create New Resume
+                     </h1>
+                  </GreenBtn>
                </Link>
-               <div className="flex flex-col  justify-center">
-                  <h1 className="text-white text-xl text-bold">
-                     {accInfo.name}
-                  </h1>
-                  <p className="text-notUsed-200/60 ">{accInfo.email}</p>
+               <ul className="mt-5">
+                  {List.map((items, index) => (
+                     <motion.li
+                        whileHover={{
+                           scale: 1.05,
+
+                           transition: { type: "spring", duration: 0.4 },
+                        }}
+                        whileTap={{
+                           scale: 0.9,
+
+                           transition: { type: "spring", duration: 0.4 },
+                        }}
+                        key={index}
+                        className={`mb-2  rounded-2xl ${
+                           pathname === items.link &&
+                           "bg-gradient-to-r from-accent-400/20 via-accent-300/60 to-contrast-500/20 border border-accent-500"
+                        } `}
+                     >
+                        <Link
+                           href={items.link}
+                           className="flex items-center gap-4 px-3 py-4 "
+                        >
+                           <div
+                              className={` p-2 rounded-xl ${
+                                 pathname === items.link
+                                    ? "bg-gradient-to-br from-pink-500 to-purple-600 "
+                                    : "bg-gray-500/30"
+                              }`}
+                           >
+                              {items.icon}
+                           </div>
+                           <h1 className="text-white">{items.label}</h1>
+                        </Link>
+                     </motion.li>
+                  ))}
+               </ul>
+            </div>
+            <div className="flex flex-col items-center w-full justify-center gap-3">
+               <div className="flex items-center justify-center gap-4 mt-10 bg-contrast-500/50 px-5 py-2 border border-accent-400/20 rounded-2xl">
+                  <Link href="/profile">
+                     <div className="relative w-[40px] h-[40px] rounded-full overflow-hidden bg-gray-800 flex-shrink-0 ">
+                        <Image
+                           src={image || NoImage}
+                           alt="profile image"
+                           fill
+                           className="object-cover"
+                        />
+                     </div>
+                  </Link>
+                  <div className="flex flex-col  justify-center">
+                     <h1 className="text-white text-xl text-bold">
+                        {accInfo.name}
+                     </h1>
+                     <p className="text-notUsed-200/60 ">{accInfo.email}</p>
+                  </div>
+               </div>
+               <div className="w-full flex flex-col gap-2">
+                  <PremiumBtn>
+                     <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="size-6 text-premium-500"
+                     >
+                        <path
+                           strokeLinecap="round"
+                           strokeLinejoin="round"
+                           d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"
+                        />
+                     </svg>
+
+                     <h1 className="text-premium-500">Upgrade To Pro</h1>
+                  </PremiumBtn>
+
+                  <ContrastBtn>
+                     <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="size-6"
+                     >
+                        <path
+                           strokeLinecap="round"
+                           strokeLinejoin="round"
+                           d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
+                        />
+                     </svg>
+
+                     <h1>Sign Out</h1>
+                  </ContrastBtn>
                </div>
             </div>
-            <div className="w-full flex flex-col gap-2">
-               <PremiumBtn>
-                  <svg
-                     xmlns="http://www.w3.org/2000/svg"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     strokeWidth={1.5}
-                     stroke="currentColor"
-                     className="size-6 text-premium-500"
-                  >
-                     <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"
-                     />
-                  </svg>
-
-                  <h1 className="text-premium-500">Upgrade To Pro</h1>
-               </PremiumBtn>
-
-               <ContrastBtn>
-                  <svg
-                     xmlns="http://www.w3.org/2000/svg"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     strokeWidth={1.5}
-                     stroke="currentColor"
-                     className="size-6"
-                  >
-                     <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
-                     />
-                  </svg>
-
-                  <h1>Sign Out</h1>
-               </ContrastBtn>
-            </div>
          </div>
+         <div className="flex items-center md:hidden justify-between p-6">
+            <button
+               onClick={() => setIsMenuOpen(!isMenuOpen)}
+               className="md:hidden p-2 rounded-lg text-white hover:bg-purple-500/20"
+               aria-label="Toggle menu"
+            >
+               <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+               >
+                  {isMenuOpen ? (
+                     <path d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                     <path d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+               </svg>
+            </button>
+            <Link href="/createResume">
+               <GreenBtn> Create New Resume</GreenBtn>
+            </Link>
+         </div>
+         {isMenuOpen && (
+            <motion.div
+               initial={{ opacity: 0, y: -20 }}
+               animate={{ opacity: 1, y: 0 }}
+               exit={{ opacity: 0, y: -20 }}
+               className="fixed top-[100px] left-4 right-4 p-4  bg-contrast-500/30 backdrop-blur-lg md:hidden z-40 rounded-2xl border border-purple-300/30 shadow-lg"
+            >
+               <div className="text-white flex flex-col items-center justify-center w-full gap-5 bg-contrast-500/60 backdrop-blur-md border border-purple-300/30 px-5 py-3  rounded-2xl shadow-lg">
+                  <ul className="mt-5 w-full">
+                     {List.map((items, index) => (
+                        <motion.li
+                           whileHover={{
+                              scale: 1.05,
+
+                              transition: { type: "spring", duration: 0.4 },
+                           }}
+                           whileTap={{
+                              scale: 0.9,
+
+                              transition: { type: "spring", duration: 0.4 },
+                           }}
+                           key={index}
+                           className={`mb-2  rounded-2xl w-full flex items-center justify-center ${
+                              pathname === items.link &&
+                              "bg-gradient-to-r from-accent-400/20 via-accent-300/60 to-contrast-500/20 border border-accent-500"
+                           } `}
+                        >
+                           <Link
+                              onClick={() => setIsMenuOpen(false)}
+                              href={items.link}
+                              className="flex items-center gap-4 px-5 py-4 w-full"
+                           >
+                              <div
+                                 className={` p-2 rounded-xl ${
+                                    pathname === items.link
+                                       ? "bg-gradient-to-br from-pink-500 to-purple-600 "
+                                       : "bg-gray-500/30"
+                                 }`}
+                              >
+                                 {items.icon}
+                              </div>
+                              <h1 className="text-white">{items.label}</h1>
+                           </Link>
+                        </motion.li>
+                     ))}
+                  </ul>
+                  <div className="flex flex-col items-center w-full justify-center gap-3">
+                     <div className="flex items-center justify-center w-full gap-4 mt-10 bg-contrast-500/50 px-4 py-2 border border-accent-400/20 rounded-2xl">
+                        <Link href="/profile">
+                           <div className="relative w-[40px] h-[40px] rounded-full overflow-hidden bg-gray-800 flex-shrink-0 ">
+                              <Image
+                                 src={image || NoImage}
+                                 alt="profile image"
+                                 fill
+                                 className="object-cover"
+                              />
+                           </div>
+                        </Link>
+                        <div className="flex flex-col  justify-center">
+                           <h1 className="text-white text-xl text-bold">
+                              {accInfo.name}
+                           </h1>
+                           <p className="text-notUsed-200/60 ">
+                              {accInfo.email}
+                           </p>
+                        </div>
+                     </div>
+                  </div>
+                  <div className="w-full flex flex-col gap-2">
+                     <PremiumBtn>
+                        <svg
+                           xmlns="http://www.w3.org/2000/svg"
+                           fill="none"
+                           viewBox="0 0 24 24"
+                           strokeWidth={1.5}
+                           stroke="currentColor"
+                           className="size-6 text-premium-500"
+                        >
+                           <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"
+                           />
+                        </svg>
+
+                        <h1 className="text-premium-500">Upgrade To Pro</h1>
+                     </PremiumBtn>
+
+                     <ContrastBtn>
+                        <svg
+                           xmlns="http://www.w3.org/2000/svg"
+                           fill="none"
+                           viewBox="0 0 24 24"
+                           strokeWidth={1.5}
+                           stroke="currentColor"
+                           className="size-6"
+                        >
+                           <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
+                           />
+                        </svg>
+
+                        <h1>Sign Out</h1>
+                     </ContrastBtn>
+                  </div>
+               </div>
+            </motion.div>
+         )}
       </div>
    );
 }
