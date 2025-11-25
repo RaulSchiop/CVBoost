@@ -148,25 +148,26 @@ export default function SideBarHeader() {
       <div className="w-[300px] sticky top-0 h-screen m-0 p-5 flex justify-between flex-col bg-contrast-500/30 gap-10">
          <div className="flex  justify-center flex-col gap-3 ">
             <Logo></Logo>
+            <Link href="/tools/createResume">
+               <GreenBtn>
+                  <svg
+                     xmlns="http://www.w3.org/2000/svg"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     strokeWidth={2}
+                     stroke="currentColor"
+                     className="size-5"
+                  >
+                     <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 4.5v15m7.5-7.5h-15"
+                     />
+                  </svg>
 
-            <GreenBtn>
-               <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                  stroke="currentColor"
-                  className="size-5"
-               >
-                  <path
-                     strokeLinecap="round"
-                     strokeLinejoin="round"
-                     d="M12 4.5v15m7.5-7.5h-15"
-                  />
-               </svg>
-
-               <h1 className="text-lg text-white/90">Create New Resume</h1>
-            </GreenBtn>
+                  <h1 className="text-lg text-white/90">Create New Resume</h1>
+               </GreenBtn>
+            </Link>
             <ul className="mt-5">
                {List.map((items, index) => (
                   <motion.li
@@ -188,7 +189,7 @@ export default function SideBarHeader() {
                   >
                      <Link
                         href={items.link}
-                        className="flex items-center gap-5 px-5 py-4 "
+                        className="flex items-center gap-4 px-3 py-4 "
                      >
                         <div
                            className={` p-2 rounded-xl ${
