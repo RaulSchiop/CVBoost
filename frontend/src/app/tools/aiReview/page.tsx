@@ -71,8 +71,8 @@ export default function AiReview() {
          </div>
          <div className="bg-contrast-500/20 rounded-2xl mt-5 h-[400px] backdrop-blur-md ">
             <div className="p-10 w-full h-full">
-               <div className="rounded-2xl border-2 border-dashed   border-gray-500/80 w-full h-full p-5 flex items-center justify-center">
-                  <div className=" p-2 rounded-xl bg-gradient-to-br from-contrast-500/40 via-contrast-500/20 to-contrast-500/10 border border-gray-500/60">
+               <div className="rounded-2xl border-2 border-dashed   border-gray-500/80 w-full h-full p-5 flex flex-col items-center justify-center">
+                  <div className=" p-2 rounded-xl bg-gradient-to-br from-contrast-500/40 via-contrast-500/20 to-contrast-500/10 border border-gray-500/60 mb-5">
                      {/* document writen */}
                      <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -89,10 +89,13 @@ export default function AiReview() {
                         />
                      </svg>
                   </div>
-                  <div>
-                     <h1 className="text-2xl text-white/80">
+                  <div className="flex items-center justify-center flex-col">
+                     <h1 className="text-xl text-white/80">
                         Upload Resume PDF
                      </h1>
+                     <p className="text-gray-500/60">
+                        Drag & drop or click to browse
+                     </p>
                   </div>
                </div>
             </div>
