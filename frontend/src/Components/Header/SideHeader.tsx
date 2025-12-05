@@ -149,8 +149,8 @@ export default function SideBarHeader() {
    ];
 
    return (
-      <div>
-         <div className="w-full md:w-[300px] sticky top-0 h-full m-0 p-5 hidden md:flex justify-between flex-col bg-contrast-500/30 gap-10">
+      <div className="">
+         <div className="fixed left-0 top-0 h-screen w-72 p-5 hidden md:flex flex-col justify-between bg-contrast-500/20 gap-10  overflow-auto">
             <div className="flex  justify-center flex-col gap-3 ">
                <Logo></Logo>
                <Link href="/tools/createResume">
@@ -275,7 +275,7 @@ export default function SideBarHeader() {
                </div>
             </div>
          </div>
-         <div className="flex items-center md:hidden justify-between p-6">
+         <div className="flex items-center md:hidden justify-between bg-contrast-500/30 p-6">
             <button
                onClick={() => setIsMenuOpen(!isMenuOpen)}
                className="md:hidden p-2 rounded-lg text-white hover:bg-purple-500/20"
@@ -306,7 +306,7 @@ export default function SideBarHeader() {
                initial={{ opacity: 0, y: -20 }}
                animate={{ opacity: 1, y: 0 }}
                exit={{ opacity: 0, y: -20 }}
-               className="fixed top-[100px] left-4 right-4 p-4  bg-contrast-500/30 backdrop-blur-lg md:hidden z-40 rounded-2xl border border-purple-300/30 shadow-lg"
+               className="fixed top-[100px] left-4 right-4 p-4  bg-contrast-500/20 backdrop-blur-lg md:hidden z-40 rounded-2xl border border-purple-300/30 shadow-lg"
             >
                <div className="text-white flex flex-col items-center justify-center w-full gap-5 bg-contrast-500/60 backdrop-blur-md border border-purple-300/30 px-5 py-3  rounded-2xl shadow-lg">
                   <ul className="mt-5 w-full">
