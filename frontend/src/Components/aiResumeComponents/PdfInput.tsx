@@ -56,7 +56,12 @@ export default function PDFInput({ toggle, resumes }: PDFInputPropsType) {
       e.stopPropagation();
    };
    return (
-      <div className="bg-contrast-500/20 rounded-2xl mt-5  backdrop-blur-md ">
+      <motion.div
+         initial={{ opacity: 0, y: 100 }}
+         animate={{ opacity: 1, y: 0 }}
+         transition={{ type: "spring", duration: 0.8 }}
+         className="bg-contrast-500/20 rounded-2xl mt-5  backdrop-blur-md "
+      >
          {toggle === false ? (
             <div className="w-full h-full flex flex-col items-end justify-center p-3">
                <div className="p-10 w-full h-[400px]">
@@ -170,6 +175,6 @@ export default function PDFInput({ toggle, resumes }: PDFInputPropsType) {
                )}
             </div>
          )}
-      </div>
+      </motion.div>
    );
 }
