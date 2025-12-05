@@ -5,6 +5,7 @@ import MainCard from "../Cards/MainCard";
 import SmallBtn from "../Buttons/SmallMainBtn";
 import { motion } from "motion/react";
 import { useState } from "react";
+import MainBtn from "../Buttons/MainBtn";
 
 export default function PDFInput({ toggle, resumes }: PDFInputPropsType) {
    const [file, setFile] = useState<File>();
@@ -57,60 +58,63 @@ export default function PDFInput({ toggle, resumes }: PDFInputPropsType) {
    return (
       <div className="bg-contrast-500/20 rounded-2xl mt-5  backdrop-blur-md ">
          {toggle === false ? (
-            <div className="p-10 w-full h-[400px]">
-               <label
-                  htmlFor="files"
-                  className="w-full h-full cursor-pointer  "
-               >
-                  <div className="rounded-2xl border-2 border-dashed border-gray-500/80 w-full h-full p-5 flex flex-col items-center justify-center gap-2">
-                     <div className="p-2 rounded-xl bg-gradient-to-br from-contrast-500/40 via-contrast-500/20 to-contrast-500/10 border border-gray-500/60">
-                        {/* document writen */}
-                        <svg
-                           xmlns="http://www.w3.org/2000/svg"
-                           fill="none"
-                           viewBox="0 0 24 24"
-                           strokeWidth={1.5}
-                           stroke="currentColor"
-                           className="size-14 text-white/50"
-                        >
-                           <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
-                           />
-                        </svg>
+            <div className="w-full h-full flex flex-col items-end justify-center p-3">
+               <div className="p-10 w-full h-[400px]">
+                  <label
+                     htmlFor="files"
+                     className="w-full h-full cursor-pointer  "
+                  >
+                     <div className="rounded-2xl border-2 border-dashed border-gray-500/80 w-full h-full p-5 flex flex-col items-center justify-center gap-2">
+                        <div className="p-2 rounded-xl bg-gradient-to-br from-contrast-500/40 via-contrast-500/20 to-contrast-500/10 border border-gray-500/60">
+                           {/* document writen */}
+                           <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="size-14 text-white/50"
+                           >
+                              <path
+                                 strokeLinecap="round"
+                                 strokeLinejoin="round"
+                                 d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
+                              />
+                           </svg>
+                        </div>
+                        {file ? (
+                           <h1 className="text-xl text-white/80 ">
+                              File Name :{" "}
+                              <a className="font-bold text-accent-700">
+                                 {file.name}
+                              </a>
+                           </h1>
+                        ) : (
+                           <h1 className="text-xl text-white/80">
+                              Upload Resume PDF
+                           </h1>
+                        )}
+
+                        <p className="text-gray-500/60">
+                           Drag & drop or click to browse
+                        </p>
+
+                        <input
+                           id="files"
+                           className="hidden"
+                           type="file"
+                           accept="application/pdf"
+                           onChange={handleInputChange}
+                        />
                      </div>
-                     {file ? (
-                        <h1 className="text-xl text-white/80 ">
-                           File Name :{" "}
-                           <a className="font-bold text-accent-700">
-                              {file.name}
-                           </a>
-                        </h1>
-                     ) : (
-                        <h1 className="text-xl text-white/80">
-                           Upload Resume PDF
-                        </h1>
-                     )}
-
-                     <p className="text-gray-500/60">
-                        Drag & drop or click to browse
-                     </p>
-
-                     <input
-                        id="files"
-                        className="hidden"
-                        type="file"
-                        accept="application/pdf"
-                        onChange={handleInputChange}
-                     />
-                  </div>
-               </label>
+                  </label>
+               </div>
+               {file && <MainBtn>Review The Resume</MainBtn>}
             </div>
          ) : (
             <div className=" w-full h-full flex items-start justify-center">
                {resumes === false ? (
-                  <ul className="p-4 overflow-y-auto lg:overflow-y- w-full h-full ">
+                  <ul className="p-4 overflow-y-auto lg:overflow-y-hidden w-full h-full ">
                      {resumesList.map((resume, index) => (
                         <motion.li
                            key={resume.id}
