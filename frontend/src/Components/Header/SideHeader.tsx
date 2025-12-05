@@ -152,9 +152,15 @@ export default function SideBarHeader() {
       <div className="">
          <div className="fixed left-0 top-0 h-screen w-72 p-5 hidden md:flex flex-col justify-between bg-contrast-500/20 gap-10  overflow-y-auto lg:overflow-y-hidden">
             <div className="flex  justify-center flex-col gap-3 ">
-               <Link href="/">
-                  <Logo></Logo>
-               </Link>
+               <motion.div
+                  initial={{ opacity: 0, y: -500 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ type: "spring", duration: 1 }}
+               >
+                  <Link href="/">
+                     <Logo></Logo>
+                  </Link>
+               </motion.div>
                <Link href="/tools/createResume">
                   <GreenBtn>
                      <svg
@@ -180,6 +186,13 @@ export default function SideBarHeader() {
                <ul className="mt-5">
                   {List.map((items, index) => (
                      <motion.li
+                        initial={{ opacity: 0, x: -200 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{
+                           type: "spring",
+                           duration: 1,
+                           delay: index * 0.5,
+                        }}
                         whileHover={{
                            scale: 1.05,
 
@@ -322,7 +335,10 @@ export default function SideBarHeader() {
                            whileTap={{
                               scale: 0.9,
 
-                              transition: { type: "spring", duration: 0.4 },
+                              transition: {
+                                 type: "spring",
+                                 duration: 0.4,
+                              },
                            }}
                            key={index}
                            className={`mb-2  rounded-2xl w-full flex items-center justify-center ${

@@ -12,9 +12,9 @@ export default function PremiumBtn({ children, onClick, type }: Props) {
       <motion.button
          type={type}
          onClick={onClick}
-         initial={{ opacity: 0, y: -500 }}
+         initial={{ opacity: 0, y: 500 }}
          animate={{ opacity: 1, y: 0 }}
-         transition={{ type: "spring", duration: 0.5 }}
+         transition={{ type: "spring", duration: 1 }}
          whileHover={{
             scale: 1.05,
 
