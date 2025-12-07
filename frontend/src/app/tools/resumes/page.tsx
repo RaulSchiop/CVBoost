@@ -4,6 +4,8 @@ import SmallBtn from "@/Components/Buttons/SmallMainBtn";
 import Image from "next/image";
 import { useState } from "react";
 import NoImage from "../../../../public/no image.jpg";
+import GreenBtn from "@/Components/Buttons/GreenBtn";
+import Link from "next/link";
 
 export default function Resume() {
    const [image, setImage] = useState<string | undefined>(undefined);
@@ -37,10 +39,30 @@ export default function Resume() {
 
    return (
       <div className="w-full h-full p-15">
-         <div>
+         <div className="flex items-center justify-between mb-4">
             <h1 className="font-bold text-transparent bg-clip-text text-4xl  bg-gradient-to-r from-accent-700 via-pink-500 to-white mb-5">
                Resumes
             </h1>
+            <Link href="/tools/createResume">
+               <GreenBtn>
+                  <svg
+                     xmlns="http://www.w3.org/2000/svg"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     strokeWidth={2}
+                     stroke="currentColor"
+                     className="size-5"
+                  >
+                     <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 4.5v15m7.5-7.5h-15"
+                     />
+                  </svg>
+
+                  <h1 className="text-lg text-white/90">Create New Resume</h1>
+               </GreenBtn>
+            </Link>
          </div>
          <div>
             <ul className="flex items-center justify-center flex-wrap gap-5">
@@ -49,7 +71,7 @@ export default function Resume() {
                      key={index}
                      className="bg-purple-500/10 border border-purple-300/20 rounded-lg overflow-hidden"
                   >
-                     <div className="relative h-40 w-full">
+                     <div className="relative h-60 w-full">
                         <Image
                            src={image || NoImage}
                            alt={`${file.name} preview`}
@@ -58,9 +80,22 @@ export default function Resume() {
                         />
                      </div>
                      <div className=" flex flex-col gap-2 p-6">
-                        <h3 className="text-white text-lg font-bold truncate">
-                           {file.name}
-                        </h3>
+                        <div className=" flex items-center justify-between">
+                           <h3 className="text-white text-lg font-bold truncate">
+                              {file.name}
+                           </h3>
+                           <h3
+                              className={`text-bold ${
+                                 file.atsScore <= 50
+                                    ? "text-red-500 border-red-500"
+                                    : file.atsScore <= 85
+                                    ? " text-yellow-500 border-yellow-500"
+                                    : " text-green-500 border-green-500"
+                              }`}
+                           >
+                              {file.atsScore}
+                           </h3>
+                        </div>
                         <div className="flex gap-2  ">
                            <SmallBtn ClassName="text-sm">View</SmallBtn>
                            <SmallBtn
