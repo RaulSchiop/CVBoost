@@ -191,7 +191,7 @@ export default function SideBarHeader() {
                         transition={{
                            type: "spring",
                            duration: 1,
-                           delay: index * 0.5,
+                           delay: index * 0.2,
                         }}
                         whileHover={{
                            scale: 1.05,

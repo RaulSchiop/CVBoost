@@ -18,6 +18,43 @@ export default function Resume() {
          atsScore: 60,
       },
       {
+         id: 1,
+         name: "CVRAULSCHIOp.pdf",
+         createdDate: "20/11/2025",
+         atsScore: 60,
+      },
+      {
+         id: 1,
+         name: "CVRAULSCHIOp.pdf",
+         createdDate: "20/11/2025",
+         atsScore: 60,
+      },
+      {
+         id: 1,
+         name: "CVRAULSCHIOp.pdf",
+         createdDate: "20/11/2025",
+         atsScore: 60,
+      },
+      {
+         id: 1,
+         name: "CVRAULSCHIOp.pdf",
+         createdDate: "20/11/2025",
+         atsScore: 60,
+      },
+      {
+         id: 1,
+         name: "CVRAULSCHIOp.pdf",
+         createdDate: "20/11/2025",
+         atsScore: 60,
+      },
+
+      {
+         id: 1,
+         name: "CVRAULSCHIOp.pdf",
+         createdDate: "20/11/2025",
+         atsScore: 60,
+      },
+      {
          id: 2,
          name: "CVRAULSCHIOp2.pdf",
          createdDate: "21/11/2025",
@@ -38,34 +75,14 @@ export default function Resume() {
    ];
 
    return (
-      <div className="w-full h-full p-15">
+      <div className="w-full h-full p-10 md:p-15">
          <div className="flex items-center justify-between mb-4">
             <h1 className="font-bold text-transparent bg-clip-text text-4xl  bg-gradient-to-r from-accent-700 via-pink-500 to-white mb-5">
                Resumes
             </h1>
-            <Link href="/tools/createResume">
-               <GreenBtn>
-                  <svg
-                     xmlns="http://www.w3.org/2000/svg"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     strokeWidth={2}
-                     stroke="currentColor"
-                     className="size-5"
-                  >
-                     <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 4.5v15m7.5-7.5h-15"
-                     />
-                  </svg>
-
-                  <h1 className="text-lg text-white/90">Create New Resume</h1>
-               </GreenBtn>
-            </Link>
          </div>
          <div>
-            <ul className="flex items-center justify-center flex-wrap gap-5">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:grid-cols-3">
                {resumesList.map((file, index) => (
                   <li
                      key={index}
