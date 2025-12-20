@@ -49,11 +49,20 @@ export default function PDFInput({ toggle, resumes }: PDFInputPropsType) {
    const handleDrag = (e: React.DragEvent) => {
       e.preventDefault();
       e.stopPropagation();
+      setDragActive(true);
    };
 
    const handleDrop = (e: React.DragEvent) => {
       e.preventDefault();
       e.stopPropagation();
+      const droppedFile = e.dataTransfer.files[0];
+      setDragActive(false);
+      if (droppedFile.type !== "application/pdf") {
+         alert("Only PDF files allowed");
+         return;
+      }
+
+      setFile(droppedFile);
    };
    return (
       <motion.div
@@ -69,7 +78,14 @@ export default function PDFInput({ toggle, resumes }: PDFInputPropsType) {
                      htmlFor="files"
                      className="w-full h-full cursor-pointer  "
                   >
-                     <div className="rounded-2xl border-2 border-dashed border-gray-500/80 w-full h-full p-5 flex flex-col items-center justify-center gap-2">
+                     <div
+                        className={`rounded-2xl border-2 border-dashed border-gray-500/80 w-full h-full p-5 flex flex-col items-center justify-center gap-2 ${
+                           dragActive && "cursor-pointer"
+                        }`}
+                        onDragOver={handleDrag}
+                        onDrop={handleDrop}
+                        onDragLeave={() => setDragActive(false)}
+                     >
                         <div className="p-2 rounded-xl bg-gradient-to-br from-contrast-500/40 via-contrast-500/20 to-contrast-500/10 border border-gray-500/60">
                            {/* document writen */}
                            <svg
