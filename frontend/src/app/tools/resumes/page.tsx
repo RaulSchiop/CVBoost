@@ -1,11 +1,14 @@
 "use client";
 import SmallBtn from "@/Components/Buttons/SmallMainBtn";
 
+import List from "@/Components/List/ClasicList";
+
 import Image from "next/image";
 import { useState } from "react";
 import NoImage from "../../../../public/no image.jpg";
 import GreenBtn from "@/Components/Buttons/GreenBtn";
 import Link from "next/link";
+import { motion } from "motion/react";
 
 export default function Resume() {
    const [image, setImage] = useState<string | undefined>(undefined);
@@ -75,18 +78,40 @@ export default function Resume() {
    ];
 
    return (
-      <div className="w-full h-full p-10 md:p-15">
-         <div className="flex items-center justify-between mb-4">
-            <h1 className="font-bold text-transparent bg-clip-text text-4xl  bg-gradient-to-r from-accent-700 via-pink-500 to-white mb-5">
+      <div className="w-full h-full p-10 md:p-15 bg-gradient-to-bl from-contrast-500/20 via-contrast-500/60 to-contrast-500/20">
+         <div className="flex items-center flex-col justify-center mb-10 mt-3 gap-2">
+            {/* page text */}
+            <motion.h1
+               initial={{ opacity: 0, y: -100 }}
+               animate={{ opacity: 1, y: 0 }}
+               transition={{ type: "spring", duration: 0.6 }}
+               className="text-white text-5xl font-bold"
+            >
                Resumes
-            </h1>
+            </motion.h1>
+            <motion.p
+               initial={{ opacity: 0, y: -100 }}
+               animate={{ opacity: 1, y: 0 }}
+               transition={{ type: "spring", duration: 0.4 }}
+               className="text-white/50"
+            >
+               View all your past resumes and scores and performance over time.
+            </motion.p>
          </div>
          <div>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:grid-cols-3">
+            <List>
                {resumesList.map((file, index) => (
-                  <li
+                  <motion.li
+                     initial={{ opacity: 0 }}
+                     animate={{ opacity: 1 }}
+                     exit={{ opacity: 0 }}
+                     transition={{
+                        type: "spring",
+                        duration: 1.5,
+                        delay: index * 0.1,
+                     }}
                      key={index}
-                     className="bg-purple-500/10 border border-purple-300/20 rounded-lg overflow-hidden"
+                     className="bg-purple-500/30 border border-purple-300/20 rounded-lg overflow-hidden"
                   >
                      <div className="relative h-60 w-full">
                         <Image
@@ -126,9 +151,9 @@ export default function Resume() {
                            </SmallBtn>
                         </div>
                      </div>
-                  </li>
+                  </motion.li>
                ))}
-            </ul>
+            </List>
          </div>
       </div>
    );

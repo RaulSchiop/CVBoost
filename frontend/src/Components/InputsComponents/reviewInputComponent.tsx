@@ -6,6 +6,7 @@ import SmallBtn from "../Buttons/SmallMainBtn";
 import { motion } from "motion/react";
 import { useState } from "react";
 import MainBtn from "../Buttons/MainBtn";
+import DownList from "../List/DownList";
 
 export default function PDFInput({ toggle, resumes }: PDFInputPropsType) {
    const [file, setFile] = useState<File>();
@@ -135,7 +136,7 @@ export default function PDFInput({ toggle, resumes }: PDFInputPropsType) {
          ) : (
             <div className=" w-full h-full flex items-start justify-center">
                {resumes === false ? (
-                  <ul className="p-4 overflow-y-auto lg:overflow-y-hidden w-full h-full ">
+                  <DownList>
                      {resumesList.map((resume, index) => (
                         <motion.li
                            key={resume.id}
@@ -185,7 +186,7 @@ export default function PDFInput({ toggle, resumes }: PDFInputPropsType) {
                            </MainCard>
                         </motion.li>
                      ))}
-                  </ul>
+                  </DownList>
                ) : (
                   <p>No Resumes</p>
                )}
