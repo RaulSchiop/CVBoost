@@ -229,8 +229,8 @@ export default function SideBarHeader() {
                </ul>
             </div>
             <div className="flex flex-col items-center w-full justify-center gap-3">
-               <div className="flex items-center justify-center gap-4 mt-10 bg-contrast-500/50 px-5 py-2 border border-accent-400/20 rounded-2xl">
-                  <Link href="/profile">
+               <Link href="/profile">
+                  <div className="flex items-center justify-center gap-4 mt-10 bg-contrast-500/50 px-3 py-2 border border-accent-400/20 rounded-xl">
                      <div className="relative w-[40px] h-[40px] rounded-full overflow-hidden bg-gray-800 flex-shrink-0 ">
                         <Image
                            src={image || NoImage}
@@ -239,14 +239,14 @@ export default function SideBarHeader() {
                            className="object-cover"
                         />
                      </div>
-                  </Link>
-                  <div className="flex flex-col  justify-center">
-                     <h1 className="text-white text-xl text-bold">
-                        {accInfo.name}
-                     </h1>
-                     <p className="text-notUsed-200/60 ">{accInfo.email}</p>
+                     <div className="flex flex-col  justify-center">
+                        <h1 className="text-white text-xl text-bold">
+                           {accInfo.name}
+                        </h1>
+                        <p className="text-notUsed-200/60 ">{accInfo.email}</p>
+                     </div>
                   </div>
-               </div>
+               </Link>
                <div className="w-full flex flex-col gap-2">
                   <Link href="../premiumSubscription">
                      <PremiumBtn>
@@ -367,9 +367,9 @@ export default function SideBarHeader() {
                         </motion.li>
                      ))}
                   </ul>
-                  <div className="flex flex-col items-center w-full justify-center gap-3">
-                     <div className="flex items-center justify-center w-full gap-4 mt-10 bg-contrast-500/50 px-4 py-2 border border-accent-400/20 rounded-2xl">
-                        <Link href="/profile">
+                  <Link href="/profile">
+                     <div className="flex flex-col items-center w-full justify-center gap-3">
+                        <div className="flex items-center justify-center w-full gap-4 mt-10 bg-contrast-500/50 px-4 py-2 border border-accent-400/20 rounded-2xl">
                            <div className="relative w-[40px] h-[40px] rounded-full overflow-hidden bg-gray-800 flex-shrink-0 ">
                               <Image
                                  src={image || NoImage}
@@ -378,17 +378,18 @@ export default function SideBarHeader() {
                                  className="object-cover"
                               />
                            </div>
-                        </Link>
-                        <div className="flex flex-col  justify-center">
-                           <h1 className="text-white text-xl text-bold">
-                              {accInfo.name}
-                           </h1>
-                           <p className="text-notUsed-200/60 ">
-                              {accInfo.email}
-                           </p>
+
+                           <div className="flex flex-col  justify-center">
+                              <h1 className="text-white text-xl text-bold">
+                                 {accInfo.name}
+                              </h1>
+                              <p className="text-notUsed-200/60 ">
+                                 {accInfo.email}
+                              </p>
+                           </div>
                         </div>
                      </div>
-                  </div>
+                  </Link>
                   <div className="w-full flex flex-col gap-2">
                      <Link href={"/premiumSubscription"}>
                         <PremiumBtn>
