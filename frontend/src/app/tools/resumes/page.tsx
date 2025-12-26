@@ -78,7 +78,7 @@ export default function Resume() {
    ];
 
    return (
-      <div className="w-full h-full p-10 md:p-15 bg-gradient-to-bl from-contrast-500/20 via-contrast-500/60 to-contrast-500/20">
+      <div className="w-full min-h-screen p-10 md:p-15 bg-gradient-to-bl from-contrast-500/20 via-contrast-500/60 to-contrast-500/20">
          <div className="flex items-center flex-col justify-center mb-10 mt-3 gap-2">
             {/* page text */}
             <motion.h1

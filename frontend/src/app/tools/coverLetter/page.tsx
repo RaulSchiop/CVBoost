@@ -1,9 +1,11 @@
 "use client";
+import GreenBtn from "@/Components/Buttons/GreenBtn";
 import { motion } from "motion/react";
+import Link from "next/link";
 
 export default function CoverLetter() {
    return (
-      <div className="w-full h-full p-10 md:p-15 bg-gradient-to-bl from-contrast-500/20 via-contrast-500/60 to-contrast-500/20">
+      <div className="w-full min-h-screen p-10 md:p-15 bg-gradient-to-bl from-contrast-500/20 via-contrast-500/60 to-contrast-500/20">
          <div className="flex items-center flex-col justify-center mb-10 mt-3 gap-2">
             {/* page text */}
             <motion.h1
@@ -22,6 +24,12 @@ export default function CoverLetter() {
             >
                View all your cover letters or create new ones.
             </motion.p>
+         </div>
+         <div className="flex items-center justify-between px-10">
+            <h2 className="text-accent-950 text-xl">My Cover Letters</h2>
+            <Link href={"/tools/coverLetter/createCoverLetters"}>
+               <GreenBtn> Create New Cover Letter</GreenBtn>
+            </Link>
          </div>
       </div>
    );
