@@ -8,56 +8,30 @@ import UnSelectetButton from "@/Components/Buttons/UnSelectedButton";
 
 export default function CreateCoverLetter() {
    const [toggleUpload, setTogleUpload] = useState(false);
-
-   const coverLetters = [
+   const resumesList = [
       {
          id: 1,
          name: "CVRAULSCHIOp.pdf",
-         Company: "hella",
-         jobTitle: "softwareEngineer",
          createdDate: "20/11/2025",
+         atsScore: 60,
       },
       {
-         id: 1,
-         name: "CVRAULSCHIOp.pdf",
-         Company: "hella",
-         jobTitle: "softwareEngineer",
-         createdDate: "20/11/2025",
+         id: 2,
+         name: "CVRAULSCHIOp2.pdf",
+         createdDate: "21/11/2025",
+         atsScore: 75,
       },
       {
-         id: 1,
-         name: "CVRAULSCHIOp.pdf",
-         Company: "hella",
-         jobTitle: "softwareEngineer",
-         createdDate: "20/11/2025",
+         id: 3,
+         name: "CVRAULSCHIOp3.pdf",
+         createdDate: "22/11/2025",
+         atsScore: 85,
       },
       {
-         id: 1,
-         name: "CVRAULSCHIOp.pdf",
-         Company: "hella",
-         jobTitle: "softwareEngineer",
-         createdDate: "20/11/2025",
-      },
-      {
-         id: 1,
-         name: "CVRAULSCHIOp.pdf",
-         Company: "hella",
-         jobTitle: "softwareEngineer",
-         createdDate: "20/11/2025",
-      },
-      {
-         id: 1,
-         name: "CVRAULSCHIOp.pdf",
-         Company: "hella",
-         jobTitle: "softwareEngineer",
-         createdDate: "20/11/2025",
-      },
-      {
-         id: 1,
-         name: "CVRAULSCHIOp.pdf",
-         Company: "hella",
-         jobTitle: "softwareEngineer",
-         createdDate: "20/11/2025",
+         id: 4,
+         name: "CVRAULSCHIOp4.pdf",
+         createdDate: "23/11/2025",
+         atsScore: 45,
       },
    ];
 
@@ -176,7 +150,7 @@ export default function CreateCoverLetter() {
 
          <CoverLetterInput
             toggle={toggleUpload}
-            coverLetters={coverLetters}
+            resumes={resumesList}
          ></CoverLetterInput>
       </div>
    );

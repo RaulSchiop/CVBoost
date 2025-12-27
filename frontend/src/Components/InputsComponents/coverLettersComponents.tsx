@@ -1,20 +1,19 @@
 "use client";
 
-import { InputCoverLetter } from "@/types/coverLetterTypes";
 import MainCard from "../Cards/MainCard";
 import SmallBtn from "../Buttons/SmallMainBtn";
 import { motion } from "motion/react";
 import { useState } from "react";
-import MainBtn from "../Buttons/MainBtn";
-import List from "../List/ClasicList";
+import DownList from "../List/DownList";
+import { PDFInputPropsType } from "@/types/resumesTypes";
 
 export default function CoverLetterInput({
    toggle,
-   coverLetters,
-}: InputCoverLetter) {
+   resumes,
+}: PDFInputPropsType) {
    const [file, setFile] = useState<File>();
    const [dragActive, setDragActive] = useState(false);
-   const [selectedCv,setSelectedCv]=useState<number>();
+   const [selectedCv, setSelectedCv] = useState<number>();
 
    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const files = e.target.files;
@@ -41,6 +40,11 @@ export default function CoverLetterInput({
 
       setFile(droppedFile);
    };
+
+   const handleSelect = (id: number) => {
+      setSelectedCv(id);
+   };
+
    return (
       <motion.div
          initial={{ opacity: 0, y: 100 }}
@@ -107,17 +111,19 @@ export default function CoverLetterInput({
                      </div>
                   </label>
                </div>
-               {file && <MainBtn>Review The Resume</MainBtn>}
             </div>
          ) : (
             <div className=" w-full h-full flex flex-col items-center justify-center py-8  md:py-20 lg:py-10">
                <h1 className="text-accent-950 mb-5 font-bold text-2xl ">
                   Click a CV to use for this cover letter
                </h1>
-               {coverLetters.length > 0 ? (
-                  <List>
-                     {coverLetters.map((file, index) => (
+               {resumes ? (
+                  <DownList>
+                     {resumes.map((resume, index) => (
                         <motion.li
+                           onClick={() => handleSelect(resume.id)}
+                           key={resume.id}
+                           className="mb-3"
                            initial={{ opacity: 0 }}
                            animate={{ opacity: 1 }}
                            exit={{ opacity: 0 }}
@@ -126,39 +132,50 @@ export default function CoverLetterInput({
                               duration: 1.5,
                               delay: index * 0.1,
                            }}
-                           key={index}
-                           className="bg-purple-500/30 border border-purple-300/20 rounded-lg overflow-hidden"
                         >
-                           <div className=" flex flex-col gap-2 p-6 items-center justify-center">
-                              <div className=" flex items-start justify-between flex-col mb-2">
-                                 <h3 className="text-white text-lg font-bold truncate mb-2">
-                                    {file.name}
-                                 </h3>
-                                 <h3 className="text-white/70  font-bold truncate">
-                                    Job Title: {file.jobTitle}
-                                 </h3>
-                                 <h3 className="text-white/70  font-bold truncate">
-                                    Company: {file.Company}
-                                 </h3>
-                                 <h3 className="text-white/70  font-bold truncate ">
-                                    Date: {file.createdDate}
-                                 </h3>
+                           <MainCard
+                              color={
+                                 selectedCv === resume.id
+                                    ? "bg-accent-500/80"
+                                    : "bg-purple-500/25"
+                              }
+                              ClassName={`w-full flex items-center  justify-between flex-col gap-3 lg:flex-row `}
+                           >
+                              <div className="">
+                                 <p>
+                                    Name:
+                                    <a className="font-bold">{resume.name}</a>
+                                 </p>
+                                 <p className="text-white/60">
+                                    Creation Date: {resume.createdDate}
+                                 </p>
                               </div>
-
-                              
-                           </div>
+                              <p>
+                                 Current Ats Score:
+                                 <a
+                                    className={`text-bold ${
+                                       resume.atsScore <= 50
+                                          ? "text-red-500 border-red-500"
+                                          : resume.atsScore <= 85
+                                          ? " text-yellow-500 border-yellow-500"
+                                          : " text-green-500 border-green-500"
+                                    }`}
+                                 >
+                                    {resume.atsScore}
+                                 </a>
+                              </p>
+                           </MainCard>
                         </motion.li>
                      ))}
-                  </List>
+                  </DownList>
                ) : (
                   <div className="w-full h-full flex items-center justify-center flex-col mt-20">
                      <h1 className="text-accent-600 text-3xl font-bold">
                         {" "}
-                        No Cover Letter{" "}
+                        No Resume{" "}
                      </h1>
                      <p className="text-accent-950/70 text-lg text-center">
-                        Curentlry you have no Cover Letter. Create new cover
-                        letter with Ai.{" "}
+                        Curentlry you have no Resume. Create new Resume with Ai.{" "}
                      </p>
                   </div>
                )}{" "}
