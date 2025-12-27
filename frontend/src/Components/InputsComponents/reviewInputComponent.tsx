@@ -162,7 +162,16 @@ export default function PDFInput({ toggle, resumes }: PDFInputPropsType) {
                      ))}
                   </DownList>
                ) : (
-                  <p> No Resumes</p>
+                  <div className="w-full h-full flex items-center justify-center flex-col mt-20">
+                     <h1 className="text-accent-600 text-3xl font-bold">
+                        {" "}
+                        No Resumes{" "}
+                     </h1>
+                     <p className="text-accent-950/70 text-lg text-center">
+                        Curentlry you have no Resumes. Create new Resume with
+                        Ai.{" "}
+                     </p>
+                  </div>
                )}
             </div>
          )}

@@ -14,8 +14,7 @@ export default function CoverLetterInput({
 }: InputCoverLetter) {
    const [file, setFile] = useState<File>();
    const [dragActive, setDragActive] = useState(false);
-   const atsScore = 60;
-   // Sample resume data - replace with actual data from props or API
+   const [selectedCv,setSelectedCv]=useState<number>();
 
    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const files = e.target.files;
@@ -111,7 +110,10 @@ export default function CoverLetterInput({
                {file && <MainBtn>Review The Resume</MainBtn>}
             </div>
          ) : (
-            <div className=" w-full h-full flex items-start justify-center">
+            <div className=" w-full h-full flex flex-col items-center justify-center py-8  md:py-20 lg:py-10">
+               <h1 className="text-accent-950 mb-5 font-bold text-2xl ">
+                  Click a CV to use for this cover letter
+               </h1>
                {coverLetters.length > 0 ? (
                   <List>
                      {coverLetters.map((file, index) => (
@@ -143,18 +145,7 @@ export default function CoverLetterInput({
                                  </h3>
                               </div>
 
-                              <div className="flex gap-2  ">
-                                 <SmallBtn ClassName="text-sm">View</SmallBtn>
-                                 <SmallBtn ClassName="text-sm bg-green-400">
-                                    Download
-                                 </SmallBtn>
-                                 <SmallBtn
-                                    ClassName="text-sm"
-                                    color="bg-red-500"
-                                 >
-                                    Delete
-                                 </SmallBtn>
-                              </div>
+                              
                            </div>
                         </motion.li>
                      ))}
