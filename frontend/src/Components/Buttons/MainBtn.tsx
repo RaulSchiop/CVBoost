@@ -5,9 +5,10 @@ type Props = {
    children: React.ReactNode;
    onClick?: () => void;
    type?: "submit" | "button";
+   className?: string;
 };
 
-export default function MainBtn({ children, onClick, type }: Props) {
+export default function MainBtn({ children, onClick, type, className }: Props) {
    return (
       <motion.button
          type={type}
@@ -25,8 +26,8 @@ export default function MainBtn({ children, onClick, type }: Props) {
 
             transition: { type: "spring", duration: 0.4 },
          }}
-         className="text-white flex items-center justify-between px-5 py-3 gap-3
-                  bg-accent-500 backdrop-blur-md border border-accent-700/30 rounded-xl shadow-lg  active:bg-accent-300"
+         className={`text-white flex items-center lg:justify-between justify-center px-5 py-3 gap-3
+                  bg-accent-500 backdrop-blur-md border border-accent-700/30 rounded-xl shadow-lg  active:bg-accent-300 ${className}`}
       >
          {children}
       </motion.button>

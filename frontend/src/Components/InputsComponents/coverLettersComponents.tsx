@@ -6,6 +6,7 @@ import { motion } from "motion/react";
 import { useState } from "react";
 import DownList from "../List/DownList";
 import { PDFInputPropsType } from "@/types/resumesTypes";
+import MainBtn from "../Buttons/MainBtn";
 
 export default function CoverLetterInput({
    toggle,
@@ -211,9 +212,25 @@ export default function CoverLetterInput({
                      className="flex flex-col gap-4 mt-5"
                   >
                      <h1 className="text-white text-3xl">Job Details</h1>
+                     <div className=" flex gap-5 flex-wrap w-full flex-col lg:flex-row">
+                        <input
+                           placeholder="name"
+                           name="name"
+                           type="text"
+                           required
+                           className="text-white placeholder-white/60 bg-contrast-500/20 border border-gray-500/60 focus:border-accent-500 rounded px-4 py-2 focus:outline-none"
+                        />
+                        <input
+                           placeholder="Job Title"
+                           name="jobTitle"
+                           type="text"
+                           required
+                           className="text-white placeholder-white/60 bg-contrast-500/20 border border-gray-500/60 focus:border-accent-500 rounded px-4 py-2 focus:outline-none"
+                        />
+                     </div>
                      <input
-                        placeholder="Job Title"
-                        name="jobTitle"
+                        placeholder="Company"
+                        name="company"
                         type="text"
                         required
                         className="text-white placeholder-white/60 bg-contrast-500/20 border border-gray-500/60 focus:border-accent-500 rounded px-4 py-2 focus:outline-none"
@@ -225,7 +242,9 @@ export default function CoverLetterInput({
                         required
                         className="text-white placeholder-white/60 bg-contrast-500/20 border border-gray-500/60 focus:border-accent-500 rounded px-4 py-2 focus:outline-none resize-none"
                      />
-                     <SmallBtn type="submit">Generate Cover Letter</SmallBtn>
+                     <MainBtn type="submit" className="lg:justify-center">
+                        Generate Cover Letter
+                     </MainBtn>
                   </form>
                </motion.div>
             </div>
