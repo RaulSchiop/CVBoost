@@ -7,7 +7,8 @@ import MainBtn from "@/Components/Buttons/MainBtn";
 import UnSelectetButton from "@/Components/Buttons/UnSelectedButton";
 
 export default function CreateCoverLetter() {
-   const [toggleUpload, setTogleUpload] = useState(false);
+   const [toggleUpload, setTogleUpload] = useState<boolean>(false);
+   const [toggleOpen, settoggleOpen] = useState<boolean>(true);
    const resumesList = [
       {
          id: 1,
@@ -68,90 +69,94 @@ export default function CreateCoverLetter() {
          {/* stap 2 */}
          {/* based on the cv ( that person ) and job description and title create a cover letter ( create a txt file and download it) */}
 
-         {toggleUpload === false ? (
-            <div className="flex bg-contrast-500/40 p-2 w-fit rounded-2xl gap-2">
-               <MainBtn>
-                  {/* uload icon */}
-                  <svg
-                     xmlns="http://www.w3.org/2000/svg"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     strokeWidth={1.5}
-                     stroke="currentColor"
-                     className="size-5"
-                  >
-                     <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"
-                     />
-                  </svg>
-                  <p>Upload New</p>
-               </MainBtn>
-               <UnSelectetButton onClick={() => setTogleUpload(true)}>
-                  {/* document writen */}
-                  <svg
-                     xmlns="http://www.w3.org/2000/svg"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     strokeWidth={1.5}
-                     stroke="currentColor"
-                     className="size-5"
-                  >
-                     <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
-                     />
-                  </svg>
-                  <p>Review Existing</p>
-               </UnSelectetButton>
-            </div>
-         ) : (
-            <div className="flex bg-contrast-500/40 p-2 w-fit rounded-2xl gap-2">
-               <UnSelectetButton onClick={() => setTogleUpload(false)}>
-                  {/* uload icon */}
-                  <svg
-                     xmlns="http://www.w3.org/2000/svg"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     strokeWidth={1.5}
-                     stroke="currentColor"
-                     className="size-5"
-                  >
-                     <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"
-                     />
-                  </svg>
-                  <p>Upload New</p>
-               </UnSelectetButton>
-               <MainBtn>
-                  {/* document writen */}
-                  <svg
-                     xmlns="http://www.w3.org/2000/svg"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     strokeWidth={1.5}
-                     stroke="currentColor"
-                     className="size-5"
-                  >
-                     <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
-                     />
-                  </svg>
-                  <p>Review Existing</p>
-               </MainBtn>
-            </div>
-         )}
+         {toggleOpen &&
+            (toggleUpload === false ? (
+               <div className="flex bg-contrast-500/40 p-2 w-fit rounded-2xl gap-2">
+                  <MainBtn>
+                     {/* uload icon */}
+                     <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="size-5"
+                     >
+                        <path
+                           strokeLinecap="round"
+                           strokeLinejoin="round"
+                           d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"
+                        />
+                     </svg>
+                     <p>Upload New</p>
+                  </MainBtn>
+                  <UnSelectetButton onClick={() => setTogleUpload(true)}>
+                     {/* document writen */}
+                     <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="size-5"
+                     >
+                        <path
+                           strokeLinecap="round"
+                           strokeLinejoin="round"
+                           d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
+                        />
+                     </svg>
+                     <p>Review Existing</p>
+                  </UnSelectetButton>
+               </div>
+            ) : (
+               <div className="flex bg-contrast-500/40 p-2 w-fit rounded-2xl gap-2">
+                  <UnSelectetButton onClick={() => setTogleUpload(false)}>
+                     {/* uload icon */}
+                     <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="size-5"
+                     >
+                        <path
+                           strokeLinecap="round"
+                           strokeLinejoin="round"
+                           d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"
+                        />
+                     </svg>
+                     <p>Upload New</p>
+                  </UnSelectetButton>
+                  <MainBtn>
+                     {/* document writen */}
+                     <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="size-5"
+                     >
+                        <path
+                           strokeLinecap="round"
+                           strokeLinejoin="round"
+                           d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
+                        />
+                     </svg>
+                     <p>Review Existing</p>
+                  </MainBtn>
+               </div>
+            ))}
 
          <CoverLetterInput
             toggle={toggleUpload}
             resumes={resumesList}
+            settoggleOpen={settoggleOpen}
          ></CoverLetterInput>
+
+         <div></div>
       </div>
    );
 }
