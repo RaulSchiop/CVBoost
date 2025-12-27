@@ -6,6 +6,33 @@ import { useState } from "react";
 import { motion } from "motion/react";
 
 export default function AiReview() {
+   const resumesList = [
+      {
+         id: 1,
+         name: "CVRAULSCHIOp.pdf",
+         createdDate: "20/11/2025",
+         atsScore: 60,
+      },
+      {
+         id: 2,
+         name: "CVRAULSCHIOp2.pdf",
+         createdDate: "21/11/2025",
+         atsScore: 75,
+      },
+      {
+         id: 3,
+         name: "CVRAULSCHIOp3.pdf",
+         createdDate: "22/11/2025",
+         atsScore: 85,
+      },
+      {
+         id: 4,
+         name: "CVRAULSCHIOp4.pdf",
+         createdDate: "23/11/2025",
+         atsScore: 45,
+      },
+   ];
+
    //false = upload mode
    //true = existent mode
    const [toggleUpload, setTogleUpload] = useState(false);
@@ -134,7 +161,7 @@ export default function AiReview() {
                </MainBtn>
             </div>
          )}
-         <PDFInput toggle={toggleUpload} resumes={false}></PDFInput>
+         <PDFInput toggle={toggleUpload} resumes={resumesList}></PDFInput>
       </div>
    );
 }

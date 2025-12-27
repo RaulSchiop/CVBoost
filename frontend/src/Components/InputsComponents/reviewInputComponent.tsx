@@ -1,6 +1,6 @@
 "use client";
 
-import { PDFInputPropsType } from "@/types/aiReviewType";
+import { PDFInputPropsType } from "@/types/resumesTypes";
 import MainCard from "../Cards/MainCard";
 import SmallBtn from "../Buttons/SmallMainBtn";
 import { motion } from "motion/react";
@@ -13,32 +13,6 @@ export default function PDFInput({ toggle, resumes }: PDFInputPropsType) {
    const [dragActive, setDragActive] = useState(false);
    const atsScore = 60;
    // Sample resume data - replace with actual data from props or API
-   const resumesList = [
-      {
-         id: 1,
-         name: "CVRAULSCHIOp.pdf",
-         createdDate: "20/11/2025",
-         atsScore: 60,
-      },
-      {
-         id: 2,
-         name: "CVRAULSCHIOp2.pdf",
-         createdDate: "21/11/2025",
-         atsScore: 75,
-      },
-      {
-         id: 3,
-         name: "CVRAULSCHIOp3.pdf",
-         createdDate: "22/11/2025",
-         atsScore: 85,
-      },
-      {
-         id: 4,
-         name: "CVRAULSCHIOp4.pdf",
-         createdDate: "23/11/2025",
-         atsScore: 45,
-      },
-   ];
 
    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const files = e.target.files;
@@ -135,9 +109,9 @@ export default function PDFInput({ toggle, resumes }: PDFInputPropsType) {
             </div>
          ) : (
             <div className=" w-full h-full flex items-start justify-center">
-               {resumes === false ? (
+               {resumes ? (
                   <DownList>
-                     {resumesList.map((resume, index) => (
+                     {resumes.map((resume, index) => (
                         <motion.li
                            key={resume.id}
                            className="mb-3"
@@ -188,7 +162,7 @@ export default function PDFInput({ toggle, resumes }: PDFInputPropsType) {
                      ))}
                   </DownList>
                ) : (
-                  <p>No Resumes</p>
+                  <p> No Resumes</p>
                )}
             </div>
          )}

@@ -1,0 +1,178 @@
+"use client";
+
+import { InputCoverLetter } from "@/types/coverLetterTypes";
+import MainCard from "../Cards/MainCard";
+import SmallBtn from "../Buttons/SmallMainBtn";
+import { motion } from "motion/react";
+import { useState } from "react";
+import MainBtn from "../Buttons/MainBtn";
+import List from "../List/ClasicList";
+
+export default function CoverLetterInput({
+   toggle,
+   coverLetters,
+}: InputCoverLetter) {
+   const [file, setFile] = useState<File>();
+   const [dragActive, setDragActive] = useState(false);
+   const atsScore = 60;
+   // Sample resume data - replace with actual data from props or API
+
+   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const files = e.target.files;
+      if (!files || files.length === 0) return;
+      setFile(files[0]);
+      e.currentTarget.value = "";
+   };
+
+   const handleDrag = (e: React.DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setDragActive(true);
+   };
+
+   const handleDrop = (e: React.DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const droppedFile = e.dataTransfer.files[0];
+      setDragActive(false);
+      if (droppedFile.type !== "application/pdf") {
+         alert("Only PDF files allowed");
+         return;
+      }
+
+      setFile(droppedFile);
+   };
+   return (
+      <motion.div
+         initial={{ opacity: 0, y: 100 }}
+         animate={{ opacity: 1, y: 0 }}
+         transition={{ type: "spring", duration: 0.8 }}
+         className="bg-contrast-500/20 rounded-2xl mt-5  backdrop-blur-md "
+      >
+         {toggle === false ? (
+            <div className="w-full h-full flex flex-col items-end justify-center p-3">
+               <div className="p-10 w-full h-[400px]">
+                  <label
+                     htmlFor="files"
+                     className="w-full h-full cursor-pointer  "
+                  >
+                     <div
+                        className={`rounded-2xl border-2 border-dashed border-gray-500/80 w-full h-full p-5 flex flex-col items-center justify-center gap-2 ${
+                           dragActive && "cursor-pointer"
+                        }`}
+                        onDragOver={handleDrag}
+                        onDrop={handleDrop}
+                        onDragLeave={() => setDragActive(false)}
+                     >
+                        <div className="p-2 rounded-xl bg-gradient-to-br from-contrast-500/40 via-contrast-500/20 to-contrast-500/10 border border-gray-500/60">
+                           {/* document writen */}
+                           <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="size-14 text-white/50"
+                           >
+                              <path
+                                 strokeLinecap="round"
+                                 strokeLinejoin="round"
+                                 d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
+                              />
+                           </svg>
+                        </div>
+                        {file ? (
+                           <h1 className="text-xl text-white/80 ">
+                              File Name :{" "}
+                              <a className="font-bold text-accent-700">
+                                 {file.name}
+                              </a>
+                           </h1>
+                        ) : (
+                           <h1 className="text-xl text-white/80">
+                              Upload Resume PDF
+                           </h1>
+                        )}
+
+                        <p className="text-gray-500/60">
+                           Drag & drop or click to browse
+                        </p>
+
+                        <input
+                           id="files"
+                           className="hidden"
+                           type="file"
+                           accept="application/pdf"
+                           onChange={handleInputChange}
+                        />
+                     </div>
+                  </label>
+               </div>
+               {file && <MainBtn>Review The Resume</MainBtn>}
+            </div>
+         ) : (
+            <div className=" w-full h-full flex items-start justify-center">
+               {coverLetters.length > 0 ? (
+                  <List>
+                     {coverLetters.map((file, index) => (
+                        <motion.li
+                           initial={{ opacity: 0 }}
+                           animate={{ opacity: 1 }}
+                           exit={{ opacity: 0 }}
+                           transition={{
+                              type: "spring",
+                              duration: 1.5,
+                              delay: index * 0.1,
+                           }}
+                           key={index}
+                           className="bg-purple-500/30 border border-purple-300/20 rounded-lg overflow-hidden"
+                        >
+                           <div className=" flex flex-col gap-2 p-6 items-center justify-center">
+                              <div className=" flex items-start justify-between flex-col mb-2">
+                                 <h3 className="text-white text-lg font-bold truncate mb-2">
+                                    {file.name}
+                                 </h3>
+                                 <h3 className="text-white/70  font-bold truncate">
+                                    Job Title: {file.jobTitle}
+                                 </h3>
+                                 <h3 className="text-white/70  font-bold truncate">
+                                    Company: {file.Company}
+                                 </h3>
+                                 <h3 className="text-white/70  font-bold truncate ">
+                                    Date: {file.createdDate}
+                                 </h3>
+                              </div>
+
+                              <div className="flex gap-2  ">
+                                 <SmallBtn ClassName="text-sm">View</SmallBtn>
+                                 <SmallBtn ClassName="text-sm bg-green-400">
+                                    Download
+                                 </SmallBtn>
+                                 <SmallBtn
+                                    ClassName="text-sm"
+                                    color="bg-red-500"
+                                 >
+                                    Delete
+                                 </SmallBtn>
+                              </div>
+                           </div>
+                        </motion.li>
+                     ))}
+                  </List>
+               ) : (
+                  <div className="w-full h-full flex items-center justify-center flex-col mt-20">
+                     <h1 className="text-accent-600 text-3xl font-bold">
+                        {" "}
+                        No Cover Letter{" "}
+                     </h1>
+                     <p className="text-accent-950/70 text-lg text-center">
+                        Curentlry you have no Cover Letter. Create new cover
+                        letter with Ai.{" "}
+                     </p>
+                  </div>
+               )}{" "}
+            </div>
+         )}
+      </motion.div>
+   );
+}

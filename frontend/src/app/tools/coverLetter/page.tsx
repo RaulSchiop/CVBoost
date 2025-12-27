@@ -3,11 +3,10 @@ import GreenBtn from "@/Components/Buttons/GreenBtn";
 import SmallBtn from "@/Components/Buttons/SmallMainBtn";
 import List from "@/Components/List/ClasicList";
 import { motion } from "motion/react";
-import Image from "next/image";
 import Link from "next/link";
 
 export default function CoverLetter() {
-   const resumesList = [
+   const coverLetters = [
       {
          id: 1,
          name: "CVRAULSCHIOp.pdf",
@@ -92,9 +91,9 @@ export default function CoverLetter() {
             </Link>
          </div>
 
-         {resumesList.length > 0 ? (
+         {coverLetters.length > 0 ? (
             <List>
-               {resumesList.map((file, index) => (
+               {coverLetters.map((file, index) => (
                   <motion.li
                      initial={{ opacity: 0 }}
                      animate={{ opacity: 1 }}
