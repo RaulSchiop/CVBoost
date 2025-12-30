@@ -4,6 +4,7 @@ import UnSelectetButton from "@/Components/Buttons/UnSelectedButton";
 import PDFInput from "@/Components/InputsComponents/reviewCvInput";
 import { useState } from "react";
 import { motion } from "motion/react";
+import Title from "@/Components/Text/Title";
 
 export default function AiReview() {
    const resumesList = [
@@ -62,25 +63,9 @@ export default function AiReview() {
                   />
                </svg>
             </motion.div>
-            <div className="flex items-center flex-col justify-center mt-4 gap-2">
-               {/* page text */}
-               <motion.h1
-                  initial={{ opacity: 0, y: -100 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ type: "spring", duration: 0.6 }}
-                  className="text-white text-5xl font-bold"
-               >
-                  Ai Resume Review
-               </motion.h1>
-               <motion.p
-                  initial={{ opacity: 0, y: -100 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ type: "spring", duration: 0.4 }}
-                  className="text-white/50"
-               >
-                  Get AI-powered ATS Review score based across 5 key criteria
-               </motion.p>
-            </div>
+            <Title title=" Ai Resume Review">
+               Get AI-powered ATS Review score based across 5 key criteria
+            </Title>
          </div>
          {toggleUpload === false ? (
             <div className="flex bg-contrast-500/40 p-2 w-fit rounded-2xl gap-2">
