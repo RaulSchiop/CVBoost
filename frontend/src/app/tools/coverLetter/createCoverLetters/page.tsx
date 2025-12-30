@@ -57,18 +57,6 @@ export default function CreateCoverLetter() {
                <a className="text-accent-500 text-xl font-bold">AI</a>
             </motion.p>
          </div>
-         {/* stap 1 */}
-         {/* {
-         id: 1,
-         name: "CVRAULSCHIOp.pdf",
-         Company: "hella",
-         jobTitle: "softwareEngineer",
-         createdDate: "20/11/2025",
-      },*/}
-
-         {/* stap 2 */}
-         {/* based on the cv ( that person ) and job description and title create a cover letter ( create a txt file and download it) */}
-
          {toggleOpen &&
             (toggleUpload === false ? (
                <div className="flex bg-contrast-500/40 p-2 w-fit rounded-2xl gap-2">
@@ -155,8 +143,6 @@ export default function CreateCoverLetter() {
             resumes={resumesList}
             settoggleOpen={settoggleOpen}
          ></CoverLetterInput>
-
-         <div></div>
       </div>
    );
 }
