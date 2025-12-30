@@ -1,5 +1,5 @@
 "use client";
-import CoverLetterInput from "@/Components/InputsComponents/coverLettersComponents";
+import CoverLetterInput from "@/Components/InputsComponents/coverLettersInput";
 import { useState } from "react";
 import { motion } from "motion/react";
 import Link from "next/link";

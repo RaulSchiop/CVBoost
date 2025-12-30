@@ -1,7 +1,7 @@
 "use client";
 import MainBtn from "@/Components/Buttons/MainBtn";
 import UnSelectetButton from "@/Components/Buttons/UnSelectedButton";
-import PDFInput from "@/Components/InputsComponents/reviewInputComponent";
+import PDFInput from "@/Components/InputsComponents/reviewCvInput";
 import { useState } from "react";
 import { motion } from "motion/react";
 
