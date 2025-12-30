@@ -7,6 +7,7 @@ import { useState } from "react";
 import DownList from "../List/DownList";
 import { PDFInputPropsType } from "@/types/resumesTypes";
 import MainBtn from "../Buttons/MainBtn";
+import { CoverLetter } from "@/types/coverLetterTypes";
 
 export default function CoverLetterInput({
    toggle,
@@ -16,6 +17,29 @@ export default function CoverLetterInput({
    const [file, setFile] = useState<File>();
    const [dragActive, setDragActive] = useState(false);
    const [selectedCv, setSelectedCv] = useState<number>();
+   const [coverInput, setCoverInput] = useState<
+      Omit<CoverLetter, "id" | "createdDate">
+   >({
+      name: "",
+      Company: "",
+      jobTitle: "",
+      jobDescription: "",
+   });
+
+   const handleChange = (
+      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+   ) => {
+      e.preventDefault();
+      const { value, name } = e.target;
+      setCoverInput((prev) => ({
+         ...prev,
+         [name]: value,
+      }));
+   };
+
+   const handlesSubmit = () => {
+      console.log("csv Input ");
+   };
 
    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const files = e.target.files;
@@ -49,6 +73,7 @@ export default function CoverLetterInput({
       setSelectedCv(id);
       settoggleOpen?.(false);
    };
+   console.log(coverInput);
 
    return (
       <div>
@@ -202,13 +227,7 @@ export default function CoverLetterInput({
                   transition={{ duration: 0.5 }}
                >
                   <form
-                     onSubmit={(e) => {
-                        e.preventDefault();
-                        // Handle form submission to create cover letter
-                        console.log(
-                           "Creating cover letter with selected CV or file"
-                        );
-                     }}
+                     onSubmit={handlesSubmit}
                      className="flex flex-col gap-4 mt-5"
                   >
                      <h1 className="text-white text-3xl">Job Details</h1>
@@ -217,6 +236,7 @@ export default function CoverLetterInput({
                            placeholder="name"
                            name="name"
                            type="text"
+                           onChange={handleChange}
                            required
                            className="text-white placeholder-white/60 bg-contrast-500/20 border border-gray-500/60 focus:border-accent-500 rounded px-4 py-2 focus:outline-none"
                         />
@@ -224,14 +244,16 @@ export default function CoverLetterInput({
                            placeholder="Job Title"
                            name="jobTitle"
                            type="text"
+                           onChange={handleChange}
                            required
                            className="text-white placeholder-white/60 bg-contrast-500/20 border border-gray-500/60 focus:border-accent-500 rounded px-4 py-2 focus:outline-none"
                         />
                      </div>
                      <input
                         placeholder="Company"
-                        name="company"
+                        name="Company"
                         type="text"
+                        onChange={handleChange}
                         required
                         className="text-white placeholder-white/60 bg-contrast-500/20 border border-gray-500/60 focus:border-accent-500 rounded px-4 py-2 focus:outline-none"
                      />
@@ -239,6 +261,7 @@ export default function CoverLetterInput({
                         placeholder="Job Description"
                         name="jobDescription"
                         rows={4}
+                        onChange={handleChange}
                         required
                         className="text-white placeholder-white/60 bg-contrast-500/20 border border-gray-500/60 focus:border-accent-500 rounded px-4 py-2 focus:outline-none resize-none"
                      />
