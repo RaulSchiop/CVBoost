@@ -234,7 +234,7 @@ export default function CoverLetterInput({
                      <div className=" flex gap-5 flex-wrap w-full flex-col lg:flex-row">
                         <input
                            placeholder="name"
-                           name="name"
+                           name="Name"
                            type="text"
                            onChange={handleChange}
                            required

@@ -233,7 +233,7 @@ export default function JobMatchInput({
                      <h1 className="text-white text-3xl">Job Details</h1>
                      <div className=" flex gap-5 flex-wrap w-full flex-col lg:flex-row">
                         <input
-                           placeholder="name"
+                           placeholder="Name"
                            name="name"
                            type="text"
                            onChange={handleChange}
