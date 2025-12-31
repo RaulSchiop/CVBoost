@@ -106,15 +106,37 @@ export default function Tools() {
          description:
             "Upload or select a resume to receive an ATS score along with AI-powered tips to improve structure, clarity, and effectiveness.",
       },
+      {
+         icon: (
+            //clock icon
+            <svg
+               xmlns="http://www.w3.org/2000/svg"
+               fill="none"
+               viewBox="0 0 24 24"
+               strokeWidth={1.5}
+               stroke="currentColor"
+               className={`w-8 h-8  text-white`}
+            >
+               <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+               />
+            </svg>
+         ),
+         link: "/",
+         label: "Coming Soon",
+         description:
+            "More AI-powered tools are coming soon to help you optimize your job search and make every application count.",
+      },
    ];
 
    return (
       <div className="w-full min-h-screen p-10 md:p-15 bg-gradient-to-bl from-contrast-500/20 via-contrast-500/60 to-contrast-500/20">
          <Title title=" Dashboard">
-            {" "}
-            Dashboard that describes all your
+            Dashboard showcasing all your
             <a className="text-accent-500 text-xl font-bold"> AI</a>-powered
-            tools.
+            tools in one place.
          </Title>
          <List>
             {paths.map((items, index) => (
