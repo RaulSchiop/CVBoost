@@ -81,7 +81,10 @@ export default function Resume() {
    return (
       <div className="w-full min-h-screen p-10 md:p-15 bg-gradient-to-bl from-contrast-500/20 via-contrast-500/60 to-contrast-500/20">
          <Title title="Resumes">
-            View all your past resumes and scores and performance over time.
+            <p className="mb-10">
+               {" "}
+               View all your past resumes and scores and performance over time.
+            </p>
          </Title>
          <div>
             <List>

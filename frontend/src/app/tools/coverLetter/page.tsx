@@ -61,7 +61,7 @@ export default function CoverLetter() {
    return (
       <div className="w-full min-h-screen p-10 md:p-15 bg-gradient-to-bl from-contrast-500/20 via-contrast-500/60 to-contrast-500/20">
          <Title title="Cover Letters">
-            View all your cover letters or create new ones.
+            <p>View all your cover letters or create new ones.</p>
          </Title>
          <div className="flex items-center justify-between lg:px-10 mb-5">
             <motion.h2

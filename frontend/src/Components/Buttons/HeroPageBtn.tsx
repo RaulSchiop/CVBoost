@@ -8,7 +8,12 @@ type Props = {
    className?: string;
 };
 
-export default function HeroPageBtn({ children, onClick, type, className }: Props) {
+export default function HeroPageBtn({
+   children,
+   onClick,
+   type,
+   className,
+}: Props) {
    return (
       <motion.button
          type={type}
@@ -17,7 +22,7 @@ export default function HeroPageBtn({ children, onClick, type, className }: Prop
          animate={{ opacity: 1, y: 0 }}
          transition={{ type: "spring", duration: 0.5 }}
          whileHover={{
-            scale: 1.05,
+            scale: 1.20,
 
             transition: { type: "spring", duration: 0.4 },
          }}
@@ -26,8 +31,8 @@ export default function HeroPageBtn({ children, onClick, type, className }: Prop
 
             transition: { type: "spring", duration: 0.4 },
          }}
-         className={`text-white flex items-center lg:justify-between justify-center px-5 py-3 gap-3
-                  bg-accent-500 backdrop-blur-md border border-accent-700/30 rounded-xl shadow-lg  active:bg-accent-300 ${className} `}
+         className={`text-white flex items-center lg:justify-between justify-center px-6 py-4 gap-3
+                  bg-accent-500 backdrop-blur-md border border-accent-700/30 rounded-xl shadow-lg text-xl active:bg-accent-300 ${className}`}
       >
          {children}
       </motion.button>
