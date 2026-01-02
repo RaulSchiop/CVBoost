@@ -1,6 +1,8 @@
+import HeroPageBtn from "@/Components/Buttons/HeroPageBtn";
 import Footer from "@/Components/Footer/Footer";
 import Header from "@/Components/Header/Header";
 import Logo from "@/Components/Logo/Logo";
+import Title from "@/Components/Text/Title";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -9,17 +11,15 @@ export default function Home() {
       <div className="min-h-screen flex flex-col overflow-x-hidden">
          <div className="flex flex-col items-center pt-30 gap-6 p-10 min-h-screen bg-gradient-to-bl from-accent-200 via-contrast-500/50 to-accent-200">
             <Header></Header>
-            {Array.from({ length: 20 }).map((_, i) => (
-               <div key={i} className="bg-white">
-                  <span className="font-semibold">Glass Box {i + 1}</span>
-                  <div className="flex gap-4">
-                     <Link href="/">Home</Link>
-                     <Link href="/tools">Tools</Link>
-                     <Link href="/contact">Contact</Link>
-                     <Link href="/profile">Profile</Link>
-                  </div>
-               </div>
-            ))}
+            <div className="flex items-center justify-center flex-col gap-5">
+               <Title title="Boost Your CV with AI">
+                  <p className="text-xl mt-2 font-bold w-2xl text-center bg-gradient-to-r from-accent-900 via-accent-700 to-accent-900 bg-clip-text text-transparent">
+                     Create job-winning CVs and personalized cover letters in
+                     minutes using powerful AI built for today’s job market.
+                  </p>
+               </Title>
+               <HeroPageBtn>Get Started For Free</HeroPageBtn>
+            </div>
          </div>
          <Footer></Footer>
       </div>
