@@ -101,6 +101,7 @@ export default function Home() {
 
                <div></div>
             </div>
+            {/* second part ( what helps you ) */}
             <motion.div
                initial={{ opacity: 0 }}
                whileInView={{ opacity: 1 }}
@@ -151,6 +152,20 @@ export default function Home() {
                      </motion.li>
                   ))}
                </List>
+            </motion.div>
+         </div>
+         <div>
+            <motion.div
+               initial={{ opacity: 0 }}
+               whileInView={{ opacity: 1 }}
+               viewport={{ once: false, amount: 0.2 }}
+               transition={{ duration: 1.5, type: "spring" }}
+               className="mt-10 lg:w-full flex items-center justify-center rounded-4xl py-5 md:px-5 lg:px-30 px-5 gap-5 md:gap-0 flex-col  mb-20"
+            >
+               <h1 className="text-3xl text-white mb-10">
+                  Features <a className="text-primary-600 text-4xl">you'll</a>{" "}
+                  Love
+               </h1>
             </motion.div>
          </div>
          <Footer></Footer>
