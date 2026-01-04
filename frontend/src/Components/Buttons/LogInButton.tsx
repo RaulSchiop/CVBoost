@@ -17,10 +17,10 @@ export default function LogInBtn() {
 
             transition: { type: "spring", duration: 0.4 },
          }}
-         className="text-white flex items-center justify-between px-5 py-3 bg-accent-500 backdrop-blur-md border
+         className="text-white flex items-center justify-between px-4 py-3 bg-accent-500 backdrop-blur-md border
                    border-accent-700/30 rounded-xl shadow-lg active:bg-accent-300"
       >
-         <h1 className="text-white ">Log In</h1>
+         <h1 className="text-white ">Get Started</h1>
       </motion.button>
    );
 }

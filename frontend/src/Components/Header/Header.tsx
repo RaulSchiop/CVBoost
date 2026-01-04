@@ -34,7 +34,7 @@ export default function Header() {
             duration: 0.5,
             bounce: 0.2,
          }}
-         className="fixed top-5 w-full h-16 flex items-center justify-between px-15 md:px-25 z-50 "
+         className="fixed top-5 w-full h-16 flex items-center justify-between px-15 md:px-20 z-50 "
       >
          <Link href={"/"}>
             <Logo></Logo>
