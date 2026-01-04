@@ -69,6 +69,7 @@ export default function ContactUs() {
                      hear from you!
                   </p>
                   <div className="flex items-center justify-center gap-10">
+                     {/* update icon */}
                      <motion.svg
                         whileHover={{ rotate: 360 }}
                         initial={{ rotate: 0 }}
@@ -96,6 +97,7 @@ export default function ContactUs() {
                      </div>
                   </div>
                   <div className="flex items-center justify-center gap-10 ">
+                     {/* tools icon(problems) */}
                      <motion.svg
                         whileHover={{ rotate: 360 }}
                         initial={{ rotate: 0 }}
@@ -123,6 +125,8 @@ export default function ContactUs() {
                      </div>
                   </div>
                   <div className="flex items-center justify-center gap-10">
+
+                     {/* phone icon */}
                      <motion.svg
                         whileHover={{ rotate: 360 }}
                         initial={{ rotate: 0 }}
