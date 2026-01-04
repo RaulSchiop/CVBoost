@@ -10,8 +10,9 @@ import { motion } from "motion/react";
 import { JSX } from "react";
 import List from "@/Components/List/ClasicList";
 import MainCard from "@/Components/Cards/MainCard";
+import ToolsSection from "@/Components/Cards/ThirdCardSectionMainPage";
 
-const paths: {
+const whatHelpsYou: {
    icon: JSX.Element;
    label: string;
    description: string;
@@ -115,7 +116,7 @@ export default function Home() {
                   <a className="text-primary-600 text-4xl">?</a>
                </h1>
                <List>
-                  {paths.map((items, index) => (
+                  {whatHelpsYou.map((items, index) => (
                      <motion.li
                         initial={{ opacity: 0, x: -200 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -154,20 +155,22 @@ export default function Home() {
                </List>
             </motion.div>
          </div>
-         <div>
-            <motion.div
-               initial={{ opacity: 0 }}
-               whileInView={{ opacity: 1 }}
-               viewport={{ once: false, amount: 0.2 }}
-               transition={{ duration: 1.5, type: "spring" }}
-               className="mt-10 lg:w-full flex items-center justify-center rounded-4xl py-5 md:px-5 lg:px-30 px-5 gap-5 md:gap-0 flex-col  mb-20"
-            >
-               <h1 className="text-3xl text-white mb-10">
+         <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 1.5, type: "spring" }}
+            className="bg-gradient-to-t from-black via-accent-500/50 to-black w-full h-fullrounded-3xl"
+         >
+            <div className=" lg:w-full flex items-center justify-center rounded-4xl py-5 md:px-5 lg:px-30 px-5 gap-5 md:gap-0 flex-col ">
+               <h1 className="text-3xl text-white ">
                   Features <a className="text-primary-600 text-4xl">you'll</a>{" "}
                   Love
                </h1>
-            </motion.div>
-         </div>
+            </div>
+
+            <ToolsSection></ToolsSection>
+         </motion.div>
          <Footer></Footer>
       </div>
    );
