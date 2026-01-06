@@ -314,7 +314,7 @@ export default function SideBarHeader() {
                   )}
                </svg>
             </button>
-            <Link href="/createResume">
+            <Link href="/tools/createResume">
                <GreenBtn> Create New Resume</GreenBtn>
             </Link>
          </div>
