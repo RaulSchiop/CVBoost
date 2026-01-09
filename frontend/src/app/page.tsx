@@ -155,12 +155,14 @@ export default function Home() {
                </List>
             </motion.div>
          </div>
+
+         {/* third part ( Features you'll  Love ) */}
          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 1.5, type: "spring" }}
-            className="bg-gradient-to-t from-black via-accent-500/50 to-black w-full h-fullrounded-3xl"
+            className="bg-gradient-to-t from-black via-accent-500/50 to-black w-full h-fullrounded-3xl mb-20"
          >
             <div className=" lg:w-full flex items-center justify-center rounded-4xl py-5 md:px-5 lg:px-30 px-5 gap-5 md:gap-0 flex-col ">
                <h1 className="text-3xl text-white ">
@@ -170,6 +172,19 @@ export default function Home() {
             </div>
 
             <ToolsSection></ToolsSection>
+         </motion.div>
+         <motion.div>
+            <div className="flex items-center justify-center flex-col">
+               <p className="text-accent-500/70 p-2 text-sm border-accent-500/40 border-1 rounded-2xl ">
+                  Pricing
+               </p>
+               <h1 className="text-white text-5xl w-xl text-center">
+                  Choose the perfect plan for you to advance your career.
+               </h1>
+               <p className="text-white/50 mt-2 text-lg">
+                  Whether you are a junior or senior, it doesn’t matter.
+               </p>
+            </div>
          </motion.div>
          <Footer></Footer>
       </div>
