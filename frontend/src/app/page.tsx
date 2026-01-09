@@ -11,6 +11,7 @@ import { JSX } from "react";
 import List from "@/Components/List/ClasicList";
 import MainCard from "@/Components/Cards/MainCard";
 import ToolsSection from "@/Components/Cards/ThirdCardSectionMainPage";
+import PriceingCards from "@/Components/Cards/PricingCards";
 
 const whatHelpsYou: {
    icon: JSX.Element;
@@ -102,7 +103,7 @@ export default function Home() {
 
                <div></div>
             </div>
-            {/* second part ( what helps you ) */}
+            {/* second section ( what helps you ) */}
             <motion.div
                initial={{ opacity: 0 }}
                whileInView={{ opacity: 1 }}
@@ -156,7 +157,7 @@ export default function Home() {
             </motion.div>
          </div>
 
-         {/* third part ( Features you'll  Love ) */}
+         {/* third section ( Features you'll  Love ) */}
          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -173,6 +174,7 @@ export default function Home() {
 
             <ToolsSection></ToolsSection>
          </motion.div>
+         {/* last section for main page( pricing section ) */}
          <motion.div>
             <div className="flex items-center justify-center flex-col">
                <p className="text-accent-500/70 p-2 text-sm border-accent-500/40 border-1 rounded-2xl ">
@@ -184,6 +186,7 @@ export default function Home() {
                <p className="text-white/50 mt-2 text-lg">
                   Whether you are a junior or senior, it doesn’t matter.
                </p>
+               <PriceingCards></PriceingCards>
             </div>
          </motion.div>
          <Footer></Footer>
