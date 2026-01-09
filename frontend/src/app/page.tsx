@@ -162,7 +162,7 @@ export default function Home() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 1.5, type: "spring" }}
-            className="bg-gradient-to-t from-black via-accent-500/50 to-black w-full h-fullrounded-3xl mb-20"
+            className="bg-gradient-to-t from-black via-accent-500/50 to-black w-full h-full rounded-3xl mb-20"
          >
             <div className=" lg:w-full flex items-center justify-center rounded-4xl py-5 md:px-5 lg:px-30 px-5 gap-5 md:gap-0 flex-col ">
                <h1 className="text-3xl text-white ">
