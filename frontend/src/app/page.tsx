@@ -7,7 +7,7 @@ import Title from "@/Components/Text/Title";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
-import { JSX } from "react";
+import { JSX, useState } from "react";
 import List from "@/Components/List/ClasicList";
 import MainCard from "@/Components/Cards/MainCard";
 import ToolsSection from "@/Components/Cards/ThirdCardSectionMainPage";
@@ -87,6 +87,8 @@ const whatHelpsYou: {
 ];
 
 export default function Home() {
+   const [toggle, setToggle] = useState<boolean>(false);
+
    return (
       <div className="min-h-screen flex flex-col overflow-x-hidden">
          <div className="flex flex-col items-center pt-30 gap-6 p-10 min-h-screen ">
@@ -186,7 +188,7 @@ export default function Home() {
                <p className="text-white/50 mt-2 text-lg">
                   Whether you are a junior or senior, it doesn’t matter.
                </p>
-               <PriceingCards></PriceingCards>
+               <PriceingCards toggle={toggle} setToggle={setToggle}></PriceingCards>
             </div>
          </motion.div>
          <Footer></Footer>
