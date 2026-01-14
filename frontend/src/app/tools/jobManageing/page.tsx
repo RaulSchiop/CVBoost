@@ -9,6 +9,7 @@ import { useState } from "react";
 import { Status } from "@/types/jobsType";
 
 export default function JobManageing() {
+   //status list
    const statusOptions = [
       "saved",
       "applied",
@@ -18,6 +19,7 @@ export default function JobManageing() {
       "rejected",
    ];
 
+   //hardcoded jobs
    const jobs: Job[] = [
       {
          id: 1,
@@ -59,9 +61,9 @@ export default function JobManageing() {
    });
 
    const [status, setStatus] = useState(initialStatuses);
-   const [open, setOpen] = useState(false);
 
-   const updateStatus = (status: Status) => {};
+   //later change status on update small button
+   const updateStatus = async (status: Status) => {};
 
    console.log(status);
    const handleStatusChange = (status: Status, id: number) => {
@@ -69,8 +71,6 @@ export default function JobManageing() {
          ...prev,
          [id]: status,
       }));
-
-      setOpen(false);
    };
 
    return (
