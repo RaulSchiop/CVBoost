@@ -8,6 +8,7 @@ import { motion } from "motion/react";
 import { useState } from "react";
 import { Status } from "@/types/jobsType";
 import GreenBtn from "@/Components/Buttons/GreenBtn";
+import Link from "next/link";
 
 export default function JobManageing() {
    //status list
@@ -80,7 +81,9 @@ export default function JobManageing() {
             <Title title="Jobs List">
                <p>Track and manage job applications in one place.</p>
             </Title>
-            <GreenBtn>Create new Application</GreenBtn>
+            <Link href="/tools/jobManageing/createApplication">
+               <GreenBtn>Create new Application</GreenBtn>
+            </Link>
          </div>
          {jobs.length > 0 ? (
             <div>
@@ -103,7 +106,7 @@ export default function JobManageing() {
                            </h1>
                            <div className="flex lg:flex-row flex-col justify-center lg:gap-20 w-full ">
                               <p className="text-white text-wrap">
-                                {items.position}
+                                 {items.position}
                               </p>
                               <p className="text-white">{items.seniority}</p>
                               <p className="text-white/50">{items.date}</p>
