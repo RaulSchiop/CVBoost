@@ -97,32 +97,34 @@ export default function JobManageing() {
                         }}
                         className="bg-purple-500/30 border border-purple-300/20 rounded-lg overflow-hidden mb-5"
                      >
-                        <div className=" flex  w-full p-6 items-center justify-between ">
+                        <div className=" flex  w-full p-6 items-center  justify-center lg:justify-between gap-2 md:gap-0">
                            <h1 className="text-white text-xl">
                               Job Titile: {items.title}
                            </h1>
-                           <p className="text-white">
-                              Position: {items.position}
-                           </p>
-                           <p className="text-white">{items.seniority}</p>
-                           <p className="text-white/50">{items.date}</p>
-                           <p
-                              className={`${
-                                 items.status === "accepted"
-                                    ? "text-green-600"
-                                    : items.status === "rejected"
-                                    ? "text-red-500"
-                                    : items.status === "interview"
-                                    ? "text-yellow-400"
-                                    : items.status === "applied"
-                                    ? "text-blue-500"
-                                    : items.status === "offer"
-                                    ? "text-emerald-500"
-                                    : "text-gray-400"
-                              } `}
-                           >
-                              {items.status}
-                           </p>
+                           <div className="flex lg:flex-row flex-col justify-center lg:gap-20 w-full ">
+                              <p className="text-white text-wrap">
+                                {items.position}
+                              </p>
+                              <p className="text-white">{items.seniority}</p>
+                              <p className="text-white/50">{items.date}</p>
+                              <p
+                                 className={`${
+                                    items.status === "accepted"
+                                       ? "text-green-600"
+                                       : items.status === "rejected"
+                                       ? "text-red-500"
+                                       : items.status === "interview"
+                                       ? "text-yellow-400"
+                                       : items.status === "applied"
+                                       ? "text-blue-500"
+                                       : items.status === "offer"
+                                       ? "text-emerald-500"
+                                       : "text-gray-400"
+                                 } `}
+                              >
+                                 {items.status}
+                              </p>
+                           </div>
                            <div className="flex items-center justify-center gap-4 ">
                               <select
                                  className="text-white"

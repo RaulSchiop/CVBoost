@@ -175,8 +175,8 @@ export default function SideBarHeader() {
 
    return (
       <div className="">
-         <div className="fixed left-0 top-0 h-screen w-72 p-5 hidden md:flex flex-col justify-between bg-contrast-500/20 gap-10  overflow-y-auto lg:overflow-y-hidden">
-            <div className="flex  justify-center flex-col gap-3 ">
+         <div className="fixed left-0 top-0 h-screen w-72 p-5 hidden md:flex flex-col justify-between bg-contrast-500/20  overflow-y-auto lg:overflow-y-hidden">
+            <div className="flex  justify-center flex-col gap-2 ">
                <motion.div
                   initial={{ opacity: 0, y: -500 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -208,7 +208,7 @@ export default function SideBarHeader() {
                      </h1>
                   </GreenBtn>
                </Link>
-               <ul className="mt-5">
+               <ul className="">
                   {List.map((items, index) => (
                      <motion.li
                         initial={{ opacity: 0, x: -200 }}
