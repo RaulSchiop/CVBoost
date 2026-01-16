@@ -140,7 +140,7 @@ export default function Home() {
                         }}
                         key={index}
                      >
-                        <MainCard>
+                        <MainCard ClassName="min-h-[200px]">
                            <div className="flex items-center justify-center gap-4 px-7 py-8 flex-col">
                               <div className="bg-gradient-to-tl from-purple-500/40 via-purple-500/85 to-purple-500/20 p-5 rounded-2xl">
                                  {items.icon}
@@ -182,13 +182,16 @@ export default function Home() {
                <p className="text-accent-500/70 p-2 text-sm border-accent-500/40 border-1 rounded-2xl ">
                   Pricing
                </p>
-               <h1 className="text-white text-5xl w-xl text-center">
+               <h1 className="text-white text-2xl md:text-5xl lg:text-5xl lg:w-xl text-center text-wrap ">
                   Choose the perfect plan for you to advance your career.
                </h1>
-               <p className="text-white/50 mt-2 text-lg">
+               <p className="text-white/50 mt-2 lg:text-lg">
                   Whether you are a junior or senior, it doesn’t matter.
                </p>
-               <PriceingCards toggle={toggle} setToggle={setToggle}></PriceingCards>
+               <PriceingCards
+                  toggle={toggle}
+                  setToggle={setToggle}
+               ></PriceingCards>
             </div>
          </motion.div>
          <Footer></Footer>

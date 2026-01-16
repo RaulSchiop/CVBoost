@@ -100,7 +100,7 @@ export default function PriceingCards({ toggle, setToggle }: PricingProps) {
                </div>
             </div>
          </div>
-         <div className="mt-6 flex items-center justify-center gap-10 ">
+         <div className="mt-6 flex items-center justify-center flex-col lg:flex-row gap-10 ">
             {pricin.map((items, index) => (
                <MainCard
                   key={index}
