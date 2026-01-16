@@ -140,7 +140,7 @@ export default function Home() {
                         }}
                         key={index}
                      >
-                        <MainCard ClassName="min-h-[200px]">
+                        <MainCard ClassName="min-h-[300px]">
                            <div className="flex items-center justify-center gap-4 px-7 py-8 flex-col">
                               <div className="bg-gradient-to-tl from-purple-500/40 via-purple-500/85 to-purple-500/20 p-5 rounded-2xl">
                                  {items.icon}
