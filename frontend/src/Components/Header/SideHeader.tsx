@@ -173,7 +173,7 @@ export default function SideBarHeader() {
       },
       {
          icon: (
-            //list icon
+            //learning icon
             <svg
                xmlns="http://www.w3.org/2000/svg"
                fill="none"
@@ -181,7 +181,7 @@ export default function SideBarHeader() {
                strokeWidth={1.5}
                stroke="currentColor"
                className={`w-6 h-6  ${
-                  pathname === "/tools/jobManageing"
+                  pathname === "/tools/learning"
                      ? "text-white"
                      : "text-white/50"
                }`}
@@ -193,8 +193,8 @@ export default function SideBarHeader() {
                />
             </svg>
          ),
-         link: "/tools/learning",
-         label: "Learning Asistent",
+         link: "/tools/interview",
+         label: "Interview Asistent",
       },
    ];
 
@@ -233,7 +233,7 @@ export default function SideBarHeader() {
                      </h1>
                   </GreenBtn>
                </Link>
-               <ul className=" mt-5">
+               <ul className=" mt-8">
                   {List.map((items, index) => (
                      <motion.li
                         initial={{ opacity: 0, x: -200 }}
@@ -261,7 +261,7 @@ export default function SideBarHeader() {
                      >
                         <Link
                            href={items.link}
-                           className="flex items-center gap-4 px-3 py-4 "
+                           className="flex items-center gap-4 px-2 py-3 "
                         >
                            <div
                               className={` p-2 rounded-xl ${
