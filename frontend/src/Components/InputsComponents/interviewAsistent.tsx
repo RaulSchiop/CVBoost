@@ -38,9 +38,11 @@ export default function InterviewAsistentInput() {
                name="description"
                onChange={handleChange}
                placeholder="Job Description "
-               className="text-white placeholder-white/60 bg-contrast-500/20 border border-gray-500/60 focus:border-accent-500 rounded px-4 py-2 focus:outline-none"
+               className="text-white min-h-[150px]  placeholder-white/60 bg-contrast-500/20 border border-gray-500/60 focus:border-accent-500 rounded px-4 py-2 focus:outline-none"
             ></textarea>
-            <MainBtn>Generate</MainBtn>
+            <MainBtn type="submit" className="lg:justify-center">
+               Generate
+            </MainBtn>
          </form>
       </div>
    );
