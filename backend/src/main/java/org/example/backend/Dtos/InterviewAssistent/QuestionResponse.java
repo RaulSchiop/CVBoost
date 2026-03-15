@@ -1,20 +1,14 @@
 package org.example.backend.Dtos.InterviewAssistent;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Question {
-
-    private String question;
-    private List<String> options;
-    private int correctAnswer;
-    private String explanation;
-
-
+public class QuestionResponse {
+    private List<Question> questions;
 }
