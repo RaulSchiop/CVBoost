@@ -6,6 +6,7 @@ export default function InterviewAsistentInput() {
    const [inputData, setInputData] = useState({
       seniority: "",
       description: "",
+      jobTitle: "",
    });
 
    const handleChange = (
@@ -26,6 +27,14 @@ export default function InterviewAsistentInput() {
             className="flex flex-col gap-4 mt-5"
             onSubmit={() => console.log("to do")}
          >
+            <input
+               placeholder="Job Title"
+               name="jobTitle"
+               type="text"
+               onChange={handleChange}
+               required
+               className="text-white placeholder-white/60 bg-contrast-500/20 border border-gray-500/60 focus:border-accent-500 rounded px-4 py-2 focus:outline-none"
+            />
             <input
                placeholder="Seniority ( Junior or Mid or Senior )"
                name="seniority"

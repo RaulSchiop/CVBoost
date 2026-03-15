@@ -19,7 +19,7 @@ public final class AiAsistentPrompt {
         """;
 
     public static final String TOPIC_GENERATOR_PROMPT = """
-    Analyze the following Job Description for a {seniority} level position:
+    Analyze the following Job Description for a {jobTitle} and seniority level {seniority} level position:
     
     {description}
     
@@ -28,6 +28,8 @@ public final class AiAsistentPrompt {
     - Topics should align with the role description provided.
     - Focus on high-impact technical skills required for this level.
     - Each topic name should be concise (max 5 words).
+    - For priority put "High" ,"Medium" or "Low"
+    - For each topic, provide a concise name, a brief description, a list of 3-4 key technical details/sub-points, and a priority level.
     
     {format}
     """;
@@ -39,7 +41,7 @@ public final class AiAsistentPrompt {
         Rules for questions:
  
              - Interview Context: Questions must simulate a real-world interview for the {seniority} level.
-             - Answer Alignment: The 'correctAnswer' field MUST be an integer representing the 0-based index of the correct string in the 'options' array.\s
+             - Answer Alignment: The 'correctAnswer' field MUST be an integer representing the 0-based index of the correct string in the 'options' array.
              - Double-check: If 'correctAnswer' is 2, the 3rd item in 'options' MUST be the only valid answer.
              - Distractors: Wrong options must be technically plausible but incorrect for specific reasons (explain these in the 'explanation' field).
              - Education: The 'explanation' must be a deep dive (2-3 sentences) into WHY that answer is correct in a production environment.

@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Topic {
-    private String id;
+
     private String name;
     private String description;
     private String priority;

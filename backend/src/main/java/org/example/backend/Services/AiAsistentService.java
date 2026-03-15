@@ -17,7 +17,7 @@ public class AiAsistentService {
     private final ChatClient chatClient;
 
     @Autowired
-    public AiAsistentService(ChatClient.Builder builder ) {
+    public AiAsistentService(ChatClient.Builder builder) {
         chatClient = builder.build();
     }
 
@@ -30,6 +30,7 @@ public class AiAsistentService {
                 .system(AiAsistentPrompt.SYSTEM_PROMPT)
                 .user(u -> u.text(AiAsistentPrompt.TOPIC_GENERATOR_PROMPT)
                         .param("seniority", request.seniority())
+                        .param("jobTitle",request.jobTitle())
                         .param("description", request.description())
                         .param("format", converter.getFormat()))
                 .call()
@@ -45,15 +46,14 @@ public class AiAsistentService {
         return chatClient.prompt()
                 .system(AiAsistentPrompt.SYSTEM_PROMPT)
                 .user(u -> u.text(AiAsistentPrompt.QUESTION_GENERATOR_PROMPT)
-                        .param("topic",request.topic())
+                        .param("topic", request.topic())
                         .param("seniority", request.seniority())
                         .param("format", converter.getFormat()))
-                        .call()
-                        .entity(converter);
+                .call()
+                .entity(converter);
 
 
     }
-
 
 
 }

@@ -71,7 +71,6 @@ public class AiAsistentControler {
     }
 
 
-
     @Operation(
             summary = "Get questions based on a specific topic",
             description = "Generates 10 interview-style questions based on the selected topic and candidate seniority level."
@@ -94,14 +93,13 @@ public class AiAsistentControler {
     public ResponseEntity<?> getQuestions(@RequestBody QuestionRequest request) {
 
 
-        try{
+        try {
 
-            QuestionResponse returnData= aiAsistentService.getQuestionsBasedOnTopic(request);
+            QuestionResponse returnData = aiAsistentService.getQuestionsBasedOnTopic(request);
 
             return ResponseEntity.ok(returnData);
 
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().body(Map.of(
                     "error", "Couldn't get question list. try again later.",
                     "details", e.getMessage()
@@ -110,11 +108,6 @@ public class AiAsistentControler {
 
 
     }
-
-
-
-
-
 
 
 }
