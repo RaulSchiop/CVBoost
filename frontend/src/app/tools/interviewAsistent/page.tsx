@@ -1,4 +1,4 @@
-import InterviewAsistentInput from "@/Components/InputsComponents/interviewAsistent";
+import InterviewAsistentInput from "@/Components/InterviewAsistent/InterviewAsistentPage";
 import Title from "../../../Components/Text/Title";
 
 export default function Learning() {
@@ -10,7 +10,7 @@ export default function Learning() {
                and 10 interview questions with answers.
             </p>
          </Title>
-         
+
          <InterviewAsistentInput></InterviewAsistentInput>
       </div>
    );

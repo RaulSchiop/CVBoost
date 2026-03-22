@@ -1,4 +1,4 @@
-import InterviewAsistentInput from "@/Components/InputsComponents/interviewAsistent";
+import InterviewAsistentInput from "@/Components/InterviewAsistent/InterviewAsistentPage";
 import Title from "@/Components/Text/Title";
 
 export default function Learning() {

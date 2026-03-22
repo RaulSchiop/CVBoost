@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import MainBtn from "../Buttons/MainBtn";
+import TopicsPage from "./Topics";
 
 export default function InterviewAsistentInput() {
    const [inputData, setInputData] = useState({
@@ -8,6 +9,9 @@ export default function InterviewAsistentInput() {
       description: "",
       jobTitle: "",
    });
+   const [isTopic, setIsTopic] = useState(false);
+
+   const [topic , setTopic]=useState();
 
    const handleChange = (
       e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -21,7 +25,7 @@ export default function InterviewAsistentInput() {
    };
    console.log(inputData);
 
-   return (
+   return isTopic == false ? (
       <div className="w-[80%] mt-10">
          <form
             className="flex flex-col gap-4 mt-5"
@@ -54,5 +58,7 @@ export default function InterviewAsistentInput() {
             </MainBtn>
          </form>
       </div>
+   ) : (
+      <TopicsPage></TopicsPage>
    );
 }
