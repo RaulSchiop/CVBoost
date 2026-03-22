@@ -2,8 +2,12 @@
 import { useState } from "react";
 import MainBtn from "../Buttons/MainBtn";
 import TopicsPage from "./Topics";
+import { TopicResponse } from "@/types/inteviewAsistentTypes";
+import { TOPIC_ENDPOINT } from "@/app/Constants/endpoints";
+import Skeleton from "../Loadings/SkeletonTopics";
 
 export default function InterviewAsistentInput() {
+   const [loading, setLoading] = useState(false);
    const [inputData, setInputData] = useState({
       seniority: "",
       description: "",
@@ -11,26 +15,53 @@ export default function InterviewAsistentInput() {
    });
    const [isTopic, setIsTopic] = useState(false);
 
-   const [topic , setTopic]=useState();
+   const [topics, setTopic] = useState<TopicResponse | null>();
 
    const handleChange = (
       e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
    ) => {
-      e.preventDefault();
       const { value, name } = e.target;
       setInputData((prev) => ({
          ...prev,
          [name]: value,
       }));
    };
-   console.log(inputData);
 
-   return isTopic == false ? (
+   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setLoading(true);
+      try {
+         const result = await fetch(TOPIC_ENDPOINT, {
+            method: "POST",
+            headers: {
+               "Content-Type": "application/json",
+            },
+            body: JSON.stringify(inputData),
+         });
+
+         if (!result.ok) {
+            throw new Error("Request failed");
+         }
+
+         const data: TopicResponse = await result.json();
+         setLoading(false);
+         setTopic(data);
+         console.log(topics);
+
+         setIsTopic(true);
+      } catch (error) {
+         console.error(error);
+         setLoading(false);
+      }
+   };
+
+   if (loading) {
+      return <Skeleton />;
+   }
+
+   return isTopic === false ? (
       <div className="w-[80%] mt-10">
-         <form
-            className="flex flex-col gap-4 mt-5"
-            onSubmit={() => console.log("to do")}
-         >
+         <form className="flex flex-col gap-4 mt-5" onSubmit={handleSubmit}>
             <input
                placeholder="Job Title"
                name="jobTitle"
@@ -59,6 +90,6 @@ export default function InterviewAsistentInput() {
          </form>
       </div>
    ) : (
-      <TopicsPage></TopicsPage>
+      topics && <TopicsPage topics={topics}></TopicsPage>
    );
 }

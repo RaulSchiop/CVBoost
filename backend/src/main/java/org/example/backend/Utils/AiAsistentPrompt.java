@@ -26,6 +26,7 @@ public final class AiAsistentPrompt {
     Rules for topics:
     - Generate 4 critical and distinct learning topics.
     - Topics should align with the role description provided.
+    - The description should be medium size start with a high level description and some tips about it
     - Focus on high-impact technical skills required for this level.
     - Each topic name should be concise (max 5 words).
     - For priority put "High" ,"Medium" or "Low"
