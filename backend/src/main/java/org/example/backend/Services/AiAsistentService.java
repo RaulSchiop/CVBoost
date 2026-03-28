@@ -27,7 +27,7 @@ public class AiAsistentService {
         var converter = new BeanOutputConverter<>(TopicResponse.class);
 
         return chatClient.prompt()
-                .system(AiAsistentPrompt.SYSTEM_PROMPT)
+                .system(AiAsistentPrompt.SYSTEM_PROMPT_TOPIC)
                 .user(u -> u.text(AiAsistentPrompt.TOPIC_GENERATOR_PROMPT)
                         .param("seniority", request.seniority())
                         .param("jobTitle",request.jobTitle())
@@ -44,7 +44,7 @@ public class AiAsistentService {
         var converter = new BeanOutputConverter<>(QuestionResponse.class);
 
         return chatClient.prompt()
-                .system(AiAsistentPrompt.SYSTEM_PROMPT)
+                .system(AiAsistentPrompt.SYSTEM_PROMPT_QUESTION)
                 .user(u -> u.text(AiAsistentPrompt.QUESTION_GENERATOR_PROMPT)
                         .param("topic", request.topic())
                         .param("seniority", request.seniority())
