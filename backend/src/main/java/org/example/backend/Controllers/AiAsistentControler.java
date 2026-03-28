@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.extern.slf4j.Slf4j;
 import org.example.backend.Dtos.InterviewAssistent.QuestionResponse;
 import org.example.backend.Dtos.InterviewAssistent.TopicResponse;
 import org.example.backend.Requests.QuestionRequest;
@@ -14,14 +15,12 @@ import org.example.backend.Services.AiAsistentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/AiAsistent")
 public class AiAsistentControler {
@@ -53,10 +52,12 @@ public class AiAsistentControler {
                     description = "Internal AI error or processing timeout",
                     content = @Content)
     })
+
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/topics")
     public ResponseEntity<?> getTopics(@RequestBody TopicsRequest request) {
         try {
-
+            log.info("Get topics request: {}", request);
             TopicResponse returnData = aiAsistentService.getTopics(request);
 
             return ResponseEntity.ok(returnData);

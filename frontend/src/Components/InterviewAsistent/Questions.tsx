@@ -17,7 +17,7 @@ export default function Questions({ questions }: QuestionsPageProps) {
       null,
    );
    const [end, setEnd] = useState(false);
-
+   console.log(questions);
    const currentQuestion = questions.questions[currentIndex];
    const isLastQuestion = currentIndex === questions.questions.length - 1;
 

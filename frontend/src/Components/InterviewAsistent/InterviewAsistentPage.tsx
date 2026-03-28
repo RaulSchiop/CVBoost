@@ -15,7 +15,7 @@ export default function InterviewAsistentInput() {
    });
    const [isTopic, setIsTopic] = useState(false);
 
-   const [topics, setTopic] = useState<TopicResponse | null>();
+   const [topics, setTopic] = useState<TopicResponse | null>(null);
 
    const handleChange = (
       e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -26,6 +26,7 @@ export default function InterviewAsistentInput() {
          [name]: value,
       }));
    };
+   console.log(inputData);
 
    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();

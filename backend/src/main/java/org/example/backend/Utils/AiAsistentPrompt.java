@@ -15,10 +15,9 @@ public final class AiAsistentPrompt {
             Strict output rules:
             1. Respond ONLY with valid JSON. No greetings, no explanations, no markdown, no code fences.
             2. Never engage in conversation or add text outside the JSON object.
-            3. If the input is missing or insufficient, return: { "topics": [] }
-            4. Ensure every topic is genuinely relevant to the job title, seniority level, and description provided.
-            5. Topics must be distinct — no overlap in content between them.
-            6. Seniority context:
+            3. Ensure every topic is genuinely relevant to the job title, seniority level, and description provided.
+            4. Topics must be distinct — no overlap in content between them.
+            5. Seniority context:
                - JUNIOR: Focus on fundamentals, core tools, and foundational concepts
                - MID: Focus on applied skills, system design basics, and best practices
                - SENIOR: Focus on architecture, trade-offs, leadership, and production-scale concerns
@@ -132,7 +131,13 @@ public final class AiAsistentPrompt {
             {resume_text}
             --- RESUME TEXT END ---
             
-            Return your full analysis as a JSON object following the structure defined in your instructions.
+            Do NOT:
+            - rename fields
+            - add extra fields
+            - remove fields
+            - change casing
+            
+            If the structure does not match EXACTLY, the response will be rejected.
  
             {format}
             """;
@@ -157,7 +162,13 @@ public final class AiAsistentPrompt {
             - Priority: assign "High", "Medium", or "Low" based on how critical this topic is for the role.
             - Calibrate depth and complexity to the {seniority} level.
     
-            Return a JSON object with this exact structure:
+            Do NOT:
+                    - rename fields
+                    - add extra fields
+                    - remove fields
+                    - change casing
+   
+                    If the structure does not match EXACTLY, the response will be rejected.
     
             {format}
     """;
@@ -178,7 +189,13 @@ public final class AiAsistentPrompt {
             - Distractors must be technically plausible — real misconceptions or alternatives that are wrong in this specific context.
             - The explanation must cover: (1) why the correct answer is right in a production environment, (2) why the most tempting wrong option is incorrect. Minimum 2 sentences.
         
-            Return a JSON object with this exact structure:
+            Do NOT:
+                - rename fields
+                - add extra fields
+                - remove fields
+                - change casing
+        
+                If the structure does not match EXACTLY, the response will be rejected.
         {format}
         """;
 
