@@ -59,7 +59,7 @@ public class AiAsistentControler {
         try {
             log.info("Get topics request: {}", request);
             TopicResponse returnData = aiAsistentService.getTopics(request);
-
+            log.info("Get topics response: {}", returnData);
             return ResponseEntity.ok(returnData);
 
         } catch (Exception e) {

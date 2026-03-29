@@ -82,7 +82,14 @@ export default function InterviewAsistentInput() {
             <textarea
                name="description"
                onChange={handleChange}
-               placeholder="Job Description "
+               placeholder={`Paste key job requirements only (NOT full job description):
+
+• Technologies (e.g., Java, Spring Boot, AWS, Kafka)
+• Responsibilities (e.g., system design, microservices, APIs)
+• Architecture / senior expectations (e.g., scalability, leadership)
+
+Keep it short: 3–6 lines max (~150–200 words)`}
+               maxLength={2000}
                className="text-white min-h-[150px]  placeholder-white/60 bg-contrast-500/20 border border-gray-500/60 focus:border-accent-500 rounded px-4 py-2 focus:outline-none"
             ></textarea>
             <MainBtn type="submit" className="lg:justify-center">
