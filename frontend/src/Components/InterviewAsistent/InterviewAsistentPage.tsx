@@ -4,7 +4,7 @@ import MainBtn from "../Buttons/MainBtn";
 import TopicsPage from "./Topics";
 import { TopicResponse } from "@/types/inteviewAsistentTypes";
 import { TOPIC_ENDPOINT } from "@/app/Constants/endpoints";
-import Skeleton from "../Loadings/SkeletonTopics";
+import Skeleton from "../Loadings/Skeleton";
 
 export default function InterviewAsistentInput() {
    const [loading, setLoading] = useState(false);

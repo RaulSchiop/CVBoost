@@ -136,6 +136,9 @@ public final class AiAsistentPrompt {
             - add extra fields
             - remove fields
             - change casing
+            - Include markdown formatting (no ```json)
+            - Include the JSON schema or $schema metadata
+            - Use field names other than those defined in the format instructions
             
             If the structure does not match EXACTLY, the response will be rejected.
  
@@ -162,11 +165,14 @@ public final class AiAsistentPrompt {
             - Priority: assign "High", "Medium", or "Low" based on how critical this topic is for the role.
             - Calibrate depth and complexity to the {seniority} level.
     
-            Do NOT:
-                    - rename fields
-                    - add extra fields
-                    - remove fields
-                    - change casing
+      Do NOT:
+            - rename fields
+            - add extra fields
+            - remove fields
+            - change casing
+            - Include markdown formatting (no ```json)
+            - Include the JSON schema or $schema metadata
+            - Use field names other than those defined in the format instructions
    
                     If the structure does not match EXACTLY, the response will be rejected.
     
@@ -184,16 +190,21 @@ public final class AiAsistentPrompt {
             - Each question must test a distinct concept within the topic — no repetition.
             - Calibrate difficulty to the {seniority} level.
             - Each question must have exactly 4 options.
-            - The correctAnswer field MUST be the 0-based index of the correct option in the options array.
-              Example: if the correct answer is the 3rd option, correctAnswer = 2.
+            - The correct answer MUST NOT always be in the same position (e.g., don't always make it the first option).\s
+            - You must randomly place the correct answer within the options array for every question.
+            - AFTER placing the options, set the "correctAnswer" field to the 0-based integer index of where that correct answer ended up.\s
+            - Double-check: If "correctAnswer" is 2, then options[2] MUST be the correct statement.
             - Distractors must be technically plausible — real misconceptions or alternatives that are wrong in this specific context.
             - The explanation must cover: (1) why the correct answer is right in a production environment, (2) why the most tempting wrong option is incorrect. Minimum 2 sentences.
         
-            Do NOT:
-                - rename fields
-                - add extra fields
-                - remove fields
-                - change casing
+           Do NOT:
+            - rename fields
+            - add extra fields
+            - remove fields
+            - change casing
+            - Include markdown formatting (no ```json)
+            - Include the JSON schema or $schema metadata
+            - Use field names other than those defined in the format instructions
         
                 If the structure does not match EXACTLY, the response will be rejected.
         {format}

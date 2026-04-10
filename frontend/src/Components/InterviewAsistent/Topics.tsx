@@ -6,7 +6,7 @@ import SmallBtn from "../Buttons/SmallMainBtn";
 import { useState } from "react";
 import { QUESTION_ENDPOINT } from "@/app/Constants/endpoints";
 import Question from "./Questions";
-import SkeletonTopics from "../Loadings/SkeletonTopics";
+import SkeletonTopics from "../Loadings/Skeleton";
 
 type TopicsPageProps = {
    topics: TopicResponse;
