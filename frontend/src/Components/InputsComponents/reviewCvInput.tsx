@@ -7,10 +7,13 @@ import { motion } from "motion/react";
 import { useState } from "react";
 import MainBtn from "../Buttons/MainBtn";
 import DownList from "../List/DownList";
+import { AI_RESUME_REVIEW_ENDPOINT } from "@/app/Constants/endpoints";
+import Skeleton from "../Loadings/Skeleton";
 
 export default function PDFInput({ toggle, resumes }: PDFInputPropsType) {
    const [file, setFile] = useState<File>();
    const [dragActive, setDragActive] = useState(false);
+   const [loading, setLoading] = useState(false);
    const atsScore = 60;
    // Sample resume data - replace with actual data from props or API
 
@@ -39,6 +42,32 @@ export default function PDFInput({ toggle, resumes }: PDFInputPropsType) {
 
       setFile(droppedFile);
    };
+
+   const handleSubmit = async (file: File) => {
+      setLoading(true);
+      const formData = new FormData();
+      formData.append("file", file);
+
+      try {
+         const result = await fetch(AI_RESUME_REVIEW_ENDPOINT, {
+            method: "POST",
+            body: formData,
+         });
+         if (!result.ok) {
+            throw new Error("Request failed");
+         }
+         const data= await result.json()
+         console.log(data);
+         setLoading(false)
+      } catch (error) {
+         console.error(error);
+         setLoading(false);
+      }
+   };
+
+   if (loading) {
+      return <Skeleton></Skeleton>;
+   }
    return (
       <motion.div
          initial={{ opacity: 0, y: 100 }}
@@ -105,7 +134,11 @@ export default function PDFInput({ toggle, resumes }: PDFInputPropsType) {
                      </div>
                   </label>
                </div>
-               {file && <MainBtn>Review The Resume</MainBtn>}
+               {file && (
+                  <MainBtn onClick={() => handleSubmit(file)}>
+                     Review The Resume
+                  </MainBtn>
+               )}
             </div>
          ) : (
             <div className=" w-full h-full flex items-start justify-center">
@@ -141,8 +174,8 @@ export default function PDFInput({ toggle, resumes }: PDFInputPropsType) {
                                        resume.atsScore <= 50
                                           ? "text-red-500 border-red-500"
                                           : resume.atsScore <= 85
-                                          ? " text-yellow-500 border-yellow-500"
-                                          : " text-green-500 border-green-500"
+                                            ? " text-yellow-500 border-yellow-500"
+                                            : " text-green-500 border-green-500"
                                     }`}
                                  >
                                     {resume.atsScore}

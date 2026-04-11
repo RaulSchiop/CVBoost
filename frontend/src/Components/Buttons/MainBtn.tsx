@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 
 type Props = {
    children: React.ReactNode;
-   onClick?: () => void;
+   onClick?: () => void ;
    type?: "submit" | "button";
    className?: string;
 };

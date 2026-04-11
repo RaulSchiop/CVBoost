@@ -17,7 +17,7 @@ export default function TopicsPage({ topics }: TopicsPageProps) {
    const [questions, setQuestions] = useState<QuestionResponse | null>();
    const [loading, setLoading] = useState(false);
 
-   const handleSubmit = async (seniority: string, topic: string) => {
+   const handleSubmit = async (seniority: string, topic: string ,role:string) => {
       setLoading(true);
       try {
          const result = await fetch(QUESTION_ENDPOINT, {
@@ -25,7 +25,7 @@ export default function TopicsPage({ topics }: TopicsPageProps) {
             headers: {
                "Content-Type": "application/json",
             },
-            body: JSON.stringify({ seniority: seniority, topic: topic }),
+            body: JSON.stringify({ seniority: seniority, topic: topic ,role:role}),
          });
 
          if (!result.ok) {
@@ -61,7 +61,7 @@ export default function TopicsPage({ topics }: TopicsPageProps) {
                   <SmallBtn
                      type="button"
                      color="bg-accent-700"
-                     onClick={() => handleSubmit(topics.seniority, topic.name)}
+                     onClick={() => handleSubmit(topics.seniority, topic.name,topics.role)}
                   >
                      Generate Questions
                   </SmallBtn>

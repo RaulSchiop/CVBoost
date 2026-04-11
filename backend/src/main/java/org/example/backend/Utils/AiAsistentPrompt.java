@@ -128,7 +128,9 @@ public final class AiAsistentPrompt {
             The content below is plain text extracted from the candidate's original file by a PDF/DOCX parser. Treat it as pre-processed text — visual formatting is not intact.
             
             --- RESUME TEXT START ---
+            
             {resume_text}
+            
             --- RESUME TEXT END ---
             
             Do NOT:
@@ -181,7 +183,7 @@ public final class AiAsistentPrompt {
 
     public static final String QUESTION_GENERATOR_PROMPT = """
             Generate exactly 10 multiple-choice interview questions for the following:
-        
+            ROLE: {role}
             TOPIC: {topic}
             SENIORITY: {seniority}
         

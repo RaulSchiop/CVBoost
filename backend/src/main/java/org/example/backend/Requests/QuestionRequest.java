@@ -1,4 +1,4 @@
 package org.example.backend.Requests;
 
-public record QuestionRequest(String seniority, String topic) {
+public record QuestionRequest(String seniority, String topic,String role) {
 }

@@ -34,7 +34,7 @@ public class AiAsistentService {
                         .param("description", request.description())
                         .param("format", converter.getFormat()))
                 .call()
-                .entity(converter);
+                .entity(TopicResponse.class);
 
     }
 
@@ -46,11 +46,12 @@ public class AiAsistentService {
         return chatClient.prompt()
                 .system(AiAsistentPrompt.SYSTEM_PROMPT_QUESTION)
                 .user(u -> u.text(AiAsistentPrompt.QUESTION_GENERATOR_PROMPT)
+                        .param("role",request.role())
                         .param("topic", request.topic())
                         .param("seniority", request.seniority())
                         .param("format", converter.getFormat()))
                 .call()
-                .entity(converter);
+                .entity(QuestionResponse.class);
 
 
     }
