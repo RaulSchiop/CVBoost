@@ -9,11 +9,14 @@ import MainBtn from "../Buttons/MainBtn";
 import DownList from "../List/DownList";
 import { AI_RESUME_REVIEW_ENDPOINT } from "@/app/Constants/endpoints";
 import Skeleton from "../Loadings/Skeleton";
+import { ReviewResponse } from "@/types/resumeReviewTypes";
+import AiReviewOutput from "../AiReviewOutput/AiReviewOutput";
 
 export default function PDFInput({ toggle, resumes }: PDFInputPropsType) {
    const [file, setFile] = useState<File>();
    const [dragActive, setDragActive] = useState(false);
    const [loading, setLoading] = useState(false);
+   const [reviewResult, setReviewResult] = useState<ReviewResponse>();
    const atsScore = 60;
    // Sample resume data - replace with actual data from props or API
 
@@ -42,39 +45,55 @@ export default function PDFInput({ toggle, resumes }: PDFInputPropsType) {
 
       setFile(droppedFile);
    };
+const handleSubmit = async (file: File) => {
+   setLoading(true);
+   const formData = new FormData();
+   formData.append("file", file);
 
-   const handleSubmit = async (file: File) => {
-      setLoading(true);
-      const formData = new FormData();
-      formData.append("file", file);
+   const MAX_RETRIES = 4;
 
+   for (let i = 0; i < MAX_RETRIES; i++) {
       try {
          const result = await fetch(AI_RESUME_REVIEW_ENDPOINT, {
             method: "POST",
             body: formData,
          });
-         if (!result.ok) {
-            throw new Error("Request failed");
-         }
-         const data= await result.json()
-         console.log(data);
-         setLoading(false)
-      } catch (error) {
-         console.error(error);
-         setLoading(false);
-      }
-   };
 
+         if (!result.ok) {
+            throw new Error(`Attempt ${i + 1} failed with status: ${result.status}`);
+         }
+
+         const data = await result.json();
+         
+         setReviewResult(data);
+         setLoading(false);
+         return; 
+
+      } catch (error) {
+         console.error(`Attempt ${i + 1} failed:`, error);
+
+         if (i === MAX_RETRIES - 1) {
+            setLoading(false);
+         } else {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+         }
+      }
+   }
+};
+   console.log(reviewResult);
    if (loading) {
       return <Skeleton></Skeleton>;
    }
    return (
+     
       <motion.div
          initial={{ opacity: 0, y: 100 }}
          animate={{ opacity: 1, y: 0 }}
          transition={{ type: "spring", duration: 0.8 }}
          className="bg-contrast-500/20 rounded-2xl mt-5  backdrop-blur-md "
       >
+         {reviewResult ? <AiReviewOutput result={reviewResult}></AiReviewOutput> :
+         <div>
          {toggle === false ? (
             <div className="w-full h-full flex flex-col items-end justify-center p-3">
                <div className="p-10 w-full h-[400px]">
@@ -208,6 +227,8 @@ export default function PDFInput({ toggle, resumes }: PDFInputPropsType) {
                )}
             </div>
          )}
+         </div>
+         }
       </motion.div>
    );
 }

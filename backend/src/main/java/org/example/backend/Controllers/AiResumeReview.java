@@ -55,8 +55,8 @@ public class AiResumeReview {
 
         try {
             log.info("Get analysis request: {}", file.getName());
-            AiResumeReviewResponse aiResponse = aiResumeReviewService.getTextReview(file);
-            log.info("Get the response from AI: {}" ,aiResponse.toString());
+            String aiResponse = aiResumeReviewService.getTextReview(file);
+            log.info("Get the response from AI: {}" ,aiResponse);
 
             return ResponseEntity.ok(aiResponse);
         } catch (Exception e) {

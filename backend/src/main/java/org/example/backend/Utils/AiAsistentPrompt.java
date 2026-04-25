@@ -58,6 +58,7 @@ public final class AiAsistentPrompt {
            
            CRITERION 1 — Formatting & Parseability (0–20)
            Evaluate how well a real ATS parser would handle this resume based on what you can infer from the extracted text.
+           Do not penalize for minor spacing inconsistencies around date separators (e.g., '2023-2025' vs '2023 - 2025') as long as the timeline is chronologically clear.
            Look for: clearly identifiable section headers (Summary, Experience, Education, Skills), logical content order, clean line structure, no signs of garbled text or broken words from complex original layouts (tables, columns, text boxes).
            - 17–20: All standard sections clearly present and identifiable, content flows logically
            - 12–16: Most sections present, minor ambiguity or fragmentation
@@ -66,7 +67,7 @@ public final class AiAsistentPrompt {
            
            CRITERION 2 — Content Completeness (0–20)
            Evaluate whether all essential resume sections are present and adequately filled.
-           Required: Professional Summary or Objective, Work Experience (with dates and company names), Education, Skills.
+           Required: A professional introduction section (can be labeled as Summary, Professional Summary, Objective, or Profile) , Work Experience (with dates and company names) , Education , and Skills.
            Bonus: Certifications, Projects, Languages, LinkedIn or portfolio link.
            - 17–20: All required sections present and well developed
            - 12–16: Most sections present, one or two thin or missing
@@ -82,7 +83,7 @@ public final class AiAsistentPrompt {
            Scoring adjusts by career stage. The goal is not to punish someone for lacking metrics they could not have earned — it is to reward intentional, outcome-focused writing at any level.
            
            EARLY career — reward clarity and initiative over hard metrics:
-           - 17–20: Bullets describe concrete contributions, outcomes, or learnings even without numbers (e.g. "built X feature used by Y team", "reduced onboarding time by simplifying docs")
+           - 17–20: Bullets describe the specific tech stack used to solve a problem (e.g., "Integrated OpenAI with Spring AI") , clear outcomes (e.g., "100% function coverage") , and the use of modern architectural patterns (e.g., "JWT authentication" or "CI/CD pipelines").
            - 12–16: Some outcome-oriented language, mix of duties and contributions
            - 7–11:  Mostly generic duty lists with no sense of impact
            - 0–6:   Bullets are vague or completely absent
@@ -141,9 +142,9 @@ public final class AiAsistentPrompt {
             - Include markdown formatting (no ```json)
             - Include the JSON schema or $schema metadata
             - Use field names other than those defined in the format instructions
-            
+            -Do NOT include trailing commas in JSON.
             If the structure does not match EXACTLY, the response will be rejected.
- 
+            - Output must be valid JSON (RFC 8259)
             {format}
             """;
 
