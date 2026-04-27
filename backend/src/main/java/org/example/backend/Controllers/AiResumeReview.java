@@ -22,6 +22,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/AiResume")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AiResumeReview {
 
     private final AiResumeReviewService aiResumeReviewService;

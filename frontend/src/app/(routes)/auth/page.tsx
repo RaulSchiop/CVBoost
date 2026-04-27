@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import MainBtn from "@/Components/Buttons/MainBtn";
 import Alert from "@/Components/Alert/Alert";
+import { CREATE_USER_ENDPOINT } from "@/app/Constants/endpoints";
 
 type AlertType = {
    message: string;
@@ -61,6 +62,32 @@ export default function LogIn() {
          ...prev,
          [name]: value,
       }));
+   }
+
+   async function handleCreateAcc(e: React.FormEvent<HTMLFormElement>) {
+      e.preventDefault();
+      try {
+         const result = await fetch(`${CREATE_USER_ENDPOINT}`, {
+            method: "POST",
+            headers: {
+               "Content-Type": "application/json",
+            },
+            body: JSON.stringify(register),
+         });
+
+         if (!result.ok) {
+            throw new Error("Registration failed");
+         }
+
+         const data = await result.json();
+         console.log("Registration successful", data);
+         setChange(true);
+      } catch (error) {
+         setError({
+            message: "Registration failed",
+            on: true,
+         });
+      }
    }
 
    return (
@@ -153,7 +180,7 @@ export default function LogIn() {
                   >
                      <form
                         className="flex flex-col gap-3"
-                        onSubmit={() => console.log("register")}
+                        onSubmit={handleCreateAcc}
                      >
                         <h1 className="text-white text-3xl">Register</h1>
                         <input
@@ -183,7 +210,7 @@ export default function LogIn() {
                            required
                            className="text-white placeholder-white border focus:border-secondarytext rounded px-4 py-2 focus:outline-none"
                         />
-                        <MainBtn>Register</MainBtn>
+                        <MainBtn type="submit">Register</MainBtn>
                      </form>
                   </motion.div>
 

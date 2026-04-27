@@ -7,3 +7,7 @@ export const TOPIC_ENDPOINT = HOST + API_VERSION + "/AiAsistent/topics"; //POST 
 export const QUESTION_ENDPOINT = HOST + API_VERSION + "/AiAsistent/questions"; //POST ENDPOINT
 
 export const AI_RESUME_REVIEW_ENDPOINT= HOST + API_VERSION + "/AiResume/review"; //POST ENDPOINT
+
+
+//Auth endpoints 
+export const CREATE_USER_ENDPOINT = HOST + API_VERSION + "/auth/createAccount"; //POST ENDPOINT
