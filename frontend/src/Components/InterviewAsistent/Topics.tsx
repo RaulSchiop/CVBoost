@@ -7,7 +7,7 @@ import { useState } from "react";
 import { QUESTION_ENDPOINT } from "@/app/Constants/endpoints";
 import Question from "./Questions";
 import SkeletonTopics from "../Loadings/Skeleton";
-
+import { useLocalStateStore } from "@/stores/slices/LocalStateStore";
 type TopicsPageProps = {
    topics: TopicResponse;
 };
@@ -17,15 +17,25 @@ export default function TopicsPage({ topics }: TopicsPageProps) {
    const [questions, setQuestions] = useState<QuestionResponse | null>();
    const [loading, setLoading] = useState(false);
 
-   const handleSubmit = async (seniority: string, topic: string ,role:string) => {
+   const { token } = useLocalStateStore();
+   const handleSubmit = async (
+      seniority: string,
+      topic: string,
+      role: string,
+   ) => {
       setLoading(true);
       try {
          const result = await fetch(QUESTION_ENDPOINT, {
             method: "POST",
             headers: {
                "Content-Type": "application/json",
+               Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({ seniority: seniority, topic: topic ,role:role}),
+            body: JSON.stringify({
+               seniority: seniority,
+               topic: topic,
+               role: role,
+            }),
          });
 
          if (!result.ok) {
@@ -61,7 +71,9 @@ export default function TopicsPage({ topics }: TopicsPageProps) {
                   <SmallBtn
                      type="button"
                      color="bg-accent-700"
-                     onClick={() => handleSubmit(topics.seniority, topic.name,topics.role)}
+                     onClick={() =>
+                        handleSubmit(topics.seniority, topic.name, topics.role)
+                     }
                   >
                      Generate Questions
                   </SmallBtn>

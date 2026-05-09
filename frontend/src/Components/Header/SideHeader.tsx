@@ -8,9 +8,10 @@ import Link from "next/link";
 
 import Image from "next/image";
 import NoImage from "../../../public/no image.jpg";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { motion } from "motion/react";
 import PremiumBtn from "../Buttons/PremiumBtn";
+import { useLocalStateStore } from "@/stores/slices/LocalStateStore";
 
 type UserInfo = {
    name: string;
@@ -20,10 +21,7 @@ type UserInfo = {
 export default function SideBarHeader() {
    const pathname = usePathname();
    const [image, setImage] = useState<string | undefined>(undefined);
-   const [accInfo, setAccInfo] = useState<UserInfo>({
-      name: "Schiop Raul",
-      email: "raul.schiop@gmail.com",
-   });
+
    const [isMenuOpen, setIsMenuOpen] = useState(false);
    const List: { icon: JSX.Element; link: string; label: string }[] = [
       // {
@@ -197,7 +195,13 @@ export default function SideBarHeader() {
          label: "Interview Asistent",
       },
    ];
+   const router = useRouter();
+   const { email, name, clearLocalState } = useLocalStateStore();
 
+   function handleLogOut() {
+      clearLocalState();
+      router.push("/");
+   }
    return (
       <div className="">
          <div className="fixed left-0 top-0 h-screen w-72 px-5 py-2 hidden md:flex flex-col justify-between bg-contrast-500/20  overflow-y-auto lg:overflow-y-hidden">
@@ -290,10 +294,8 @@ export default function SideBarHeader() {
                         />
                      </div>
                      <div className="flex flex-col  justify-center">
-                        <h1 className="text-white text-xl text-bold">
-                           {accInfo.name}
-                        </h1>
-                        <p className="text-notUsed-200/60 ">{accInfo.email}</p>
+                        <h1 className="text-white text-xl text-bold">{name}</h1>
+                        <p className="text-notUsed-200/60 ">{email}</p>
                      </div>
                   </div>
                </Link>
@@ -320,7 +322,7 @@ export default function SideBarHeader() {
                      </PremiumBtn>
                   </Link>
 
-                  <ContrastBtn>
+                  <ContrastBtn onClick={handleLogOut}>
                      {/*sign out icon */}
                      <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -431,11 +433,9 @@ export default function SideBarHeader() {
 
                            <div className="flex flex-col  justify-center">
                               <h1 className="text-white text-xl text-bold">
-                                 {accInfo.name}
+                                 {name}
                               </h1>
-                              <p className="text-notUsed-200/60 ">
-                                 {accInfo.email}
-                              </p>
+                              <p className="text-notUsed-200/60 ">{email}</p>
                            </div>
                         </div>
                      </div>
@@ -462,7 +462,7 @@ export default function SideBarHeader() {
                         </PremiumBtn>
                      </Link>
 
-                     <ContrastBtn>
+                     <ContrastBtn onClick={handleLogOut}>
                         <svg
                            xmlns="http://www.w3.org/2000/svg"
                            fill="none"

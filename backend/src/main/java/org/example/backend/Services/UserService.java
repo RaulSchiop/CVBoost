@@ -1,6 +1,7 @@
 package org.example.backend.Services;
 
 import org.example.backend.Requests.UserRequest;
+import org.example.backend.Utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +22,13 @@ public class UserService {
 
     private final String sk="USER";
     private final BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
-    private DynamoDbClient dynamoDbClient;
+    private final DynamoDbClient dynamoDbClient;
+    private final JwtUtil jwtUtil;
 
     @Autowired
-    UserService(DynamoDbClient dynamoDbClient) {
+    UserService(DynamoDbClient dynamoDbClient,JwtUtil jwtUtil) {
         this.dynamoDbClient = dynamoDbClient;
+        this.jwtUtil=jwtUtil;
     }
 
     public ResponseEntity<?> createUser(UserRequest userRequest) {
@@ -81,4 +84,43 @@ public class UserService {
         }
     }
 
+    public ResponseEntity<?> authenticateUser(String email, String password) {
+        try {
+            // Get user from DynamoDB
+            GetItemRequest request = GetItemRequest.builder()
+                    .tableName("AppTable")
+                    .key(Map.of(
+                            "PK", AttributeValue.builder().s(email).build(),
+                            "SK", AttributeValue.builder().s("USER").build()
+                    ))
+                    .build();
+
+            GetItemResponse response = dynamoDbClient.getItem(request);
+
+            if (response.item().isEmpty()) {
+                return new ResponseEntity<>("User not found", HttpStatus.UNAUTHORIZED);
+            }
+
+            Map<String, AttributeValue> item = response.item();
+            String storedPassword = item.get("Password").s();
+            String profileType = item.get("ProfileType").s();
+            String name = item.get("Name").s();
+
+            if (!encoder.matches(password, storedPassword)) {
+                return new ResponseEntity<>("Invalid credentials", HttpStatus.UNAUTHORIZED);
+            }
+
+            String token = jwtUtil.generateToken(email, profileType);
+
+            return new ResponseEntity<>(Map.of(
+                    "token", token,
+                    "email", email,
+                    "name", name,
+                    "profileType", profileType
+            ), HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

@@ -5,6 +5,7 @@ import TopicsPage from "./Topics";
 import { TopicResponse } from "@/types/inteviewAsistentTypes";
 import { TOPIC_ENDPOINT } from "@/app/Constants/endpoints";
 import Skeleton from "../Loadings/Skeleton";
+import { useLocalStateStore } from "@/stores/slices/LocalStateStore";
 
 export default function InterviewAsistentInput() {
    const [loading, setLoading] = useState(false);
@@ -16,7 +17,7 @@ export default function InterviewAsistentInput() {
    const [isTopic, setIsTopic] = useState(false);
 
    const [topics, setTopic] = useState<TopicResponse | null>(null);
-
+   const { token } = useLocalStateStore();
    const handleChange = (
       e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
    ) => {
@@ -36,6 +37,7 @@ export default function InterviewAsistentInput() {
             method: "POST",
             headers: {
                "Content-Type": "application/json",
+               Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(inputData),
          });
@@ -47,8 +49,6 @@ export default function InterviewAsistentInput() {
          const data: TopicResponse = await result.json();
          setLoading(false);
          setTopic(data);
-         console.log(topics);
-
          setIsTopic(true);
       } catch (error) {
          console.error(error);

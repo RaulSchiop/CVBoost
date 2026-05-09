@@ -21,8 +21,7 @@ public class UserController {
     @PostMapping("/getUserByEmail")
     ResponseEntity<?> getUserByEmail(@RequestBody String email) {
 
-        return  userService.getUserByEmail(email);
+        return userService.getUserByEmail(email);
 
     }
-
 }

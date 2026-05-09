@@ -4,8 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import MainBtn from "@/Components/Buttons/MainBtn";
 import Alert from "@/Components/Alert/Alert";
-import { CREATE_USER_ENDPOINT } from "@/app/Constants/endpoints";
-
+import {
+   CREATE_USER_ENDPOINT,
+   LOG_IN_USER_ENDPOINT,
+} from "@/app/Constants/endpoints";
+import { useLocalStateStore } from "@/stores/slices/LocalStateStore";
+import { useRouter } from "next/navigation";
 type AlertType = {
    message: string;
    on: boolean;
@@ -21,6 +25,9 @@ type Register = {
    password: string;
 };
 export default function LogIn() {
+   const { setLocalState, clearLocalState, getLocalState } =
+      useLocalStateStore();
+   const router = useRouter();
    const [change, setChange] = useState(true);
    const [error, setError] = useState<AlertType>({
       message: "",
@@ -62,6 +69,32 @@ export default function LogIn() {
          ...prev,
          [name]: value,
       }));
+   }
+
+   async function handleLogIn(e: React.FormEvent<HTMLFormElement>) {
+      e.preventDefault();
+      try {
+         const result = await fetch(`${LOG_IN_USER_ENDPOINT}`, {
+            method: "POST",
+            headers: {
+               "Content-Type": "application/json",
+            },
+            body: JSON.stringify(logIn),
+         });
+
+         if (!result.ok) {
+            throw new Error("LogIn failed");
+         }
+         const data = await result.json();
+         console.log("Login response:", data);
+         setLocalState(data.email, data.token, data.profileType, data.name);
+         router.push("/tools");
+      } catch (error) {
+         setError({
+            message: "Invalid Credentials. Try again.",
+            on: true,
+         });
+      }
    }
 
    async function handleCreateAcc(e: React.FormEvent<HTMLFormElement>) {
@@ -113,7 +146,7 @@ export default function LogIn() {
                      transition={{ duration: 0.5 }}
                   >
                      <form
-                        onSubmit={() => console.log("logIn")}
+                        onSubmit={handleLogIn}
                         className="flex flex-col gap-2"
                      >
                         <h1 className="text-white text-3xl">Log in</h1>

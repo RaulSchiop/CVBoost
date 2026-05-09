@@ -5,13 +5,17 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { useLocalStateStore } from "@/stores/slices/LocalStateStore";
+import MainBtn from "../Buttons/MainBtn";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
+   const router = useRouter();
    const [isMenuOpen, setIsMenuOpen] = useState(false);
    const [isVisible, setIsVisible] = useState(true);
    const [lastScrollY, setLastScrollY] = useState(0);
    const pathname = usePathname();
-
+   const { token, clearLocalState } = useLocalStateStore();
    useEffect(() => {
       const handleScroll = () => {
          const currentScrollY = window.scrollY;
@@ -22,6 +26,10 @@ export default function Header() {
       window.addEventListener("scroll", handleScroll, { passive: true });
       return () => window.removeEventListener("scroll", handleScroll);
    }, [lastScrollY]);
+   const handleLogOut = () => {
+      clearLocalState();
+      router.refresh();
+   };
    return (
       <motion.div
          initial={{ opacity: 0, y: -500 }}
@@ -95,9 +103,13 @@ export default function Header() {
                   )}
                </svg>
             </button>
-            <Link href="/auth">
-               <LogInBtn></LogInBtn>
-            </Link>
+            {token != null ? (
+               <MainBtn onClick={handleLogOut}>Log Out</MainBtn>
+            ) : (
+               <Link href="/auth">
+                  <LogInBtn />
+               </Link>
+            )}
          </div>
 
          {isMenuOpen && (
@@ -115,6 +127,7 @@ export default function Header() {
                   >
                      Home
                   </Link>
+                  {token != null ? <></>:
                   <Link
                      className=" border-b-2 active:text-accent-200 "
                      href="/tools"
@@ -122,6 +135,7 @@ export default function Header() {
                   >
                      Tools
                   </Link>
+}
                   <Link
                      className=" border-b-2 active:text-accent-200 "
                      href="/contact"

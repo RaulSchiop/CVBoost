@@ -11,6 +11,7 @@ import { AI_RESUME_REVIEW_ENDPOINT } from "@/app/Constants/endpoints";
 import Skeleton from "../Loadings/Skeleton";
 import { ReviewResponse } from "@/types/resumeReviewTypes";
 import AiReviewOutput from "../AiReviewOutput/AiReviewOutput";
+import { useLocalStateStore } from "@/stores/slices/LocalStateStore";
 
 export default function PDFInput({ toggle, resumes }: PDFInputPropsType) {
    const [file, setFile] = useState<File>();
@@ -20,6 +21,7 @@ export default function PDFInput({ toggle, resumes }: PDFInputPropsType) {
    const atsScore = 60;
    // Sample resume data - replace with actual data from props or API
 
+   const { token } = useLocalStateStore();
    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const files = e.target.files;
       if (!files || files.length === 0) return;
@@ -45,190 +47,197 @@ export default function PDFInput({ toggle, resumes }: PDFInputPropsType) {
 
       setFile(droppedFile);
    };
-const handleSubmit = async (file: File) => {
-   setLoading(true);
-   const formData = new FormData();
-   formData.append("file", file);
+   const handleSubmit = async (file: File) => {
+      setLoading(true);
+      const formData = new FormData();
+      formData.append("file", file);
 
-   const MAX_RETRIES = 4;
+      const MAX_RETRIES = 4;
 
-   for (let i = 0; i < MAX_RETRIES; i++) {
-      try {
-         const result = await fetch(AI_RESUME_REVIEW_ENDPOINT, {
-            method: "POST",
-            body: formData,
-         });
+      for (let i = 0; i < MAX_RETRIES; i++) {
+         try {
+            const result = await fetch(AI_RESUME_REVIEW_ENDPOINT, {
+               method: "POST",
+               headers: {
+                  Authorization: `Bearer ${token}`,
+               },
+               body: formData,
+            });
 
-         if (!result.ok) {
-            throw new Error(`Attempt ${i + 1} failed with status: ${result.status}`);
-         }
+            if (!result.ok) {
+               throw new Error(
+                  `Attempt ${i + 1} failed with status: ${result.status}`,
+               );
+            }
 
-         const data = await result.json();
-         
-         setReviewResult(data);
-         setLoading(false);
-         return; 
+            const data = await result.json();
 
-      } catch (error) {
-         console.error(`Attempt ${i + 1} failed:`, error);
-
-         if (i === MAX_RETRIES - 1) {
+            setReviewResult(data);
             setLoading(false);
-         } else {
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            return;
+         } catch (error) {
+            console.error(`Attempt ${i + 1} failed:`, error);
+
+            if (i === MAX_RETRIES - 1) {
+               setLoading(false);
+            } else {
+               await new Promise((resolve) => setTimeout(resolve, 1000));
+            }
          }
       }
-   }
-};
+   };
    console.log(reviewResult);
    if (loading) {
       return <Skeleton></Skeleton>;
    }
    return (
-     
       <motion.div
          initial={{ opacity: 0, y: 100 }}
          animate={{ opacity: 1, y: 0 }}
          transition={{ type: "spring", duration: 0.8 }}
          className="bg-contrast-500/20 rounded-2xl mt-5  backdrop-blur-md "
       >
-         {reviewResult ? <AiReviewOutput result={reviewResult}></AiReviewOutput> :
-         <div>
-         {toggle === false ? (
-            <div className="w-full h-full flex flex-col items-end justify-center p-3">
-               <div className="p-10 w-full h-[400px]">
-                  <label
-                     htmlFor="files"
-                     className="w-full h-full cursor-pointer  "
-                  >
-                     <div
-                        className={`rounded-2xl border-2 border-dashed border-gray-500/80 w-full h-full p-5 flex flex-col items-center justify-center gap-2 ${
-                           dragActive && "cursor-pointer"
-                        }`}
-                        onDragOver={handleDrag}
-                        onDrop={handleDrop}
-                        onDragLeave={() => setDragActive(false)}
-                     >
-                        <div className="p-2 rounded-xl bg-gradient-to-br from-contrast-500/40 via-contrast-500/20 to-contrast-500/10 border border-gray-500/60">
-                           {/* document writen */}
-                           <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth={1.5}
-                              stroke="currentColor"
-                              className="size-14 text-white/50"
-                           >
-                              <path
-                                 strokeLinecap="round"
-                                 strokeLinejoin="round"
-                                 d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
-                              />
-                           </svg>
-                        </div>
-                        {file ? (
-                           <h1 className="text-xl text-white/80 ">
-                              File Name :{" "}
-                              <a className="font-bold text-accent-700">
-                                 {file.name}
-                              </a>
-                           </h1>
-                        ) : (
-                           <h1 className="text-xl text-white/80">
-                              Upload Resume PDF
-                           </h1>
-                        )}
-
-                        <p className="text-gray-500/60">
-                           Drag & drop or click to browse
-                        </p>
-
-                        <input
-                           id="files"
-                           className="hidden"
-                           type="file"
-                           accept="application/pdf"
-                           onChange={handleInputChange}
-                        />
-                     </div>
-                  </label>
-               </div>
-               {file && (
-                  <MainBtn onClick={() => handleSubmit(file)}>
-                     Review The Resume
-                  </MainBtn>
-               )}
-            </div>
+         {reviewResult ? (
+            <AiReviewOutput result={reviewResult}></AiReviewOutput>
          ) : (
-            <div className=" w-full h-full flex items-start justify-center">
-               {resumes ? (
-                  <DownList>
-                     {resumes.map((resume, index) => (
-                        <motion.li
-                           key={resume.id}
-                           className="mb-3"
-                           initial={{ opacity: 0 }}
-                           animate={{ opacity: 1 }}
-                           exit={{ opacity: 0 }}
-                           transition={{
-                              type: "spring",
-                              duration: 1.5,
-                              delay: index * 0.1,
-                           }}
+            <div>
+               {toggle === false ? (
+                  <div className="w-full h-full flex flex-col items-end justify-center p-3">
+                     <div className="p-10 w-full h-[400px]">
+                        <label
+                           htmlFor="files"
+                           className="w-full h-full cursor-pointer  "
                         >
-                           <MainCard ClassName="w-full flex items-center  justify-between flex-col gap-3 lg:flex-row">
-                              <div className="">
-                                 <p>
-                                    Name:
-                                    <a className="font-bold">{resume.name}</a>
-                                 </p>
-                                 <p className="text-white/60">
-                                    Creation Date: {resume.createdDate}
-                                 </p>
-                              </div>
-                              <p>
-                                 Current Ats Score:
-                                 <a
-                                    className={`text-bold ${
-                                       resume.atsScore <= 50
-                                          ? "text-red-500 border-red-500"
-                                          : resume.atsScore <= 85
-                                            ? " text-yellow-500 border-yellow-500"
-                                            : " text-green-500 border-green-500"
-                                    }`}
+                           <div
+                              className={`rounded-2xl border-2 border-dashed border-gray-500/80 w-full h-full p-5 flex flex-col items-center justify-center gap-2 ${
+                                 dragActive && "cursor-pointer"
+                              }`}
+                              onDragOver={handleDrag}
+                              onDrop={handleDrop}
+                              onDragLeave={() => setDragActive(false)}
+                           >
+                              <div className="p-2 rounded-xl bg-gradient-to-br from-contrast-500/40 via-contrast-500/20 to-contrast-500/10 border border-gray-500/60">
+                                 {/* document writen */}
+                                 <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth={1.5}
+                                    stroke="currentColor"
+                                    className="size-14 text-white/50"
                                  >
-                                    {resume.atsScore}
-                                 </a>
-                              </p>
-                              <div className="flex gap-2 lg:flex-col ">
-                                 <SmallBtn>View</SmallBtn>
-                                 <SmallBtn color="bg-green-500/60">
-                                    Update Score
-                                 </SmallBtn>
-                                 <SmallBtn color="bg-red-500">
-                                    Delete Resume
-                                 </SmallBtn>
+                                    <path
+                                       strokeLinecap="round"
+                                       strokeLinejoin="round"
+                                       d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
+                                    />
+                                 </svg>
                               </div>
-                           </MainCard>
-                        </motion.li>
-                     ))}
-                  </DownList>
+                              {file ? (
+                                 <h1 className="text-xl text-white/80 ">
+                                    File Name :{" "}
+                                    <a className="font-bold text-accent-700">
+                                       {file.name}
+                                    </a>
+                                 </h1>
+                              ) : (
+                                 <h1 className="text-xl text-white/80">
+                                    Upload Resume PDF
+                                 </h1>
+                              )}
+
+                              <p className="text-gray-500/60">
+                                 Drag & drop or click to browse
+                              </p>
+
+                              <input
+                                 id="files"
+                                 className="hidden"
+                                 type="file"
+                                 accept="application/pdf"
+                                 onChange={handleInputChange}
+                              />
+                           </div>
+                        </label>
+                     </div>
+                     {file && (
+                        <MainBtn onClick={() => handleSubmit(file)}>
+                           Review The Resume
+                        </MainBtn>
+                     )}
+                  </div>
                ) : (
-                  <div className="w-full h-full flex items-center justify-center flex-col mt-20">
-                     <h1 className="text-accent-600 text-3xl font-bold">
-                        {" "}
-                        No Resumes{" "}
-                     </h1>
-                     <p className="text-accent-950/70 text-lg text-center">
-                        Curentlry you have no Resumes. Create new Resume with
-                        Ai.{" "}
-                     </p>
+                  <div className=" w-full h-full flex items-start justify-center">
+                     {resumes ? (
+                        <DownList>
+                           {resumes.map((resume, index) => (
+                              <motion.li
+                                 key={resume.id}
+                                 className="mb-3"
+                                 initial={{ opacity: 0 }}
+                                 animate={{ opacity: 1 }}
+                                 exit={{ opacity: 0 }}
+                                 transition={{
+                                    type: "spring",
+                                    duration: 1.5,
+                                    delay: index * 0.1,
+                                 }}
+                              >
+                                 <MainCard ClassName="w-full flex items-center  justify-between flex-col gap-3 lg:flex-row">
+                                    <div className="">
+                                       <p>
+                                          Name:
+                                          <a className="font-bold">
+                                             {resume.name}
+                                          </a>
+                                       </p>
+                                       <p className="text-white/60">
+                                          Creation Date: {resume.createdDate}
+                                       </p>
+                                    </div>
+                                    <p>
+                                       Current Ats Score:
+                                       <a
+                                          className={`text-bold ${
+                                             resume.atsScore <= 50
+                                                ? "text-red-500 border-red-500"
+                                                : resume.atsScore <= 85
+                                                  ? " text-yellow-500 border-yellow-500"
+                                                  : " text-green-500 border-green-500"
+                                          }`}
+                                       >
+                                          {resume.atsScore}
+                                       </a>
+                                    </p>
+                                    <div className="flex gap-2 lg:flex-col ">
+                                       <SmallBtn>View</SmallBtn>
+                                       <SmallBtn color="bg-green-500/60">
+                                          Update Score
+                                       </SmallBtn>
+                                       <SmallBtn color="bg-red-500">
+                                          Delete Resume
+                                       </SmallBtn>
+                                    </div>
+                                 </MainCard>
+                              </motion.li>
+                           ))}
+                        </DownList>
+                     ) : (
+                        <div className="w-full h-full flex items-center justify-center flex-col mt-20">
+                           <h1 className="text-accent-600 text-3xl font-bold">
+                              {" "}
+                              No Resumes{" "}
+                           </h1>
+                           <p className="text-accent-950/70 text-lg text-center">
+                              Curentlry you have no Resumes. Create new Resume
+                              with Ai.{" "}
+                           </p>
+                        </div>
+                     )}
                   </div>
                )}
             </div>
          )}
-         </div>
-         }
       </motion.div>
    );
 }
