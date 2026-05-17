@@ -12,3 +12,7 @@ export const AI_RESUME_REVIEW_ENDPOINT =
 //Auth endpoints
 export const CREATE_USER_ENDPOINT = HOST + API_VERSION + "/auth/createAccount"; //POST ENDPOINT
 export const LOG_IN_USER_ENDPOINT = HOST + API_VERSION + "/auth/login"; //POST ENDPOINT
+
+
+//Application endpoints
+export const CREATE_APPLICATION_ENDPOINT = HOST+ API_VERSION + "/application/createApplication" //POST ENDPOINT 

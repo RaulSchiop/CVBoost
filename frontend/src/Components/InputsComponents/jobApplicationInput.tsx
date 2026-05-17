@@ -4,14 +4,16 @@ import { Job, Status } from "@/types/jobsType";
 import { motion } from "motion/react";
 import { useState } from "react";
 import MainBtn from "../Buttons/MainBtn";
+import { useLocalStateStore } from "@/stores/slices/LocalStateStore";
+import { CREATE_APPLICATION_ENDPOINT } from "@/app/Constants/endpoints";
 
 export default function JobApplicationInput() {
    const [status, setStatus] = useState<Status>();
    const [jobApplication, setJobApplication] = useState<Omit<Job, "id">>({
-      title: "",
+      company: "",
       position: "",
       seniority: "junior",
-      date: "",
+      applicationDate: "",
       status: "applied",
    });
    const statusOptions = [
@@ -22,7 +24,7 @@ export default function JobApplicationInput() {
       "accepted",
       "rejected",
    ];
-
+   const { email, token } = useLocalStateStore();
    const handleStatusChange = (status: Status) => {
       setStatus(status);
    };
@@ -37,6 +39,29 @@ export default function JobApplicationInput() {
       }));
    };
 
+   const handleSubbmit = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      try {
+         const result = await fetch(CREATE_APPLICATION_ENDPOINT, {
+            method: "POST",
+            headers: {
+               "Content-Type": "application/json",
+               Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ ...jobApplication, email }),
+         });
+         if (!result.ok) {
+            const errorBody = await result.text();
+            console.log("Error body:", errorBody);
+            throw new Error(`Failed: ${result.status} - ${errorBody}`);
+         }
+         const data = await result.json();
+         console.log("Application created:", data);
+      } catch (error) {
+         console.error(error);
+      }
+   };
+
    return (
       <motion.div
          initial={{ y: 100, opacity: 0 }}
@@ -46,14 +71,11 @@ export default function JobApplicationInput() {
          <h1 className="text-2xl font-bold text-white mt-10">
             Job Application Details
          </h1>
-         <form
-            className="flex flex-col gap-4 mt-5"
-            onSubmit={() => console.log("to do when backend is done")}
-         >
+         <form className="flex flex-col gap-4 mt-5" onSubmit={handleSubbmit}>
             <div className="flex items-center justify-center w-full gap-4 flex-col md:flex-row">
                <input
-                  placeholder="Job Title (ex: Google )"
-                  name="title"
+                  placeholder="Company (ex: Google )"
+                  name="company"
                   type="text"
                   onChange={handleChange}
                   required
@@ -79,7 +101,7 @@ export default function JobApplicationInput() {
             />
             <input
                placeholder=" Appliction Date ( dd/mm/yyyy )"
-               name="date"
+               name="applicationDate"
                type="text"
                onChange={handleChange}
                required

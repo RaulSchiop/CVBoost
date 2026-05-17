@@ -12,15 +12,14 @@ export default function RootLayout({
    children: React.ReactNode;
 }>) {
    const router = useRouter();
-   const { token } = useLocalStateStore();
+
    useEffect(() => {
-      function handleCheckToken() {
-         if (!token) {
-            router.push("/auth");
-         }
+      useLocalStateStore.getState().rehydrate(); 
+
+      const { token } = useLocalStateStore.getState(); 
+      if (!token) {
+         router.push("/auth");
       }
-      handleCheckToken();
-      useLocalStateStore.getState().rehydrate();
    }, []);
 
    return (

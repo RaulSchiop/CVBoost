@@ -1,9 +1,9 @@
 export interface Job {
    id: number;
-   title: string;
+   company: string;
    position: string;
    seniority: "junior" | "mid" | "senior";
-   date: string;
+   applicationDate: string;
    status: Status;
 }
 

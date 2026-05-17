@@ -25,34 +25,34 @@ export default function JobManageing() {
    const jobs: Job[] = [
       {
          id: 1,
-         title: "hella",
+         company: "hella",
          position: "full stack",
          seniority: "junior",
-         date: "20/11/2025",
+         applicationDate: "20/11/2025",
          status: "accepted",
       },
       {
          id: 2,
-         title: "hella",
+         company: "hella",
          position: "full stack",
          seniority: "junior",
-         date: "20/11/2025",
+         applicationDate: "20/11/2025",
          status: "rejected",
       },
       {
          id: 3,
-         title: "hella",
+         company: "hella",
          position: "full stack",
          seniority: "junior",
-         date: "20/11/2025",
+         applicationDate: "20/11/2025",
          status: "interview",
       },
       {
          id: 4,
-         title: "hella",
+         company: "hella",
          position: "full stack",
          seniority: "junior",
-         date: "20/11/2025",
+         applicationDate: "20/11/2025",
          status: "accepted",
       },
    ];
@@ -102,27 +102,29 @@ export default function JobManageing() {
                      >
                         <div className=" flex  w-full p-6 items-center  justify-center lg:justify-between gap-2 md:gap-0">
                            <h1 className="text-white text-xl">
-                              Job Titile: {items.title}
+                              {items.company}
                            </h1>
                            <div className="flex lg:flex-row flex-col justify-center lg:gap-20 w-full ">
                               <p className="text-white text-wrap">
                                  {items.position}
                               </p>
                               <p className="text-white">{items.seniority}</p>
-                              <p className="text-white/50">{items.date}</p>
+                              <p className="text-white/50">
+                                 {items.applicationDate}
+                              </p>
                               <p
                                  className={`${
                                     items.status === "accepted"
                                        ? "text-green-600"
                                        : items.status === "rejected"
-                                       ? "text-red-500"
-                                       : items.status === "interview"
-                                       ? "text-yellow-400"
-                                       : items.status === "applied"
-                                       ? "text-blue-500"
-                                       : items.status === "offer"
-                                       ? "text-emerald-500"
-                                       : "text-gray-400"
+                                         ? "text-red-500"
+                                         : items.status === "interview"
+                                           ? "text-yellow-400"
+                                           : items.status === "applied"
+                                             ? "text-blue-500"
+                                             : items.status === "offer"
+                                               ? "text-emerald-500"
+                                               : "text-gray-400"
                                  } `}
                               >
                                  {items.status}
@@ -135,7 +137,7 @@ export default function JobManageing() {
                                  onChange={(e) =>
                                     handleStatusChange(
                                        e.target.value as Status,
-                                       items.id
+                                       items.id,
                                     )
                                  }
                               >
