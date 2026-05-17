@@ -1,6 +1,5 @@
 package org.example.backend.Requests;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,8 +8,8 @@ import org.example.backend.Enums.ApplicationStatus;
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-public class ApplicationRequest {
-    private String SK;
+public class ApplicationRequestCreate {
+
     private String email;
     private String position;
     private String seniority;

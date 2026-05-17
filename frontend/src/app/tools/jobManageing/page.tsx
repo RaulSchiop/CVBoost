@@ -5,10 +5,16 @@ import DownList from "@/Components/List/DownList";
 import Title from "@/Components/Text/Title";
 import { Job } from "@/types/jobsType";
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Status } from "@/types/jobsType";
 import GreenBtn from "@/Components/Buttons/GreenBtn";
 import Link from "next/link";
+import {
+   GET_APPLICATION_ENDPOINT,
+   UPDATE_APPLICATION_STATUS_ENDPOINT,
+} from "@/app/Constants/endpoints";
+import { useLocalStateStore } from "@/stores/slices/LocalStateStore";
+import { useRouter } from "next/navigation";
 
 export default function JobManageing() {
    //status list
@@ -20,63 +26,86 @@ export default function JobManageing() {
       "accepted",
       "rejected",
    ];
+   const [jobs, setJobs] = useState<Job[]>([]);
 
-   //hardcoded jobs
-   const jobs: Job[] = [
-      {
-         id: 1,
-         company: "hella",
-         position: "full stack",
-         seniority: "junior",
-         applicationDate: "20/11/2025",
-         status: "accepted",
-      },
-      {
-         id: 2,
-         company: "hella",
-         position: "full stack",
-         seniority: "junior",
-         applicationDate: "20/11/2025",
-         status: "rejected",
-      },
-      {
-         id: 3,
-         company: "hella",
-         position: "full stack",
-         seniority: "junior",
-         applicationDate: "20/11/2025",
-         status: "interview",
-      },
-      {
-         id: 4,
-         company: "hella",
-         position: "full stack",
-         seniority: "junior",
-         applicationDate: "20/11/2025",
-         status: "accepted",
-      },
-   ];
-
-   const initialStatuses: { [key: number]: Status } = {};
+   const initialStatuses: { [key: string]: Status } = {};
    jobs.forEach((job) => {
-      initialStatuses[job.id] = job.status;
+      initialStatuses[job.sk] = job.status;
    });
-
+   const router = useRouter();
    const [status, setStatus] = useState(initialStatuses);
+   const { email, token, rehydrate } = useLocalStateStore();
+   useEffect(() => {
+      rehydrate();
+   }, [rehydrate]);
 
-   //later change status on update small button
-   const updateStatus = async (status: Status) => {};
+   useEffect(() => {
+      if (!email || !token) return;
 
-   console.log(status);
-   const handleStatusChange = (status: Status, id: number) => {
+      const getApplications = async () => {
+         try {
+            const result = await fetch(GET_APPLICATION_ENDPOINT + `/${email}`, {
+               method: "GET",
+               headers: {
+                  Authorization: `Bearer ${token}`,
+               },
+            });
+            if (!result.ok) {
+               const errorBody = await result.json();
+               console.log("Error body:", errorBody);
+               throw new Error(`Failed: ${result.status} - ${errorBody}`);
+            }
+            const data = await result.json();
+            setJobs(data);
+            console.log("Get Application:", data);
+         } catch (error) {
+            console.error(error);
+         }
+      };
+
+      getApplications();
+   }, [email, token]);
+
+   const updateStatus = async (
+      newStatus: Status,
+      SK: string,
+      email: string,
+   ) => {
+      try {
+         const result = await fetch(UPDATE_APPLICATION_STATUS_ENDPOINT, {
+            method: "PATCH",
+            headers: {
+               Authorization: `Bearer ${token}`,
+               "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, sk: SK, status: newStatus }),
+         });
+         if (!result.ok) {
+            const errorBody = await result.text();
+            console.log("Error body:", errorBody);
+            throw new Error(`Failed: ${result.status} - ${errorBody}`);
+         }
+         setJobs((prev) =>
+            prev.map((job) =>
+               job.sk === SK ? { ...job, status: newStatus } : job,
+            ),
+         );
+         setStatus((prev) => ({ ...prev, [SK]: newStatus }));
+      } catch (error) {
+         console.error(error);
+      }
+   };
+
+   const handleStatusChange = (status: Status, SK: string) => {
       setStatus((prev) => ({
          ...prev,
-         [id]: status,
+         [SK]: status,
       }));
    };
 
+   console.log(jobs);
    return (
-      <div className="min-h-full bg-gradient-to-bl from-contrast-500/20 via-contrast-500/60 to-contrast-500/20 p-5 lg:p-20">
+      <div className="min-h-screen bg-gradient-to-bl from-contrast-500/20 via-contrast-500/60 to-contrast-500/20 p-5 lg:p-20">
          <div className="mb-5">
             <Title title="Jobs List">
                <p>Track and manage job applications in one place.</p>
@@ -133,11 +162,11 @@ export default function JobManageing() {
                            <div className="flex items-center justify-center gap-4 ">
                               <select
                                  className="text-white"
-                                 value={status[items.id]}
+                                 value={status[items.email]}
                                  onChange={(e) =>
                                     handleStatusChange(
                                        e.target.value as Status,
-                                       items.id,
+                                       items.sk,
                                     )
                                  }
                               >
@@ -147,7 +176,17 @@ export default function JobManageing() {
                                     </option>
                                  ))}
                               </select>
-                              <SmallBtn>Update status</SmallBtn>
+                              <SmallBtn
+                                 onClick={() =>
+                                    updateStatus(
+                                       status[items.sk],
+                                       items.sk,
+                                       email!,
+                                    )
+                                 }
+                              >
+                                 Update status
+                              </SmallBtn>
                            </div>
                         </div>
                      </motion.li>

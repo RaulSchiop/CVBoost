@@ -6,15 +6,18 @@ import { useState } from "react";
 import MainBtn from "../Buttons/MainBtn";
 import { useLocalStateStore } from "@/stores/slices/LocalStateStore";
 import { CREATE_APPLICATION_ENDPOINT } from "@/app/Constants/endpoints";
+import { useRouter } from "next/navigation";
 
 export default function JobApplicationInput() {
    const [status, setStatus] = useState<Status>();
-   const [jobApplication, setJobApplication] = useState<Omit<Job, "id">>({
+   const [jobApplication, setJobApplication] = useState<
+      Omit<Job, "email" | "sk">
+   >({
       company: "",
       position: "",
-      seniority: "junior",
-      applicationDate: "",
-      status: "applied",
+      seniority: "",
+      applicationDate: new Date().toISOString(),
+      status: "saved",
    });
    const statusOptions = [
       "saved",
@@ -38,6 +41,7 @@ export default function JobApplicationInput() {
          [name]: value,
       }));
    };
+   const router = useRouter();
 
    const handleSubbmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -56,11 +60,13 @@ export default function JobApplicationInput() {
             throw new Error(`Failed: ${result.status} - ${errorBody}`);
          }
          const data = await result.json();
+         router.push("/tools/jobManageing/");
          console.log("Application created:", data);
       } catch (error) {
          console.error(error);
       }
    };
+   console.log(jobApplication);
 
    return (
       <motion.div
@@ -99,27 +105,6 @@ export default function JobApplicationInput() {
                required
                className="text-white placeholder-white/60 bg-contrast-500/20 border border-gray-500/60 focus:border-accent-500 rounded px-4 py-2 focus:outline-none"
             />
-            <input
-               placeholder=" Appliction Date ( dd/mm/yyyy )"
-               name="applicationDate"
-               type="text"
-               onChange={handleChange}
-               required
-               className="text-white placeholder-white/60 bg-contrast-500/20 border border-gray-500/60 focus:border-accent-500 rounded px-4 py-2 focus:outline-none"
-            />
-            <div className="flex items-center justify-start w-full gap-4 ">
-               <select
-                  className="text-white text-lg"
-                  value={status}
-                  onChange={(e) => handleStatusChange(e.target.value as Status)}
-               >
-                  {statusOptions.map((option, index) => (
-                     <option key={index} value={option}>
-                        {option}
-                     </option>
-                  ))}
-               </select>
-            </div>
 
             <MainBtn type="submit">Create New Application</MainBtn>
          </form>

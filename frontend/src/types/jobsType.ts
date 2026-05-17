@@ -1,10 +1,11 @@
 export interface Job {
-   id: number;
+   email: string;
    company: string;
    position: string;
-   seniority: "junior" | "mid" | "senior";
+   seniority: "";
    applicationDate: string;
    status: Status;
+   sk: string;
 }
 
 export type Status =
@@ -13,4 +14,5 @@ export type Status =
    | "interview" // interview scheduled / in progress
    | "offer" // offer received
    | "accepted" // offer accepted
-   | "rejected";
+   | "rejected"
+  

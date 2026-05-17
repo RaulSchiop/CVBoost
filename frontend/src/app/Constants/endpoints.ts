@@ -16,3 +16,5 @@ export const LOG_IN_USER_ENDPOINT = HOST + API_VERSION + "/auth/login"; //POST E
 
 //Application endpoints
 export const CREATE_APPLICATION_ENDPOINT = HOST+ API_VERSION + "/application/createApplication" //POST ENDPOINT 
+export const UPDATE_APPLICATION_STATUS_ENDPOINT = HOST+ API_VERSION + "/application/updateStatus" //POST ENDPOINT 
+export const GET_APPLICATION_ENDPOINT = HOST+ API_VERSION + "/application/getApplications" //GET ENDPOINT 
