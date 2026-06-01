@@ -1,7 +1,6 @@
 package org.example.backend.Services;
 
 import org.example.backend.Dtos.InterviewAssistent.AiResumeReview.AiResumeReviewResponse;
-import org.example.backend.Dtos.InterviewAssistent.TopicResponse;
 import org.example.backend.Utils.AiAsistentPrompt;
 import org.example.backend.Utils.FileUtils;
 import org.springframework.ai.chat.client.ChatClient;
@@ -21,7 +20,7 @@ public class AiResumeReviewService
         chatClient = builder.build();
     }
 
-    public String getTextReview(MultipartFile file) throws IOException {
+    public AiResumeReviewResponse getTextReview(MultipartFile file) throws IOException {
 
         var converter = new BeanOutputConverter<>(AiResumeReviewResponse.class);
 
@@ -33,7 +32,8 @@ public class AiResumeReviewService
                         .param("format", converter.getFormat())
                 )
                 .call()
-                .content();
+                .entity(AiResumeReviewResponse.class);
+
 
     }
 

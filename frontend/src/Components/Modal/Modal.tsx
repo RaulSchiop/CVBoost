@@ -26,7 +26,7 @@ const Modal = ({ show, onClose, children }: PropsType) => {
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ type: "spring", duration: 0.5 }}
                   exit={{ y: 500, opacity: 0 }}
-                  className=" relative bg-secondary  bg-gradient-to-bl from-accent-300/70 via-black to-black bg-purple-500/25 backdrop-blur-md  shadow-2xl  rounded-xl p-20 overflow-y-auto"
+                  className=" relative bg-secondary max-h-full bg-gradient-to-bl from-accent-300/70 via-black to-black bg-purple-500/25 backdrop-blur-md  shadow-2xl  rounded-xl p-20 overflow-y-auto"
                   onClick={(e) => e.stopPropagation()}
                >
                   <motion.button

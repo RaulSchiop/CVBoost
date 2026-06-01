@@ -64,7 +64,9 @@ export default function AiReview() {
                </svg>
             </motion.div>
             <Title title=" Ai Resume Review">
-               Get AI-powered ATS Review score based across 5 key criteria
+               Keep in mind the score should not be perfect{" "}
+               <a className="text-accent-500">70+</a> should be ok to pass in
+               most cases
             </Title>
          </div>
          {toggleUpload === false ? (

@@ -1,7 +1,7 @@
 package org.example.backend.Services;
 
-import org.example.backend.Dtos.InterviewAssistent.QuestionResponse;
-import org.example.backend.Dtos.InterviewAssistent.TopicResponse;
+import org.example.backend.Response.QuestionResponse;
+import org.example.backend.Response.TopicResponse;
 import org.example.backend.Requests.QuestionRequest;
 import org.example.backend.Requests.TopicsRequest;
 import org.example.backend.Utils.AiAsistentPrompt;

@@ -7,17 +7,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
-import org.example.backend.Dtos.InterviewAssistent.QuestionResponse;
-import org.example.backend.Dtos.InterviewAssistent.TopicResponse;
+import org.example.backend.Response.QuestionResponse;
+import org.example.backend.Response.TopicResponse;
 import org.example.backend.Requests.QuestionRequest;
 import org.example.backend.Requests.TopicsRequest;
 import org.example.backend.Services.AiAsistentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j

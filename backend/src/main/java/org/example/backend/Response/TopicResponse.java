@@ -1,8 +1,9 @@
-package org.example.backend.Dtos.InterviewAssistent;
+package org.example.backend.Response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.backend.Dtos.InterviewAssistent.Topic;
 
 import java.util.List;
 

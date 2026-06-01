@@ -8,14 +8,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.example.backend.Dtos.InterviewAssistent.AiResumeReview.AiResumeReviewResponse;
-import org.example.backend.Dtos.InterviewAssistent.TopicResponse;
 import org.example.backend.Services.AiResumeReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
@@ -56,7 +54,7 @@ public class AiResumeReview {
 
         try {
             log.info("Get analysis request: {}", file.getName());
-            String aiResponse = aiResumeReviewService.getTextReview(file);
+            AiResumeReviewResponse aiResponse = aiResumeReviewService.getTextReview(file);
             log.info("Get the response from AI: {}" ,aiResponse);
 
             return ResponseEntity.ok(aiResponse);
