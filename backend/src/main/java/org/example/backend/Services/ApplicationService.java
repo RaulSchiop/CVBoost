@@ -1,20 +1,23 @@
 package org.example.backend.Services;
 
-
 import org.example.backend.Enums.ApplicationStatus;
+import org.example.backend.Models.Application;
 import org.example.backend.Requests.ApplicationRequest;
-
 import org.example.backend.Requests.ApplicationRequestCreate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
-import software.amazon.awssdk.services.dynamodb.model.*;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
+import software.amazon.awssdk.enhanced.dynamodb.Key;
+import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
+import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,99 +25,89 @@ import java.util.stream.Collectors;
 @Service
 public class ApplicationService {
 
-
-
-    private final String sk="APLICATION";
-
-    private final BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
-    private final DynamoDbClient dynamoDbClient;
+    private static final Logger logger = LoggerFactory.getLogger(ApplicationService.class);
+    private final String skPrefixConstant = "APPLICATION";
+    private final DynamoDbTable<Application> applicationTable;
 
     @Autowired
-    ApplicationService(DynamoDbClient dynamoDbClient) {
-        this.dynamoDbClient = dynamoDbClient;
+    public ApplicationService(DynamoDbEnhancedClient enhancedClient) {
+        this.applicationTable = enhancedClient.table("AppTable", TableSchema.fromBean(Application.class));
     }
 
-    public ResponseEntity<?> createApplication(ApplicationRequestCreate application) {
-        try{
-            String uniqueSk = sk + "#" + LocalDateTime.now();
-            String pk=application.getEmail();
-            PutItemRequest request = PutItemRequest.builder()
-                    .tableName("AppTable")
-                    .item(Map.of(
-                            "PK", AttributeValue.builder().s(pk).build(),
-                            "SK", AttributeValue.builder().s(uniqueSk).build(),
-                            "Seniority", AttributeValue.builder().s(application.getSeniority()).build(),
-                            "Company", AttributeValue.builder().s(application.getCompany()).build(),
-                            "CreatedAt", AttributeValue.builder().s(new Date().toString()).build(),
-                            "Position",AttributeValue.builder().s(application.getPosition()).build(),
-                            "Status",AttributeValue.builder().s(application.getStatus().name()).build()
-                    ))
-                    .build();
+    public ResponseEntity<?> createApplication(ApplicationRequestCreate applicationRequest) {
+        try {
+            String isoNow = LocalDate.now().toString();
+            String uniqueSk = skPrefixConstant + "#" + isoNow;
 
-            dynamoDbClient.putItem(request);
-            return new ResponseEntity<>(application, HttpStatus.CREATED);
+            Application application = new Application();
+            application.setPK(applicationRequest.getEmail());
+            application.setSK(uniqueSk);
+            application.setSeniority(applicationRequest.getSeniority());
+            application.setCompany(applicationRequest.getCompany());
+            application.setCreatedAt(isoNow);
+            application.setPosition(applicationRequest.getPosition());
+            application.setStatus(applicationRequest.getStatus().name());
+
+            applicationTable.putItem(application);
+            return new ResponseEntity<>(applicationRequest, HttpStatus.CREATED);
+
         } catch (Exception e) {
+            logger.error("Error creating application: ", e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     public ResponseEntity<?> getApplications(String email) {
         try {
+            String skTargetPrefix = skPrefixConstant + "#";
 
-            String skPrefix = sk + "#";
+            QueryConditional queryConditional = QueryConditional
+                    .sortBeginsWith(Key.builder()
+                            .partitionValue(email)
+                            .sortValue(skTargetPrefix)
+                            .build());
 
-            QueryRequest queryRequest = QueryRequest.builder()
-                    .tableName("AppTable")
-                    .keyConditionExpression("PK = :pk and begins_with(SK, :sk)")
-                    .expressionAttributeValues(Map.of(
-                            ":pk", AttributeValue.builder().s(email).build(),
-                            ":sk", AttributeValue.builder().s(skPrefix).build()
-                    ))
-                    .build();
-            System.out.println("Querying DynamoDB for PK=" + email + " SKPrefix=" + skPrefix);
-            QueryResponse queryResponse = dynamoDbClient.query(queryRequest);
-
-            List<ApplicationRequest> applications = queryResponse.items().stream().map(item -> {
-                ApplicationRequest app = new ApplicationRequest();
-                app.setSK(item.getOrDefault("SK", AttributeValue.builder().s("").build()).s());
-                app.setEmail(item.getOrDefault("PK", AttributeValue.builder().s("").build()).s());
-                app.setStatus(item.containsKey("Status") ? ApplicationStatus.valueOf(item.get("Status").s()) : ApplicationStatus.applied);
-                app.setPosition(item.containsKey("Position") ? item.get("Position").s() : "");
-                app.setSeniority(item.containsKey("Seniority") ? item.get("Seniority").s() : "");
-                app.setApplicationDate(item.containsKey("CreatedAt") ? item.get("CreatedAt").s() : "");
-                app.setCompany(item.containsKey("Company") ? item.get("Company").s() : "");
-
-                return app;
-            }).collect(Collectors.toList());
+            List<ApplicationRequest> applications = applicationTable.query(queryConditional)
+                    .items()
+                    .stream()
+                    .map(item -> {
+                        ApplicationRequest app = new ApplicationRequest();
+                        app.setSK(item.getSK());
+                        app.setEmail(item.getPK());
+                        app.setStatus(item.getStatus() != null ? ApplicationStatus.valueOf(item.getStatus()) : ApplicationStatus.applied);
+                        app.setPosition(item.getPosition());
+                        app.setSeniority(item.getSeniority());
+                        app.setApplicationDate(item.getCreatedAt());
+                        app.setCompany(item.getCompany());
+                        return app;
+                    })
+                    .collect(Collectors.toList());
 
             return new ResponseEntity<>(applications, HttpStatus.OK);
 
         } catch (Exception e) {
-            return new ResponseEntity<>(Map.of("message", e.getMessage()), HttpStatus.OK);
+            logger.error("Error querying applications: ", e);
+            return new ResponseEntity<>(Map.of("message", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    public ResponseEntity<?> updateApplication(String email,String sk,String status) {
+    public ResponseEntity<?> updateApplication(String email, String sk, String status) {
         try {
+            Key key = Key.builder().partitionValue(email).sortValue(sk).build();
+            Application existingApplication = applicationTable.getItem(key);
 
-            UpdateItemRequest updateRequest = UpdateItemRequest.builder()
-                    .tableName("AppTable")
-                    .key(Map.of(
-                            "PK", AttributeValue.builder().s(email).build(),
-                            "SK", AttributeValue.builder().s(sk).build()
-                    ))
-                    .updateExpression("SET #st = :status")
-                    .expressionAttributeNames(Map.of("#st", "Status"))
-                    .expressionAttributeValues(Map.of(
-                            ":status", AttributeValue.builder().s(status).build()
-                    ))
-                    .build();
+            if (existingApplication == null) {
+                return new ResponseEntity<>("Application record not found", HttpStatus.NOT_FOUND);
+            }
 
-            dynamoDbClient.updateItem(updateRequest);
+            existingApplication.setStatus(status);
+            applicationTable.updateItem(existingApplication);
+
             return new ResponseEntity<>("Status updated", HttpStatus.OK);
 
         } catch (Exception e) {
+            logger.error("Error updating application status: ", e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

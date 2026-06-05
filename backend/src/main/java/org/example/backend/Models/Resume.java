@@ -1,35 +1,30 @@
 package org.example.backend.Models;
 
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSortKey;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.*;
 
 @Data
-@DynamoDbBean
 @NoArgsConstructor
+@DynamoDbBean
 public class Resume {
-    private String pk;
-    private String sk;
+    private String PK;
+    private String SK;
     private String fileName;
-    private Number atsScore;
+    private Integer atsScore;
     private String file;
     private String uploadedAt;
 
     @DynamoDbPartitionKey
     @DynamoDbAttribute("PK")
     public String getPK() {
-        return pk;
+        return PK;
     }
 
     @DynamoDbSortKey
     @DynamoDbAttribute("SK")
     public String getSK() {
-        return sk;
+        return SK;
     }
 
     @DynamoDbAttribute("FileName")
@@ -38,7 +33,7 @@ public class Resume {
     }
 
     @DynamoDbAttribute("ATSScore")
-    public Number getAtsScore() {
+    public Integer getAtsScore() {
         return atsScore;
     }
 
@@ -51,7 +46,4 @@ public class Resume {
     public String getUploadedAt() {
         return uploadedAt;
     }
-
-
-
 }

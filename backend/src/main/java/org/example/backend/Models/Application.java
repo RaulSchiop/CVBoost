@@ -2,59 +2,40 @@ package org.example.backend.Models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSortKey;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.*;
 
 @Data
 @NoArgsConstructor
 @DynamoDbBean
 public class Application {
-    private String pk;
-    private String sk;
-    private String job;
+    private String PK;
+    private String SK;
+    private String position;
     private String seniority;
     private String company;
-    private String applicationDate;
+    private String createdAt;
     private String status;
 
-    @DynamoDbAttribute("PK")
     @DynamoDbPartitionKey
-    public String getPK(){
-        return pk;
-    }
+    @DynamoDbAttribute("PK")
+    public String getPK() { return PK; }
 
-    @DynamoDbAttribute("SK")
     @DynamoDbSortKey
-    public String getSK(){
-        return sk;
-    }
+    @DynamoDbAttribute("SK")
+    public String getSK() { return SK; }
 
-    @DynamoDbAttribute("Job")
-    public String getJob(){
-        return job;
-    }
+    @DynamoDbAttribute("Position")
+    public String getPosition() { return position; }
 
     @DynamoDbAttribute("Seniority")
-    public String getSeniority(){
-        return seniority;
-    }
+    public String getSeniority() { return seniority; }
 
     @DynamoDbAttribute("Company")
-    public String getCompany(){
-        return company;
-    }
+    public String getCompany() { return company; }
 
-    @DynamoDbAttribute("ApplicationDate")
-    public String getData(){
-        return applicationDate;
-    }
+    @DynamoDbAttribute("CreatedAt")
+    public String getCreatedAt() { return createdAt; }
 
     @DynamoDbAttribute("Status")
-    public String getStatus(){
-        return status;
-    }
-
+    public String getStatus() { return status; }
 }
-

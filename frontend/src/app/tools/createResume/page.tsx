@@ -215,7 +215,7 @@ export default function CVFormComponent() {
       languages: sections.languages ? languages : undefined,
    });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+   const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       const form = buildForm();
       setLoading(true);
@@ -232,16 +232,14 @@ export default function CVFormComponent() {
          if (!result.ok) throw new Error(await result.text());
          const data: CVGenerated = await result.json();
          setGeneratedCV(data);
-         setShowModal(true);   
+         setShowModal(true);
       } catch (error) {
          console.error(error);
       } finally {
          setLoading(false);
       }
    };
-   const handleSave = async (e: React.FormEvent) => {
-      e.preventDefault();
-   };
+   const handleSave = async () => {};
 
    const inputClass =
       "w-full bg-transparent border border-gray-500/40 rounded px-3 py-2 text-white text-sm placeholder-white/40 focus:outline-none focus:border-accent-500";
@@ -299,6 +297,7 @@ export default function CVFormComponent() {
                               className={inputClass}
                               name="phone"
                               required
+                              type="number"
                               onChange={handlePersonal}
                               placeholder="+40 728 440 967"
                            />

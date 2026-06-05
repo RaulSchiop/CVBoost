@@ -10,37 +10,223 @@ export default function CVPreview({
    onCancel,
 }: {
    cv: CVGenerated;
-   onSave: (e?: React.FormEvent) => void;
+   onSave: () => void;
    onCancel: () => void;
 }) {
-   const downloadPDF = async () => {
-      const element = document.getElementById("cv-preview");
-      if (!element) return;
-
-      const canvas = await html2canvas(element, {
-         scale: 2,
-         backgroundColor: "#ffffff",
-         useCORS: true,
-         allowTaint: true,
-         logging: false,
+   const downloadPDF = () => {
+      const pdf = new jsPDF({
+         orientation: "p",
+         unit: "mm",
+         format: "a4",
+         compress: true,
       });
 
-      const pdf = new jsPDF("p", "mm", "a4");
-      const imgWidth = 210;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let y = 20;
+      const leftMargin = 20;
+      const rightMargin = 190;
+      const contentWidth = 170;
 
-      pdf.addImage(
-         canvas.toDataURL("image/png"),
-         "PNG",
-         0,
-         0,
-         imgWidth,
-         imgHeight,
-      );
+      const checkPageBound = (neededSpace: number) => {
+         if (y + neededSpace > 280) {
+            pdf.addPage();
+            y = 20;
+         }
+      };
+
+      const addBodyParagraph = (
+         text: string,
+         size = 10,
+         isBold = false,
+         lineSpacing = 5,
+      ) => {
+         pdf.setFontSize(size);
+         pdf.setFont("helvetica", isBold ? "bold" : "normal");
+
+         const splitLines = pdf.splitTextToSize(text, contentWidth);
+         splitLines.forEach((line: string) => {
+            checkPageBound(lineSpacing);
+            pdf.text(line, leftMargin, y);
+            y += lineSpacing;
+         });
+      };
+
+      const addSectionHeader = (title: string) => {
+         checkPageBound(15);
+         y += 4;
+         pdf.setFontSize(11);
+         pdf.setFont("helvetica", "bold");
+         pdf.text(title.toUpperCase(), leftMargin, y);
+
+         y += 2;
+         pdf.setLineWidth(0.2);
+         pdf.line(leftMargin, y, rightMargin, y);
+         y += 6;
+      };
+
+      const addBulletRow = (label: string, value: string, labelBold = true) => {
+         checkPageBound(6);
+         pdf.setFontSize(10);
+
+         pdf.setFont("helvetica", "normal");
+         pdf.text("•", leftMargin + 2, y);
+
+         pdf.setFont("helvetica", labelBold ? "bold" : "normal");
+         pdf.text(label, leftMargin + 7, y);
+
+         const labelWidth = label ? pdf.getTextWidth(label) + 2 : 0;
+
+         pdf.setFont("helvetica", "normal");
+         const availableWidth = contentWidth - 7 - labelWidth;
+         const splitValues = pdf.splitTextToSize(value, availableWidth);
+
+         splitValues.forEach((line: string, index: number) => {
+            if (index > 0) checkPageBound(5);
+            const currentX =
+               index === 0
+                  ? leftMargin + 7 + labelWidth
+                  : leftMargin + 7 + labelWidth;
+            pdf.text(line, currentX, y);
+            if (index < splitValues.length - 1) y += 5;
+         });
+         y += 5.5;
+      };
+
+      pdf.setFontSize(26);
+      pdf.setFont("helvetica", "bold");
+      pdf.text(cv.name.toUpperCase(), 105, y, { align: "center" });
+      y += 7;
+
+      pdf.setFontSize(10);
+      pdf.setFont("helvetica", "normal");
+      const contactInfo = [
+         cv.email,
+         cv.phone,
+         cv.linkedin,
+         cv.github,
+         cv.website,
+      ]
+         .filter(Boolean)
+         .join(" | ");
+      pdf.text(contactInfo, 105, y, { align: "center" });
+      y += 5;
+      pdf.text(cv.location, 105, y, { align: "center" });
+      y += 10;
+
+      if (cv.summary) {
+         addSectionHeader("Summary");
+         addBodyParagraph(cv.summary, 10, false, 5);
+         y += 2;
+      }
+
+      if (cv.skills) {
+         addSectionHeader("Skills");
+         if (cv.skills.languages?.length)
+            addBulletRow("Languages: ", cv.skills.languages.join(", "));
+         if (cv.skills.databases?.length)
+            addBulletRow("Databases: ", cv.skills.databases.join(", "));
+         if (cv.skills.frameworks?.length)
+            addBulletRow(
+               "Technologies/Frameworks: ",
+               cv.skills.frameworks.join(", "),
+            );
+         if (cv.skills.tools?.length)
+            addBulletRow("DevOps & Tools: ", cv.skills.tools.join(", "));
+         if (cv.skills.other?.length)
+            addBulletRow("Other: ", cv.skills.other.join(", "));
+      }
+
+      if (cv.experience && cv.experience.length > 0) {
+         addSectionHeader("Experience");
+         cv.experience.forEach((exp) => {
+            checkPageBound(12);
+            pdf.setFontSize(11);
+            pdf.setFont("helvetica", "bold");
+            pdf.text(`${exp.company} — ${exp.role}`, leftMargin, y);
+
+            pdf.setFont("helvetica", "normal");
+            pdf.setFontSize(10);
+            pdf.text(`${exp.startDate} – ${exp.endDate}`, rightMargin, y, {
+               align: "right",
+            });
+            y += 6;
+
+            exp.bullets?.forEach((bulletText) => {
+               addBulletRow("", bulletText, false);
+            });
+            y += 1.5;
+         });
+      }
+
+      if (cv.projects && cv.projects.length > 0) {
+         addSectionHeader("Projects");
+         cv.projects.forEach((proj) => {
+            checkPageBound(12);
+            pdf.setFontSize(11);
+            pdf.setFont("helvetica", "bold");
+            pdf.text(proj.name, leftMargin, y);
+
+            pdf.setFont("helvetica", "normal");
+            pdf.setFontSize(10);
+            pdf.text(`${proj.startDate} – ${proj.endDate}`, rightMargin, y, {
+               align: "right",
+            });
+            y += 6;
+
+            proj.bullets?.forEach((bulletText) => {
+               addBulletRow("", bulletText, false);
+            });
+
+            if (proj.technologies?.length) {
+               addBulletRow("Technologies: ", proj.technologies.join(", "));
+            }
+            y += 1.5;
+         });
+      }
+
+      if (cv.education && cv.education.length > 0) {
+         addSectionHeader("Education");
+         cv.education.forEach((edu) => {
+            checkPageBound(12);
+            pdf.setFontSize(11);
+            pdf.setFont("helvetica", "bold");
+            pdf.text(edu.university, leftMargin, y);
+
+            pdf.setFont("helvetica", "normal");
+            pdf.setFontSize(10);
+            pdf.text(`${edu.startDate} – ${edu.endDate}`, rightMargin, y, {
+               align: "right",
+            });
+            y += 5;
+
+            addBodyParagraph(
+               `${edu.degree}${edu.major ? ` — ${edu.major}` : ""}`,
+               10,
+               false,
+               5,
+            );
+            y += 2;
+         });
+      }
+
+      if (cv.certifications && cv.certifications.length > 0) {
+         addSectionHeader("Certifications");
+         cv.certifications.forEach((cert) => {
+            checkPageBound(6);
+            pdf.setFontSize(10);
+            pdf.setFont("helvetica", "normal");
+            pdf.text(`${cert.name} — ${cert.issuer}`, leftMargin, y);
+            pdf.text(cert.date, rightMargin, y, { align: "right" });
+            y += 5.5;
+         });
+      }
+
+      if (cv.languages && cv.languages.length > 0) {
+         addSectionHeader("Languages");
+         addBodyParagraph(cv.languages.join(", "), 10, false, 5);
+      }
 
       pdf.save(`${cv.name}_CV.pdf`);
    };
-
    return (
       <div className="flex flex-col items-center gap-4 w-full">
          <div
@@ -297,7 +483,6 @@ export default function CVPreview({
                </CVSection>
             )}
 
-            {/* Education */}
             {cv.education && cv.education.length > 0 && (
                <CVSection title="EDUCATION">
                   {cv.education.map((edu, i) => (
@@ -344,7 +529,6 @@ export default function CVPreview({
                </CVSection>
             )}
 
-            {/* Languages */}
             {cv.languages && cv.languages.length > 0 && (
                <CVSection title="LANGUAGES">
                   <p>{cv.languages.join(", ")}</p>
@@ -352,7 +536,6 @@ export default function CVPreview({
             )}
          </div>
 
-         {/* Action buttons outside the CV */}
          <div className="flex gap-4 w-full justify-end mt-2">
             <button
                onClick={downloadPDF}

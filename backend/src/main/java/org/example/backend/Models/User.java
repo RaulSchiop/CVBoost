@@ -1,18 +1,18 @@
 package org.example.backend.Models;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.backend.Enums.ProfileType;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.*;
 
-import java.util.Date;
-
 @Data
-@DynamoDbBean
 @NoArgsConstructor
+@DynamoDbBean
 public class User {
 
-    private String pk;
-    private String sk;
+    private String PK;
+    private String SK;
+
     private String name;
     private String password;
     private String createdAt;
@@ -20,11 +20,11 @@ public class User {
 
     @DynamoDbPartitionKey
     @DynamoDbAttribute("PK")
-    public String getPK() { return pk; }
+    public String getPK() { return PK; }
 
     @DynamoDbSortKey
     @DynamoDbAttribute("SK")
-    public String getSK() { return sk; }
+    public String getSK() { return SK; }
 
     @DynamoDbAttribute("Name")
     public String getName() { return name; }
@@ -37,5 +37,4 @@ public class User {
 
     @DynamoDbAttribute("ProfileType")
     public ProfileType getProfileType() { return profileType; }
-
 }

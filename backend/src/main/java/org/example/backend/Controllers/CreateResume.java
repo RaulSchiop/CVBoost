@@ -7,7 +7,9 @@ import org.example.backend.Response.CreateResumeResponse;
 import org.example.backend.Services.AiCreateResumeService;
 import org.example.backend.Services.ResumeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
@@ -27,5 +29,9 @@ public class CreateResume {
         return aiCreateResumeService.createResume(resume);
     }
 
+    @PostMapping("/save")
+    ResponseEntity<?> saveResume(@RequestParam("file") MultipartFile file,@RequestParam("email") String email) {
+        return aiCreateResumeService.save(email,file);
+    }
 
 }
