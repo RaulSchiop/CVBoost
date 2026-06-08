@@ -1,16 +1,15 @@
 "use client";
 
+import { SAVE_RESUME_ENDPOINT } from "@/app/Constants/endpoints";
 import { CVGenerated } from "../../types/createCvRequest";
 import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
+import { useLocalStateStore } from "@/stores/slices/LocalStateStore";
 
 export default function CVPreview({
    cv,
-   onSave,
    onCancel,
 }: {
    cv: CVGenerated;
-   onSave: () => void;
    onCancel: () => void;
 }) {
    const downloadPDF = () => {
@@ -226,6 +225,36 @@ export default function CVPreview({
       }
 
       pdf.save(`${cv.name}_CV.pdf`);
+      return pdf;
+   };
+
+   const { token, email } = useLocalStateStore();
+
+   const handleBackendSave = async () => {
+      const pdf = downloadPDF();
+      const pdfBlob = pdf.output("blob");
+
+      const formData = new FormData();
+      formData.append("file", pdfBlob, `${cv.name}_CV.pdf`);
+      formData.append("email", email || "");
+
+      try {
+         const response = await fetch(SAVE_RESUME_ENDPOINT, {
+            method: "POST",
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+         });
+
+         if (response.ok) {
+            console.log("Succesfully saved");
+         } else {
+            console.error("Backend failed to save the file.");
+         }
+      } catch (error) {
+         console.error("Network error:", error);
+      }
    };
    return (
       <div className="flex flex-col items-center gap-4 w-full">
@@ -550,7 +579,7 @@ export default function CVPreview({
                Cancel
             </button>
             <button
-               onClick={onSave}
+               onClick={handleBackendSave}
                className="px-6 py-2 bg-accent-500 text-white rounded hover:bg-accent-600 transition-all"
             >
                Save CV

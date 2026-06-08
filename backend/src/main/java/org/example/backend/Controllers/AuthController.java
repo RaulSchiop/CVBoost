@@ -35,12 +35,12 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        log.info("AuthController.login(): Received login request for email: {}", loginRequest.getEmail());
+        log.info("AuthController.login(): Received login request for email: {}", loginRequest.email());
         
-        if (loginRequest.getEmail() == null || loginRequest.getPassword() == null) {
+        if (loginRequest.email() == null || loginRequest.password() == null) {
             log.info("AuthController.login(): Email or password is null");
             return ResponseEntity.badRequest().body("Email and password are required");
         }
-        return userService.authenticateUser(loginRequest.getEmail(), loginRequest.getPassword());
+        return userService.authenticateUser(loginRequest.email(), loginRequest.password());
     }
 }

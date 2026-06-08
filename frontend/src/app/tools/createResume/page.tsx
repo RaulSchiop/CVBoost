@@ -239,7 +239,6 @@ export default function CVFormComponent() {
          setLoading(false);
       }
    };
-   const handleSave = async () => {};
 
    const inputClass =
       "w-full bg-transparent border border-gray-500/40 rounded px-3 py-2 text-white text-sm placeholder-white/40 focus:outline-none focus:border-accent-500";
@@ -935,7 +934,6 @@ export default function CVFormComponent() {
                      <CVPreview
                         cv={generatedCV}
                         onCancel={() => setShowModal(false)}
-                        onSave={handleSave}
                      />
                   )}
                </Modal>

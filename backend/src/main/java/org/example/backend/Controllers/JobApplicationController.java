@@ -1,7 +1,6 @@
 package org.example.backend.Controllers;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.example.backend.Requests.ApplicationRequest;
 import org.example.backend.Requests.ApplicationRequestCreate;
 import org.example.backend.Requests.ApplicationUpdate;
 import org.example.backend.Services.ApplicationService;
@@ -38,7 +37,7 @@ public class JobApplicationController {
 
     @PatchMapping("/updateStatus")
     public ResponseEntity<?> updateStatus(@RequestBody ApplicationUpdate request) {
-        return applicationService.updateApplication(request.getEmail(), request.getSk(), request.getStatus());
+        return applicationService.updateApplication(request.email(), request.sk(), request.status());
     }
 
 

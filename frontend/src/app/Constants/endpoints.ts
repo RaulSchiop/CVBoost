@@ -21,3 +21,10 @@ export const GET_APPLICATION_ENDPOINT = HOST+ API_VERSION + "/application/getApp
 
 //Create Resume 
 export const CREATE_RESUME_ENDPOINT=HOST+ API_VERSION+"/createResume/create" //POST ENDPOINT 
+
+//save resume
+export const SAVE_RESUME_ENDPOINT=HOST+ API_VERSION+"/createResume/save" //POST ENDPOINT 
+
+
+//getResumes
+export const GET_RESUMES=HOST+API_VERSION+"/resume/getResumes/"//GET ENDPOINT

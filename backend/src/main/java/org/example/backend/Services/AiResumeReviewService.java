@@ -20,7 +20,7 @@ public class AiResumeReviewService
         chatClient = builder.build();
     }
 
-    public AiResumeReviewResponse getTextReview(MultipartFile file) throws IOException {
+    public String getTextReview(MultipartFile file) throws IOException {
 
         var converter = new BeanOutputConverter<>(AiResumeReviewResponse.class);
 
@@ -32,7 +32,7 @@ public class AiResumeReviewService
                         .param("format", converter.getFormat())
                 )
                 .call()
-                .entity(AiResumeReviewResponse.class);
+                .content();
 
 
     }

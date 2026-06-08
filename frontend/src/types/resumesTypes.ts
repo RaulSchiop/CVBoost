@@ -1,7 +1,7 @@
 export interface PDFInputPropsType {
    toggle: boolean;
    settoggleOpen?: (seter: boolean) => void;
-   resumes: Resume[]; //to be changed when i build the db
+   resumes?: Resume[]; 
 }
 
 export interface Resume {
@@ -9,4 +9,11 @@ export interface Resume {
    name: string;
    createdDate: string;
    atsScore: number;
+}
+
+export interface ResumeItem {
+   fileName: string;
+   uploadedAt: string;
+   atsScore: number | null;
+   downloadUrl: string;
 }
