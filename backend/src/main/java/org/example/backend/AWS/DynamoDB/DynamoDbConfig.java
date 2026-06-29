@@ -1,31 +1,37 @@
 package org.example.backend.AWS.DynamoDB;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-import java.net.URI;
 
 @Configuration
 public class DynamoDbConfig {
 
+    @Value("${aws.credentials.access-key}")
+    private String accessKey;
+
+    @Value("${aws.credentials.secret-key}")
+    private String secretKey;
+
+    @Value("${aws.credentials.region}")
+    private String region;
+
     @Bean
     public DynamoDbClient dynamoDbClient() {
         return DynamoDbClient.builder()
-                .endpointOverride(URI.create("http://localhost:8000"))
-                .region(Region.US_EAST_1)
+                .region(Region.of(region))
                 .credentialsProvider(
                         StaticCredentialsProvider.create(
-                                AwsBasicCredentials.create("dummy", "dummy")
+                                AwsBasicCredentials.create(accessKey, secretKey)
                         )
                 )
                 .build();
     }
-
 
     @Bean
     public DynamoDbEnhancedClient dynamoDbEnhancedClient(DynamoDbClient dynamoDbClient) {
@@ -33,5 +39,4 @@ public class DynamoDbConfig {
                 .dynamoDbClient(dynamoDbClient)
                 .build();
     }
-
 }
