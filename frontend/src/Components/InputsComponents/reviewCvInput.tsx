@@ -9,6 +9,7 @@ import MainBtn from "../Buttons/MainBtn";
 import DownList from "../List/DownList";
 import {
    AI_RESUME_REVIEW_ENDPOINT,
+   AI_RESUME_REVIEW_UPDATE,
    GET_RESUMES,
 } from "@/app/Constants/endpoints";
 import Skeleton from "../Loadings/Skeleton";
@@ -101,7 +102,7 @@ export default function PDFInput({ toggle }: PDFInputPropsType) {
       const formData = new FormData();
       formData.append("file", file);
 
-      const MAX_RETRIES = 4;
+      const MAX_RETRIES = 10;
 
       for (let i = 0; i < MAX_RETRIES; i++) {
          try {
@@ -184,21 +185,18 @@ export default function PDFInput({ toggle }: PDFInputPropsType) {
 
          const newScoreNumber = aiData.ats_score ?? aiData.score ?? 0;
          console.log(newScoreNumber);
-         const updateResult = await fetch(
-            "http://localhost:8080/api/v1/resume/updateScore",
-            {
-               method: "POST",
-               headers: {
-                  Authorization: `Bearer ${token}`,
-                  "Content-Type": "application/json",
-               },
-               body: JSON.stringify({
-                  email: email,
-                  fileName: resume.fileName,
-                  atsScore: newScoreNumber,
-               }),
+         const updateResult = await fetch(AI_RESUME_REVIEW_UPDATE, {
+            method: "POST",
+            headers: {
+               Authorization: `Bearer ${token}`,
+               "Content-Type": "application/json",
             },
-         );
+            body: JSON.stringify({
+               email: email,
+               fileName: resume.fileName,
+               atsScore: newScoreNumber,
+            }),
+         });
 
          if (!updateResult.ok) {
             throw new Error(
@@ -316,14 +314,6 @@ export default function PDFInput({ toggle }: PDFInputPropsType) {
                         ></Alert>
                      )}
 
-                     {!fetchLoading &&
-                        !error.on &&
-                        resumesList.length === 0 && (
-                           <div className="text-purple-200/60 text-center py-16 bg-purple-500/10 border border-purple-300/10 rounded-xl backdrop-blur-sm max-w-md mx-auto">
-                              No resumes found. Try uploading one!
-                           </div>
-                        )}
-
                      {resumesList.length > 0 ? (
                         <DownList>
                            {resumesList.map((resume, index) => (
@@ -385,18 +375,12 @@ export default function PDFInput({ toggle }: PDFInputPropsType) {
                                              View
                                           </SmallBtn>
                                        </a>
-                                       {resume.atsScore === null && (
-                                          <SmallBtn
-                                             color="bg-green-500/60"
-                                             onClick={() =>
-                                                handleRescore(resume)
-                                             }
-                                          >
-                                             Update Score
-                                          </SmallBtn>
-                                       )}
-                                       <SmallBtn color="bg-red-500">
-                                          Delete Resume
+
+                                       <SmallBtn
+                                          color="bg-green-500/60"
+                                          onClick={() => handleRescore(resume)}
+                                       >
+                                          Update Score
                                        </SmallBtn>
                                     </div>
                                  </MainCard>

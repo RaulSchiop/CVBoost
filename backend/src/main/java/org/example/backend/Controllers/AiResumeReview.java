@@ -8,6 +8,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.example.backend.Dtos.InterviewAssistent.AiResumeReview.AiResumeReviewResponse;
+import org.example.backend.Requests.ApplicationUpdate;
+import org.example.backend.Requests.UpdateScoreRequest;
 import org.example.backend.Services.AiResumeReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -67,4 +69,10 @@ public class AiResumeReview {
         }
     }
 
+    @PostMapping("/updateScore")
+    public ResponseEntity<?> updateScore(@RequestBody UpdateScoreRequest request) {
+
+        return aiResumeReviewService.updateScore(request);
+
+    }
 }

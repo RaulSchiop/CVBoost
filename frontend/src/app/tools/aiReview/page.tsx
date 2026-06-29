@@ -7,12 +7,10 @@ import { motion } from "motion/react";
 import Title from "@/Components/Text/Title";
 
 export default function AiReview() {
-   
-
    const [toggleUpload, setTogleUpload] = useState(false);
 
    return (
-      <div className="min-h-full bg-gradient-to-bl from-contrast-500/20 via-contrast-500/60 to-contrast-500/20 p-5 lg:p-20">
+      <div className="min-h-screen bg-gradient-to-bl from-contrast-500/20 via-contrast-500/60 to-contrast-500/20 p-5 lg:p-20">
          <div className="flex flex-col items-center w-full mb-10">
             <motion.div
                initial={{ opacity: 0, y: -100 }}
@@ -119,7 +117,7 @@ export default function AiReview() {
                </MainBtn>
             </div>
          )}
-         <PDFInput toggle={toggleUpload} ></PDFInput>
+         <PDFInput toggle={toggleUpload}></PDFInput>
       </div>
    );
 }

@@ -2,6 +2,7 @@ package org.example.backend.Controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.example.backend.Requests.CreateResumeRequest;
+import org.example.backend.Requests.DeleteResumeRequest;
 import org.example.backend.Response.CreateResumeResponse;
 import org.example.backend.Services.ResumeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,4 +33,8 @@ public class CreateResume {
         return resumeService.save(email,file);
     }
 
+    @PostMapping("/delete")
+    ResponseEntity<?> deleteResume(@RequestBody DeleteResumeRequest request) {
+        return resumeService.deleteResume(request.email(),request.fileName());
+    }
 }

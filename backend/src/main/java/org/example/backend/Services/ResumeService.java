@@ -22,6 +22,7 @@ import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
@@ -114,18 +115,19 @@ public class ResumeService {
         }
     }
 
-
     public ResponseEntity<?> getResumesByEmail(String email) {
         try {
-            QueryConditional queryConditional = QueryConditional
-                    .sortBeginsWith(Key.builder()
+            QueryConditional queryConditional = QueryConditional.sortBeginsWith(
+                    Key.builder()
                             .partitionValue(email)
                             .sortValue("RESUME#")
-                            .build());
+                            .build()
+            );
 
             List<GetResumesResponse> userResumes = resumeTable.query(queryConditional)
                     .items()
                     .stream()
+                    .filter(resume -> resume.getFile() != null && !resume.getFile().isEmpty())
                     .map(resume -> {
                         String s3Key = resume.getFile();
 
@@ -144,13 +146,40 @@ public class ResumeService {
                         GetResumesResponse item = new GetResumesResponse();
                         item.setFileName(resume.getFileName());
                         item.setUploadedAt(resume.getUploadedAt());
-                        item.setAtsScore(resume.getAtsScore());
+                        item.setAtsScore(resume.getAtsScore()); // Safe even if null
                         item.setDownloadUrl(securePresignedUrl);
                         return item;
                     })
                     .toList();
 
             return new ResponseEntity<>(userResumes, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<?> deleteResume(String email, String fileName) {
+        try {
+
+            String s3Key = "resumes/" + email + "/" + fileName;
+
+
+            DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(s3Key)
+                    .build();
+            s3Client.deleteObject(deleteObjectRequest);
+
+
+            Key keyToDelete = Key.builder()
+                    .partitionValue(email)
+                    .sortValue("RESUME#" + fileName)
+                    .build();
+
+            resumeTable.deleteItem(keyToDelete);
+
+            return new ResponseEntity<>(Map.of("message", "CV deleted successfully."), HttpStatus.OK);
 
         } catch (Exception e) {
             return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

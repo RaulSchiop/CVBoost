@@ -241,23 +241,48 @@ public final class AiAsistentPrompt {
                     - If a section was not provided, do not include it in the output
             """;
 
- public static final String CREATE_RESUME_PROMPT = """
-        Using the candidate's information below, generate a polished, ATS-ready CV.
-        
-        STRICT RULES:
-        - Only include sections that have data — if a field is null or empty, omit it entirely
-        - Never invent experience, projects, or skills that were not provided
-        - Summary: rewrite into 2-3 professional sentences tailored to the target role
-        - Experience bullets: rewrite description into 3-5 bullet points starting with strong action verbs (Developed, Built, Led, Implemented, Designed, Integrated, Optimized)
-        - Project bullets: rewrite description into 2-4 bullet points highlighting tech and impact
-        - Skills: split comma-separated strings into proper string arrays
-        - Make it keyword-rich and tailored to the target role: {target_role} at {company}
-        
-        Candidate data:
-        {data}
-        
-        {format}
-        """;
-
+     public static final String CREATE_RESUME_PROMPT = """
+            Using the candidate's information below, generate a polished, ATS-ready CV.
+            
+            STRICT RULES:
+            - Only include sections that have data — if a field is null or empty, omit it entirely
+            - Never invent experience, projects, or skills that were not provided
+            - Summary: rewrite into 2-3 professional sentences tailored to the target role
+            - Experience bullets: rewrite description into 3-5 bullet points starting with strong action verbs (Developed, Built, Led, Implemented, Designed, Integrated, Optimized)
+            - Project bullets: rewrite description into 2-4 bullet points highlighting tech and impact
+            - Skills: split comma-separated strings into proper string arrays
+            - Make it keyword-rich and tailored to the target role: {target_role} at {company}
+            
+            Candidate data:
+            {data}
+            
+            {format}
+            """;
+     public static final String CREATE_COVER_LETTER_PROMPT = """
+            Using the candidate's CV and the job details below, generate a professional cover letter.
+    
+            CANDIDATE NAME: {name}
+            TARGET COMPANY: {company}
+            JOB TITLE: {jobTitle}
+    
+            --- JOB DESCRIPTION START ---
+            {description}
+            --- JOB DESCRIPTION END ---
+    
+            --- CANDIDATE CV START ---
+            {data}
+            --- CANDIDATE CV END ---
+    
+            Rules:
+            - The cover letter must be tailored specifically to the company and role — no generic content.
+            - Opening paragraph: hook the reader with a strong, specific reason why this candidate fits this role.
+            - Middle paragraphs: highlight 2–3 concrete achievements or skills from the CV that directly match the job description.
+            - Closing paragraph: express enthusiasm for the company specifically, and include a clear call to action.
+            - Tone must be confident and professional, but not robotic.
+            - Length: 3–4 paragraphs. No more, no less.
+            - Do NOT invent experience not present in the CV.
+            - Do NOT use clichés like "team player", "hard worker", "passionate about".
+            - Return plain text only — no markdown, no JSON, no headers.
+            """;
 
 }

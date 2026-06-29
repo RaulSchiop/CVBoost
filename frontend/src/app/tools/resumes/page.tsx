@@ -11,7 +11,7 @@ import { ResumeItem } from "../../../types/resumesTypes";
 import Skeleton from "@/Components/Loadings/Skeleton";
 import Alert from "@/Components/Alert/Alert";
 import { useRouter } from "next/navigation";
-import { GET_RESUMES } from "@/app/Constants/endpoints";
+import { DELETE_RESUME_ENDPOINT, GET_RESUMES } from "@/app/Constants/endpoints";
 
 type AlertType = {
    message: string;
@@ -31,6 +31,39 @@ export default function Resume() {
 
    function handleGoToUpdate() {
       router.push("/tools/aiReview");
+   }
+
+   async function handleDelete(fileName: string) {
+      if (!token || !email) {
+         setError({ message: "Not authenticated.", on: true });
+         return;
+      }
+
+      const previous = resumesList;
+      // Optimistically remove locally
+      setResumesList((prev) => prev.filter((r) => r.fileName !== fileName));
+      setLoading(true);
+      setError({ message: "", on: false });
+
+      try {
+         const response = await fetch(`${DELETE_RESUME_ENDPOINT}`, {
+            method: "POST",
+            headers: {
+               Authorization: `Bearer ${token}`,
+               "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, fileName }),
+         });
+
+         if (!response.ok) {
+            throw new Error(`Server returned error status: ${response.status}`);
+         }
+      } catch (err: any) {
+         setResumesList(previous);
+         setError({ message: "Failed to delete resume.", on: true });
+      } finally {
+         setLoading(false);
+      }
    }
 
    function handleCloseAlert() {
@@ -208,6 +241,7 @@ export default function Resume() {
                                  <SmallBtn
                                     ClassName="text-sm"
                                     color="bg-red-500"
+                                    onClick={() => handleDelete(file.fileName)}
                                  >
                                     Delete
                                  </SmallBtn>

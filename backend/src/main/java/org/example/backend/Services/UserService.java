@@ -59,7 +59,7 @@ public class UserService {
             return new ResponseEntity<>(Map.of(
                     "email", user.getPK(),
                     "name", user.getName(),
-                    "profileType", user.getProfileType().toString(), // Added .toString()
+                    "profileType", user.getProfileType().toString(),
                     "createdAt", user.getCreatedAt()
             ), HttpStatus.CREATED);
 
@@ -84,7 +84,7 @@ public class UserService {
                     "email", user.getPK(),
                     "name", user.getName(),
                     "createdAt", user.getCreatedAt(),
-                    "profileType", user.getProfileType().toString() // Added .toString()
+                    "profileType", user.getProfileType().toString()
             ), HttpStatus.OK);
 
         } catch (Exception e) {

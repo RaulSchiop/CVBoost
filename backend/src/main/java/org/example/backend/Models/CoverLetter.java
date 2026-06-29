@@ -16,8 +16,7 @@ public class CoverLetter {
     private String pk;
     private String sk;
     private String fileName;
-    private String jobTitle;
-    private String company;
+    private String file;
     private String date;
 
     @DynamoDbAttribute("SK")
@@ -37,14 +36,9 @@ public class CoverLetter {
         return fileName;
     }
 
-    @DynamoDbAttribute("JobTitle")
-    public String getJobTitle() {
-        return jobTitle;
-    }
-
-    @DynamoDbAttribute("Company")
-    public String getCompany() {
-        return company;
+    @DynamoDbAttribute("File")
+    public String getFile() {
+        return file;
     }
 
     @DynamoDbAttribute("Date")
