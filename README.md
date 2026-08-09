@@ -12,6 +12,7 @@
 
 ## 🛠️ System Architecture
 
+![System Architecture](frontend/public/arhitectura.png)
 
 
 ---
