@@ -4,7 +4,8 @@
 
 ![Java](https://img.shields.io/badge/Java-17-orange?logo=java)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-brightgreen?logo=springboot)
-![React](https://img.shields.io/badge/React-18-blue?logo=react)
+![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=nextdotjs)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.x-38B2AC?logo=tailwindcss)
 ![AWS S3](https://img.shields.io/badge/AWS_S3-Storage-FF9900?logo=amazonaws)
 ![AWS DynamoDB](https://img.shields.io/badge/AWS_DynamoDB-Database-4053D6?logo=amazonaws)
 
@@ -44,11 +45,11 @@ To run this application locally, set up the following AWS resources in the `eu-c
 
 ### 1. Clone the Repository
 ```bash
-git clone [https://github.com/RaulSchiop/CVBoost.git](https://github.com/RaulSchiop/CVBoost.git)
+git clone https://github.com/RaulSchiop/CVBoost.git
 cd CVBoost
 ```
 
-## 2. Configure Environment Variables
+### 2. Configure Environment Variables
 Set the required secrets in your local environment or create a .env file:
 ```bash
 export OPENAI_KEY="your-openai-api-key"
@@ -56,7 +57,7 @@ export AWS_ACCESS_KEY_ID="your-iam-access-key"
 export AWS_SECRET_ACCESS_KEY="your-iam-secret-key"
 export AWS_REGION="eu-central-1"
 ```
-## 3. Run the Backend
+### 3. Run the Backend
 Open terminal 1:
 
 ```bash
@@ -64,9 +65,8 @@ cd backend
 mvn clean install
 mvn spring-boot:run
 ```
-Backend Service: Runs on http://localhost:8080
 
-## 4. Run the Frontend
+### 4. Run the Frontend
 Open terminal 2:
 ```bash
 cd frontend
