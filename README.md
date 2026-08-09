@@ -1,40 +1,77 @@
+# CVBoost 🚀
 
-# 1. Comandă clonare repo github
+> An end-to-end, AI-powered resume evaluation and optimization platform built to analyze, score, and tailor CVs against targeted job postings in real time.
+
+![Java](https://img.shields.io/badge/Java-17-orange?logo=java)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-brightgreen?logo=springboot)
+![React](https://img.shields.io/badge/React-18-blue?logo=react)
+![AWS S3](https://img.shields.io/badge/AWS_S3-Storage-FF9900?logo=amazonaws)
+![AWS DynamoDB](https://img.shields.io/badge/AWS_DynamoDB-Database-4053D6?logo=amazonaws)
+
+---
+
+## 🛠️ System Architecture
+
+
+
+---
+
+## ✨ Features
+
+* **AI-Driven Resume Analysis:** Evaluates structure, content and tone using OpenAI models.
+* **AI-Driven Resume and Cover letter creation:** Creates resumes and cover letters based on a input
+* **AWS Cloud Integration:** Offloads secure PDF storage to **Amazon S3** and saves metadata in **Amazon DynamoDB**.
+* **Modern Reactive UI:** Clean user interface built with Next Js and Tailwind CSS for seamless file uploads and instant report rendering.
+
+---
+
+## ⚙️ AWS Configuration
+
+To run this application locally, set up the following AWS resources in the `eu-central-1` region:
+
+1. **Amazon S3:** Create a private S3 bucket named `raul-resumes-private-storage`.
+2. **Amazon DynamoDB:** Create a table named `AppTable` with:
+   * **Partition Key (`PK`):** `String`
+   * **Sort Key (`SK`):** `String`
+3. **AWS IAM Credentials:** Generate an IAM user with the following permissions:
+   * **S3 Policy:** `s3:*` (or restricted to `s3:GetObject`, `s3:PutObject`, `s3:DeleteObject`)
+   * **DynamoDB Policy:** `dynamodb:PutItem`, `dynamodb:GetItem`, `dynamodb:Query`, `dynamodb:UpdateItem`, `dynamodb:DeleteItem`
+
+---
+
+## 🚀 Local Quickstart
+
+### 1. Clone the Repository
+```bash
+git clone [https://github.com/RaulSchiop/CVBoost.git](https://github.com/RaulSchiop/CVBoost.git)
+cd CVBoost
 ```
-git clone https://github.com/RaulSchiop/CVBoost.git
+
+## 2. Configure Environment Variables
+Set the required secrets in your local environment or create a .env file:
+```bash
+export OPENAI_KEY="your-openai-api-key"
+export AWS_ACCESS_KEY_ID="your-iam-access-key"
+export AWS_SECRET_ACCESS_KEY="your-iam-secret-key"
+export AWS_REGION="eu-central-1"
 ```
+## 3. Run the Backend
+Open terminal 1:
 
-# 2. Configuratie AWS 
-
-1. AWS Console in regiunea eu-central-1
-2. Un bucket în **S3** privat `raul-resumes-private-storage`.
-3. O tabelă în **DynamoDB** numită `AppTable` cu cheia de partiție `PK` (String) și cheia de sortare `SK` (String).
-4. Un utilizator **IAM** cu o politică de acces ce permite acțiunile (`s3:*`,`dynamodb:PutItem`, `dynamodb:DeleteItem`,`dynamodb:GetItem`,,`dynamodb:Query`,`dynamodb:UpdateItem` )
-
-
-## Configurație Variabile de Mediu Backend
-  ```
-  OPENAI_KEY="cheia_ta_openai_aici"
-  AWS_ACCESS_KEY_ID="cheia_ta_de_acces_iam"
-  AWS_SECRET_ACCESS_KEY="cheia_ta_secreta_iam"
-  ```
-
-# 3. Instalare şi Rulare
-
-1. Instalare şi Rulare Backend
-```
-cd backend/
+```bash
+cd backend
 mvn clean install
 mvn spring-boot:run
 ```
-2. Instalare şi Rulare Frontend
-```
-cd frontend/
+Backend Service: Runs on http://localhost:8080
+
+## 4. Run the Frontend
+Open terminal 2:
+```bash
+cd frontend
 npm install
 npm run dev
 ```
-( terminale diferite )
 
-Frontend: localhost portul:3000
-Backend: localhost portul:8080
-  
+
+---
